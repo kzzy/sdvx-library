@@ -5,7 +5,7 @@ let filter_game_entry_toggle = false
 <template>
     <div class="text-white border text-md">
         <h2 class="text-center text-xl mt-2 mb-2">Filters</h2>
-        <div id="search_simple_filters" class="ml-10 mr-10 border min-w-fit">
+        <div id="search_simple_filters" class="ml-10 mr-10 border min-w-fit w-64">
             <div id="filter_game_entry">Game Entry
                 <button @click="filter_game_entry_toggle = !filter_game_entry_toggle; console.log(filter_game_entry_toggle)" class="float-right">All</button>
             </div>

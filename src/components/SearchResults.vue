@@ -124,18 +124,20 @@ const results: SongData[] = [
         <div class="border" v-for="result in results">
             <div id="search_result_cell">
                 <div id="result_cell" class="text-white p-6 flex hover:cursor-pointer">
-                    <img class="w-32 h-32" :src="'/' + result.jacket + '.png'" >
+                    <div class="min-h-full min-w-fit flex items-center">
+                        <img class="w-32 h-32" :src="'/' + result.jacket + '.png'" >
+                    </div>
 
                     <div class="ml-5">
-                        <div class="font-thin font-sans text-5xl w-128">{{ result.title }}</div>
-                        <div class="to-indigo-600 shadow-inner shadow-white rounded-lg flex mt-10 max-w-lg justify-between">
-                            <div class="m-2 bg-center bg-no-repeat text-center" :class=getDiffBackground(difficulty[0]) v-for="difficulty in result.song_difficulties">
+                        <div class="font-thin font-sans text-5xl sm:w-64 xl:w-128">{{ result.title }}</div>
+                        <div class="bg-gray-950 w-36 flex-col shadow-inner shadow-indigo-800 rounded-lg flex xl:flex-row xl:w-fit mt-10 max-w-lg justify-between">
+                            <div class="m-2 bg-center bg-no-repeat text-center min-w-fit" :class=getDiffBackground(difficulty[0]) v-for="difficulty in result.song_difficulties">
                                 <p class="ml-2 mr-2 font-semibold">{{difficulty[0]}} {{difficulty[1]}} </p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="text-xl min-w-fit leading-loose text-left">
+                    <div class="text-xl min-w-fit leading-loose text-left flex flex-col justify-center items-center">
                         <p>Artist - {{ result.song_artist }}</p>
                         <p>BPM - {{ result.bpm }}</p>
                         <p>Song Length - {{ result.duration }}</p>
