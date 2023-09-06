@@ -1,11 +1,12 @@
 <script setup lang="ts">
 let filter_game_entry_toggle = false
 
+
 </script>
 <template>
     <div class="text-white border text-md">
-        <h2 class="text-center text-xl mt-2 mb-2">Filters</h2>
-        <div id="search_simple_filters" class="ml-10 mr-10 border min-w-fit w-64">
+        <h2 class="text-center text-xl my-2">Filters</h2>
+        <div id="search_simple_filters" class="mx-10 border min-w-fit w-64">
             <div id="filter_game_entry">Game Entry
                 <button @click="filter_game_entry_toggle = !filter_game_entry_toggle; console.log(filter_game_entry_toggle)" class="float-right">All</button>
             </div>
@@ -22,8 +23,8 @@ let filter_game_entry_toggle = false
             </div>
             <div id="filter_is_konasute">Konasute</div>
         </div>
-        <h2 class="text-center text-xl mt-2 mb-2">Advanced Filters</h2>
-        <div id="search_advanced_filters" class="ml-10 mr-10 border">
+        <h2 class="text-center text-xl my-2">Advanced Filters</h2>
+        <div id="search_advanced_filters" class="mx-10 border">
         </div>
     </div>
 </template>
