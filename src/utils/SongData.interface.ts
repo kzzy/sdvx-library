@@ -1,10 +1,32 @@
+export interface ChartMaxNotesDescription {
+    max_chain?: number;
+    max_chip_notes?: number;
+    max_long_notes?: number;
+    max_vol_notes?: number
+}
+
+export interface ChartEffectDescription {
+    song_effect_radar_notes?: string;
+    song_effect_radar_peak?: string;
+    song_effect_radar_tsumami?: string;
+    song_effect_radar_onehanded?: string;
+    song_effect_radar_handtrip?: string;
+    song_effect_radar_tricky?: string;
+}
+
+export interface SongDifficulty extends ChartMaxNotesDescription, ChartEffectDescription{
+    difficulty_name: string;
+    difficulty_level: number;
+    difficulty_release_date: string;
+}
+
 export interface BasicSongDataInterface {
     title: string;
     jacket: string;
-    duration: string; // In minutes:seconds
+    duration: string;
     bpm: string;
     song_artist: string;
-    song_difficulties: [string, number, string][]; // Array of tuples [Difficulty Name, Difficulty Level, Difficulty Release Date]
+    song_difficulties: SongDifficulty[];
 
     expanded: boolean;
 }
@@ -21,16 +43,4 @@ export interface AdvancedSongDataInterface extends BasicSongDataInterface {
     arcade_unlock_method?: string;
 
     song_release_date: string;
-
-    song_max_chain?: string;
-    song_max_chip_notes?: string;
-    song_max_long_notes?: string;
-    song_max_vol_notes?: string;
-
-    song_effect_radar_notes?: string;
-    song_effect_radar_peak?: string;
-    song_effect_radar_tsumami?: string;
-    song_effect_radar_onehanded?: string;
-    song_effect_radar_handtrip?: string;
-    song_effect_radar_tricky?: string;
 }

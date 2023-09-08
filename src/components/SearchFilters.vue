@@ -13,8 +13,8 @@ let filter_game_entry_toggle = false
             <div id="filter_level" >
                 Level Range
                 <span class="float-right">
-                    <a href="#">1</a>
-                    <a href="#">20 </a>
+                    <a href="#min">1</a>
+                    <a href="#max">20 </a>
                 </span>
             </div>
             <div id="filter_is_arcade">

@@ -5,12 +5,14 @@ import { ref, watch } from 'vue'
 import debounce from 'lodash.debounce'
 
 const search_field = ref('')
-let active_search = false
+const active_search = ref(false)
 
 watch(search_field, (value) => {
     if(value.length > 0) {
-        active_search = true
+        active_search.value = true
         search(value)
+    } else {
+        active_search.value = false
     }
 })
 
@@ -57,10 +59,3 @@ const search = debounce((input:string) => {
         </main>
     </body>
 </template>
-
-
-<style>
-.search-enter-active {
-
-}
-</style>

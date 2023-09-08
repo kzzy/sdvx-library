@@ -1,64 +1,125 @@
-<script lang="ts">
-import { ref } from 'vue'
-const selected = ref("general")
+<script setup lang="ts">
+import { onMounted, ref, reactive, computed } from 'vue'
 
-export default {
-    name: 'SongDetailsBar',
-    props: {
-      song_info: {
-        title: String,
-        jacket: String,
-        jacket_artist: String,
-        charter: String,
-        duration: String, // In minutes:seconds
-        album: String,
-        bpm: String,
+const props = defineProps(['song_info'])
 
-        isKonasute: Boolean,
-        konasute_vol_pack: Number,
+const selected = reactive({
+  details: true,
+  unlock: false,
+  history: false
+})
 
-        konasute_unlock_method: String,
-        arcade_unlock_method: String,
-
-        song_artist: String,
-        song_difficulties: [String, Number, String], // Array of tuples [Difficulty Name, Difficulty Level, Difficulty Release Date]
-        song_release_date: String,
-
-        song_max_chain: String,
-        song_max_chip_notes: String,
-        song_max_long_notes: String,
-        song_max_vol_notes: String,
-
-        song_effect_radar_notes: String,
-        song_effect_radar_peak: String,
-        song_effect_radar_tsumami: String,
-        song_effect_radar_onehanded: String,
-        song_effect_radar_handtrip: String,
-        song_effect_radar_tricky: String
-      }
-    }, 
-
-    // Need to access via props.xxx to retain reactivity, but our data does not need to maintain that capability
-    setup(props) {
-        console.log(props.song_info.title)
+function setSelected(select: string) {
+  for(const prop in selected) {
+    if(prop != select) {
+      selected[prop] = false;
+    } else {
+      selected[prop] = true;
     }
+  }
 }
+
+function getDiffBGColor(diff:string) {
+  switch(diff) {
+    case("NOVICE"):
+      return "bg-indigo-900"
+    case("ADVANCED"):
+      return "bg-yellow-600"
+    case "EXHAUST":
+      return "bg-red-600"
+    case "HEAVENLY":
+      return "bg-cyan-700"
+    case "INFINITE":
+      return "bg-pink-700"
+    case "GRAVITY":
+      return "bg-orange-600"
+    case "VIVID":
+      return "bg-pink-600"
+    case "MAXIMUM":
+      return "bg-gray-600"
+    case "EXCEED":
+      return "bg-cyan-600"
+  }
+}
+
+/*
+    jacket_artist: string;
+    charter: string;
+    album: string;
+
+    isKonasute?: boolean;
+    konasute_vol_pack?: number;
+
+    konasute_unlock_method?: string;
+    arcade_unlock_method?: string;
+
+    song_release_date: string;
+*/
+
+onMounted(() => {
+  console.log(props.song_info)
+})
 
 </script>
 <template>
-    <header class="">
+    <header>
       <nav>
         <ul class="flex justify-center text-xl">
-          <li class="hover:text-gray-500 cursor-pointer px-4">
-            <div>General Details</div>
+          <li class="px-4 hover:text-indigo-400 cursor-pointer" :class="(selected.details)?'text-indigo-400':'text-white'" @click="setSelected('details')">
+            <div>Details</div>
           </li>
-          <li class="hover:text-gray-500 cursor-pointer px-4">
+          <li class="px-4 hover:text-indigo-400 cursor-pointer" :class="(selected.unlock)?'text-indigo-400':'text-white'" @click="setSelected('unlock')">
             <div>Unlocking</div>
           </li>
-          <li class="hover:text-gray-500 cursor-pointer px-4">
+          <li class="px-4 hover:text-indigo-400 cursor-pointer" :class="(selected.history)?'text-indigo-400':'text-white'" @click="setSelected('history')">
             <div>History</div>
           </li>
         </ul>
       </nav>
     </header>
+    <body id="expanded_details_body_container" v-if="selected.details" class="h-expanded-details">
+      <div class="m-5 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80">
+        <div class="m-8">
+          <table class="table-auto text-center m-auto font-semibold outline outline-offset-16 rounded-lg outline-yellow-400">
+            <thead>
+              <tr class="border-b">
+                <th class="w-32">Difficulty</th>
+                <th class="w-32">Level</th>
+                <th class="w-32">Max Chain</th>
+                <th class="w-32">Max Chip Notes (Tap)</th>
+                <th class="w-32">Max Long Notes (Holding)</th>
+                <th class="w-40">Max Volume Notes (Lasers)</th>
+              </tr>
+            </thead>
+            <tbody class="hover:bg-gray-800" v-for="difficulty in props.song_info.song_difficulties">
+              <tr class="border-b" :class="getDiffBGColor(difficulty.difficulty_name)">
+                <td class="m-6 w-32 border-l">{{ difficulty.difficulty_name }}</td>
+                <td class="w-32">{{ difficulty.difficulty_level }}</td>
+                <td class="w-32">{{ difficulty.max_chain }}</td>
+                <td class="w-32">{{ difficulty.max_chip_notes }}</td>
+                <td class="w-32">{{ difficulty.max_long_notes }}</td>
+                <td class="w-40 border-r">{{ difficulty.max_vol_notes }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="effect_chart" class="border">
+        </div>
+      </div>
+    </body>
+    <body id="expanded_unlock_body_container" v-if="selected.unlock" class="h-expanded-drop">
+      <div class="m-5 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80">
+        <p class="m-5">
+        </p>
+      </div>
+    </body>
+    <body id="expanded_history_body_container" v-if="selected.history" class="h-expanded-drop">
+      <div class="m-5 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80">
+        <div class="m-5">
+          <p>{{ props.song_info.title }}'s initial release date was {{ props.song_info.song_release_date }}</p>
+        </div>
+      </div>
+    </body>
 </template>
+

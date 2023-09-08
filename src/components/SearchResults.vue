@@ -1,25 +1,24 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { AdvancedSongDataInterface } from '../utils/SongData.interface.ts'
+import type { AdvancedSongDataInterface, BasicSongDataInterface, SongDifficulty } from '../utils/SongData.interface.ts'
 import SongDetailsBar from './SongDetailsBar.vue';
-
 
 const results = ref<AdvancedSongDataInterface[]>([]);
 
-function addSong(title:string, jacket:string, jacket_artist:string, charter:string, duration:string, album:string, bpm:string, song_artist:string, song_difficulties:[string, number, string][], song_release_date:string) {
-    results.value.push({
+function addSong(title:string, jacket:string, jacket_artist:string, charter:string, duration:string, album:string, bpm:string, song_artist:string, song_difficulties:SongDifficulty[], song_release_date:string) {
+    const new_entry: AdvancedSongDataInterface = {
         title: title,
         jacket: jacket,
-        jacket_artist: jacket_artist,
         charter: charter,
         duration: duration,
         album: album,
         bpm: bpm,
         song_artist: song_artist,
         song_difficulties: song_difficulties,
-        song_release_date: song_release_date,
-        expanded: false
-    })
+        song_release_date: song_release_date
+    }
+
+    results.value.push(new_entry)
 }
 
 function removeSong() {
@@ -61,9 +60,13 @@ results.value = [{
         album: "For UltraPlayers (2015)",
         bpm: "222",
         song_artist: "cosMo＠暴走Ultimate",
-        song_difficulties: [["NOVICE", 6, "1/1/1969"], ["ADVANCED", 12, "1/1/1969"], ["EXHAUST", 18, "1/1/1969"], ["GRAVITY", 19, "1/1/1969"]],
-        song_release_date: "",
-        song_max_chain: "1337",
+        song_difficulties: [
+            <SongDifficulty>{difficulty_name:"NOVICE", difficulty_level:6, difficulty_release_date:"8/21/2015", max_chain: 2641, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197},
+            <SongDifficulty>{difficulty_name:"ADVANCED", difficulty_level:12, difficulty_release_date:"8/21/2015", max_chain: 2641, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197}, 
+            <SongDifficulty>{difficulty_name:"EXHAUST", difficulty_level:18, difficulty_release_date:"8/21/2015", max_chain: 2641, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197},
+            <SongDifficulty>{difficulty_name:"GRAVITY", difficulty_level:19, difficulty_release_date:"8/21/2015", max_chain: 2641, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197}
+            ],
+        song_release_date: "August 21, 2015",
         expanded: false
     },
     {
@@ -75,7 +78,12 @@ results.value = [{
         album: "",
         bpm: "236",
         song_artist: "かねこちはる",
-        song_difficulties: [["NOVICE", 8, "1/1/1969"], ["ADVANCED", 15, "1/1/1969"], ["EXHAUST", 18, "1/1/1969"], ["GRAVITY", 20, "1/1/1969"]],
+        song_difficulties: [
+            <SongDifficulty>{difficulty_name:"NOVICE", difficulty_level:8, difficulty_release_date:"1/1/1969"}, 
+            <SongDifficulty>{difficulty_name:"ADVANCED", difficulty_level:15, difficulty_release_date:"1/1/1969"}, 
+            <SongDifficulty>{difficulty_name:"EXHAUST", difficulty_level:18, difficulty_release_date:"1/1/1969"}, 
+            <SongDifficulty>{difficulty_name:"HEAVENLY", difficulty_level:20, difficulty_release_date:"1/1/1969"}
+            ],
         song_release_date: "",
         expanded: false
     },
@@ -88,12 +96,16 @@ results.value = [{
         album: "",
         bpm: "222",
         song_artist: "ryhki",
-        song_difficulties: [["NOVICE", 7, "1/1/1969"], ["ADVANCED", 14, "1/1/1969"], ["EXHAUST", 17, "1/1/1969"], ["MAXIMUM", 19, "1/1/1969"]],
+        song_difficulties: [
+            <SongDifficulty>{difficulty_name:"NOVICE", difficulty_level:7, difficulty_release_date:"1/1/1969"}, 
+            <SongDifficulty>{difficulty_name:"ADVANCED", difficulty_level:14, difficulty_release_date:"1/1/1969"}, 
+            <SongDifficulty>{difficulty_name:"EXHAUST", difficulty_level:17, difficulty_release_date:"1/1/1969"},
+            <SongDifficulty>{difficulty_name:"MAXIMUM", difficulty_level:19, difficulty_release_date:"1/1/1969"}
+            ],
         song_release_date: "",
         expanded: false
     }
 ]
-
 </script>
 
 <template>
@@ -107,9 +119,9 @@ results.value = [{
 
                     <div class="ml-5">
                         <div class="font-thin font-sans text-5xl sm:w-64 xl:w-128">{{ result.title }}</div>
-                        <div class="bg-gray-950 w-36 flex-col shadow-inner shadow-indigo-800 rounded-lg flex xl:flex-row xl:w-fit mt-10 max-w-lg justify-between">
-                            <div class="m-2 bg-center bg-no-repeat text-center min-w-fit" :class=getDiffBackground(difficulty[0]) v-for="difficulty in result.song_difficulties">
-                                <p class="mx-2 font-semibold">{{difficulty[0]}} {{difficulty[1]}} </p>
+                        <div class="bg-gray-950 w-36 flex-col border-slate-500 border-2 rounded-lg flex xl:flex-row xl:w-fit mt-10 max-w-lg justify-between">
+                            <div class="m-2 bg-center bg-no-repeat text-center min-w-fit" :class=getDiffBackground(difficulty.difficulty_name) v-for="difficulty in result.song_difficulties">
+                                <p class="mx-2 font-semibold">{{difficulty.difficulty_name}} {{difficulty.difficulty_level}} </p>
                             </div>
                         </div>
                     </div>
@@ -121,7 +133,7 @@ results.value = [{
                     </div>
                 </div>
             </div>
-            <div id="search_result_expanded_details" v-if="result.expanded" class="h-screen">
+            <div id="search_result_expanded_details" v-if="result.expanded">
                 <SongDetailsBar :song_info="result"/>
             </div>
         </div>
@@ -132,4 +144,4 @@ results.value = [{
                 REMOVE SONG
         </div>
     </div>
-</template>../utils/SongDataLayout.js
+</template>

@@ -19,6 +19,12 @@ module.exports = {
       },
       width: {
         '128': "48rem"
+      },
+      height: {
+        'expanded-drop': "82vh"
+      },
+      outlineOffset: {
+        '16': "16px"
       }
     },
   },
