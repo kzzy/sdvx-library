@@ -6,12 +6,12 @@ export interface ChartMaxNotesDescription {
 }
 
 export interface ChartEffectDescription {
-    song_effect_radar_notes?: string;
-    song_effect_radar_peak?: string;
-    song_effect_radar_tsumami?: string;
-    song_effect_radar_onehanded?: string;
-    song_effect_radar_handtrip?: string;
-    song_effect_radar_tricky?: string;
+    song_effect_radar_notes?: number;
+    song_effect_radar_peak?: number;
+    song_effect_radar_tsumami?: number;
+    song_effect_radar_onehanded?: number;
+    song_effect_radar_handtrip?: number;
+    song_effect_radar_tricky?: number;
 }
 
 export interface SongDifficulty extends ChartMaxNotesDescription, ChartEffectDescription{

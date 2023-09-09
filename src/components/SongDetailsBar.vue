@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import { onMounted, ref, reactive, computed } from 'vue'
+import { onMounted, reactive, computed, ref, watch } from 'vue'
+import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler } from 'chart.js'
+import { Radar } from 'vue-chartjs'
+
+ChartJS.register(
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler
+)
 
 const props = defineProps(['song_info'])
 
@@ -42,23 +51,66 @@ function getDiffBGColor(diff:string) {
   }
 }
 
-/*
-    jacket_artist: string;
-    charter: string;
-    album: string;
+const radarData = reactive({
+  labels: ['NOTES', 'PEAK', 'TSUMAMI ', 'TRICKY', 'HAND TRIP', 'ONE HAND'],
+  datasets: [
+    {
+      backgroundColor: 'rgba(255,99,132,0.2)',
+      borderColor: 'rgba(255,99,132,1)',
+      data: []
+    }
+  ]
+})
 
-    isKonasute?: boolean;
-    konasute_vol_pack?: number;
+const radarComputed = computed(() => {
+  return {
+    labels: ['NOTES', 'PEAK', 'TSUMAMI ', 'TRICKY', 'HAND TRIP', 'ONE HAND'],
+    datasets: [
+      {
+        backgroundColor: 'rgba(255,99,132,0.2)',
+        borderColor: 'rgba(255,99,132,1)',
+        data: radarData.datasets.data
+      }
+    ]
+  }
+})
 
-    konasute_unlock_method?: string;
-    arcade_unlock_method?: string;
+const setRadarData = (notes:number, peak:number, tsumami:number, tricky:number, handtrip: number, onehand: number) => {
+  radarData.datasets.data = [notes, peak, tsumami, tricky, handtrip, onehand]
+}
 
-    song_release_date: string;
-*/
+const radar_options = {
+  responsive: true,
+  maintainAspectRatio: true,
+  scale: {
+    r: {
+      min: 0,
+      max: 100,
+      color: 'white',
+      /* For some reason, this hides the tick labels??? the maxTicksLimit 1 is required */
+      ticks: {
+        display: false,
+        maxTicksLimit: 1,
+        color: 'white'
+      }
+    }
+  }
+}
 
 onMounted(() => {
   console.log(props.song_info)
 })
+
+/*
+    fillEffectRadarDataPoints(
+              props.song_info.song_difficulties[0].song_effect_radar_notes,
+              props.song_info.song_difficulties[0].song_effect_radar_peak,
+              props.song_info.song_difficulties[0].song_effect_radar_tsumami,
+              props.song_info.song_difficulties[0].song_effect_radar_tricky,
+              props.song_info.song_difficulties[0].song_effect_radar_handtrip,
+              props.song_info.song_difficulties[0].song_effect_radar_onehanded
+              )
+*/
 
 </script>
 <template>
@@ -77,10 +129,10 @@ onMounted(() => {
         </ul>
       </nav>
     </header>
-    <body id="expanded_details_body_container" v-if="selected.details" class="h-expanded-details">
-      <div class="m-5 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80">
+    <body id="expanded_details_body_container" v-if="selected.details" class="h-expanded-drop">
+      <div class="m-5 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80 flex flex-col">
         <div class="m-8">
-          <table class="table-auto text-center m-auto font-semibold outline outline-offset-16 rounded-lg outline-yellow-400">
+          <table class="table-auto text-center m-auto font-semibold outline outline-offset-16 rounded-lg outline-emerald-900">
             <thead>
               <tr class="border-b">
                 <th class="w-32">Difficulty</th>
@@ -104,16 +156,32 @@ onMounted(() => {
           </table>
         </div>
 
-        <div id="effect_chart" class="border">
+        <div id="jacket_info" class="mx-8 text-xl">
+          <p>Extra Info</p>
+        </div>
+
+        <div id="effect_radar_chart_container" class="m-3" :setRadarData="setRadarData(props.song_info.song_difficulties[0].song_effect_radar_notes, props.song_info.song_difficulties[0].song_effect_radar_peak, props.song_info.song_difficulties[0].song_effect_radar_tsumami, props.song_info.song_difficulties[0].song_effect_radar_tricky, props.song_info.song_difficulties[0].song_effect_radar_handtrip, props.song_info.song_difficulties[0].song_effect_radar_onehanded)">
+          <div class="relative 96 w-96 ml-auto mr-48">
+              <div class="pt-2 text-center text-lg">
+                <h1 class="text-3xl font-semibold my-1">Gravity</h1>
+                <div id="dropdown-content" class="hidden">
+
+                </div>
+                <h2 class="font-thin">Song Effect Radar</h2>
+              </div>
+              <Radar :data="radarComputed" :options="radar_options"></Radar>
+          </div>
         </div>
       </div>
     </body>
+
     <body id="expanded_unlock_body_container" v-if="selected.unlock" class="h-expanded-drop">
       <div class="m-5 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80">
         <p class="m-5">
         </p>
       </div>
     </body>
+
     <body id="expanded_history_body_container" v-if="selected.history" class="h-expanded-drop">
       <div class="m-5 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80">
         <div class="m-5">
@@ -122,4 +190,3 @@ onMounted(() => {
       </div>
     </body>
 </template>
-
