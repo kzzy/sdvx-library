@@ -18,6 +18,7 @@ export interface SongDifficulty extends ChartMaxNotesDescription, ChartEffectDes
     difficulty_name: string;
     difficulty_level: number;
     difficulty_release_date: string;
+    rank_tier: string;
 }
 
 export interface BasicSongDataInterface {

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { onMounted, reactive, computed, ref, watch } from 'vue'
+import { onMounted, reactive, computed, ref} from 'vue'
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler } from 'chart.js'
 import { Radar } from 'vue-chartjs'
+import HelpDescriptionPopup from './HelpDescriptionPopup.vue'
 
 ChartJS.register(
   RadialLinearScale,
@@ -11,45 +12,40 @@ ChartJS.register(
 )
 
 const props = defineProps(['song_info'])
+const hover_konasute_desc_popup = ref(false)
+const hover_tierlist_desc_popup = ref(false)
 
 const selected = reactive({
   details: true,
-  unlock: false,
-  history: false
+  unlock: false
 })
 
-function setSelected(select: string) {
-  for(const prop in selected) {
-    if(prop != select) {
-      selected[prop] = false;
-    } else {
-      selected[prop] = true;
-    }
-  }
+const diffBGColorLookupTable: { [key:string]:string } = {
+  "NOVICE": "bg-indigo-900",
+  "ADVANCED": "bg-yellow-600",
+  "EXHAUST": "bg-red-600",
+  "HEAVENLY": "bg-cyan-700",
+  "INFINITE": "bg-pink-700",
+  "GRAVITY": "bg-orange-600",
+  "VIVID": "bg-pink-600",
+  "MAXIMUM": "bg-gray-600",
+  "EXCEED": "bg-cyan-600"
 }
 
-function getDiffBGColor(diff:string) {
-  switch(diff) {
-    case("NOVICE"):
-      return "bg-indigo-900"
-    case("ADVANCED"):
-      return "bg-yellow-600"
-    case "EXHAUST":
-      return "bg-red-600"
-    case "HEAVENLY":
-      return "bg-cyan-700"
-    case "INFINITE":
-      return "bg-pink-700"
-    case "GRAVITY":
-      return "bg-orange-600"
-    case "VIVID":
-      return "bg-pink-600"
-    case "MAXIMUM":
-      return "bg-gray-600"
-    case "EXCEED":
-      return "bg-cyan-600"
-  }
+const rankColorLookupTable: { [key:string]:string } = {
+  "SS": "text-cyan-400",
+  "S" : "text-red-900",
+  "A+" : "text-red-300",
+  "A": "text-red-300",
+  "B+": "text-orange-400",
+  "B": "text-orange-400",
+  "C": "text-yellow-400",
+  "D": "text-lime-400",
+  "E": "text-green-400",
+  "F": "text-gray-400",
+  "F-": "text-gray-400",
 }
+
 
 const radarData = reactive({
   labels: ['NOTES', 'PEAK', 'TSUMAMI ', 'TRICKY', 'HAND TRIP', 'ONE HAND'],
@@ -101,36 +97,58 @@ onMounted(() => {
   console.log(props.song_info)
 })
 
-/*
-    fillEffectRadarDataPoints(
-              props.song_info.song_difficulties[0].song_effect_radar_notes,
-              props.song_info.song_difficulties[0].song_effect_radar_peak,
-              props.song_info.song_difficulties[0].song_effect_radar_tsumami,
-              props.song_info.song_difficulties[0].song_effect_radar_tricky,
-              props.song_info.song_difficulties[0].song_effect_radar_handtrip,
-              props.song_info.song_difficulties[0].song_effect_radar_onehanded
-              )
-*/
-
 </script>
 <template>
     <header>
       <nav>
         <ul class="flex justify-center text-xl">
-          <li class="px-4 hover:text-indigo-400 cursor-pointer" :class="(selected.details)?'text-indigo-400':'text-white'" @click="setSelected('details')">
+          <li class="px-4 hover:text-indigo-400 cursor-pointer" :class="(selected.details)?'text-indigo-400':'text-white'" @click="selected.details=true;selected.unlock=false">
             <div>Details</div>
           </li>
-          <li class="px-4 hover:text-indigo-400 cursor-pointer" :class="(selected.unlock)?'text-indigo-400':'text-white'" @click="setSelected('unlock')">
+          <li class="px-4 hover:text-indigo-400 cursor-pointer" :class="(selected.unlock)?'text-indigo-400':'text-white'" @click="selected.details=false;selected.unlock=true">
             <div>Unlocking</div>
-          </li>
-          <li class="px-4 hover:text-indigo-400 cursor-pointer" :class="(selected.history)?'text-indigo-400':'text-white'" @click="setSelected('history')">
-            <div>History</div>
           </li>
         </ul>
       </nav>
     </header>
-    <body id="expanded_details_body_container" v-if="selected.details" class="h-expanded-drop">
-      <div class="m-5 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80 flex flex-col">
+    <body id="expanded_details_body_container" v-if="selected.details">
+      <div class="m-5 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80 flex flex-col min-w-fit">
+        <div id='details-text-container' class="flex justify-around">
+          <div id="jacket_info" class="mx-5 text-xl mt-auto">
+            <p class="py-4">Charted by {{ props.song_info.charter }}</p>
+            <p class="py-4">Jacket Artist: {{ props.song_info.jacket_artist }}</p>
+            <p class="py-4">Album: {{ props.song_info.album }}</p>
+            <p class="py-4">Arcade {{ }}</p>
+            <div class="relative my-4 w-fit hover: cursor-pointer" @mouseover="hover_konasute_desc_popup = true" @mouseleave="hover_konasute_desc_popup = false">
+              <span class="text-emerald-300">Konasute</span>
+              <span v-if="hover_konasute_desc_popup"> <HelpDescriptionPopup :description="'konasute'"/></span>
+            </div>
+            <p class="py-4">{{ props.song_info.title }} was initially released on {{ props.song_info.song_release_date }}</p>
+          </div>
+          
+          <div id="effect_radar_chart_container" class="my-3.5" :setRadarData="setRadarData(props.song_info.song_difficulties[0].song_effect_radar_notes, props.song_info.song_difficulties[0].song_effect_radar_peak, props.song_info.song_difficulties[0].song_effect_radar_tsumami, props.song_info.song_difficulties[0].song_effect_radar_tricky, props.song_info.song_difficulties[0].song_effect_radar_handtrip, props.song_info.song_difficulties[0].song_effect_radar_onehanded)">
+            <div class="relative w-96">
+                <div class="pt-2 text-center text-lg">
+                  <h1 class="text-3xl font-semibold text-center text-orange-400">
+                  Gravity
+                  </h1>
+                  <h2 class="font-thin">Difficulty Style Radar</h2>
+                </div>
+                <Radar :data="radarComputed" :options="radar_options"></Radar>
+            </div>
+
+            <div id='tier_list_rank' class="flex items-center text-lg">
+              <div class="relative w-fit :hover cursor-pointer" @mouseover="hover_tierlist_desc_popup = true" @mouseleave="hover_tierlist_desc_popup = false">
+                <span class="text-emerald-300">Community First Clear Difficulty Tier List</span>
+                <span v-if="hover_tierlist_desc_popup">
+                  <HelpDescriptionPopup :description="'tierlist'"/>
+                </span>
+              </div>
+              <p class="px-2">Rank:</p>
+              <p class="text-3xl flex-1 mr-3" :class="rankColorLookupTable[props.song_info.song_difficulties[0].rank_tier]">{{ props.song_info.song_difficulties[0].rank_tier }}</p>
+            </div>
+          </div>
+        </div>
         <div class="m-8">
           <table class="table-auto text-center m-auto font-semibold outline outline-offset-16 rounded-lg outline-emerald-900">
             <thead>
@@ -144,7 +162,7 @@ onMounted(() => {
               </tr>
             </thead>
             <tbody class="hover:bg-gray-800" v-for="difficulty in props.song_info.song_difficulties">
-              <tr class="border-b" :class="getDiffBGColor(difficulty.difficulty_name)">
+              <tr class="border-b" :class="diffBGColorLookupTable[difficulty.difficulty_name]">
                 <td class="m-6 w-32 border-l">{{ difficulty.difficulty_name }}</td>
                 <td class="w-32">{{ difficulty.difficulty_level }}</td>
                 <td class="w-32">{{ difficulty.max_chain }}</td>
@@ -155,38 +173,13 @@ onMounted(() => {
             </tbody>
           </table>
         </div>
-
-        <div id="jacket_info" class="mx-8 text-xl">
-          <p>Extra Info</p>
-        </div>
-
-        <div id="effect_radar_chart_container" class="m-3" :setRadarData="setRadarData(props.song_info.song_difficulties[0].song_effect_radar_notes, props.song_info.song_difficulties[0].song_effect_radar_peak, props.song_info.song_difficulties[0].song_effect_radar_tsumami, props.song_info.song_difficulties[0].song_effect_radar_tricky, props.song_info.song_difficulties[0].song_effect_radar_handtrip, props.song_info.song_difficulties[0].song_effect_radar_onehanded)">
-          <div class="relative 96 w-96 ml-auto mr-48">
-              <div class="pt-2 text-center text-lg">
-                <h1 class="text-3xl font-semibold my-1">Gravity</h1>
-                <div id="dropdown-content" class="hidden">
-
-                </div>
-                <h2 class="font-thin">Song Effect Radar</h2>
-              </div>
-              <Radar :data="radarComputed" :options="radar_options"></Radar>
-          </div>
-        </div>
       </div>
     </body>
 
-    <body id="expanded_unlock_body_container" v-if="selected.unlock" class="h-expanded-drop">
+    <body id="expanded_unlock_body_container" v-if="selected.unlock" class="">
       <div class="m-5 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80">
         <p class="m-5">
         </p>
-      </div>
-    </body>
-
-    <body id="expanded_history_body_container" v-if="selected.history" class="h-expanded-drop">
-      <div class="m-5 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80">
-        <div class="m-5">
-          <p>{{ props.song_info.title }}'s initial release date was {{ props.song_info.song_release_date }}</p>
-        </div>
       </div>
     </body>
 </template>

@@ -61,7 +61,7 @@ results.value = [{
         bpm: "222",
         song_artist: "cosMo＠暴走Ultimate",
         song_difficulties: [
-            <SongDifficulty>{difficulty_name:"NOVICE", difficulty_level:6, difficulty_release_date:"8/21/2015", max_chain: 861, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197, song_effect_radar_notes:100, song_effect_radar_peak:100, song_effect_radar_handtrip:100, song_effect_radar_onehanded:100, song_effect_radar_tricky:100, song_effect_radar_tsumami:60},
+            <SongDifficulty>{difficulty_name:"NOVICE", difficulty_level:6, difficulty_release_date:"8/21/2015", rank_tier: "SS", max_chain: 861, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197, song_effect_radar_notes:100, song_effect_radar_peak:100, song_effect_radar_handtrip:100, song_effect_radar_onehanded:100, song_effect_radar_tricky:100, song_effect_radar_tsumami:60},
             <SongDifficulty>{difficulty_name:"ADVANCED", difficulty_level:12, difficulty_release_date:"8/21/2015", max_chain: 1361, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197}, 
             <SongDifficulty>{difficulty_name:"EXHAUST", difficulty_level:18, difficulty_release_date:"8/21/2015", max_chain: 2073, max_chip_notes: 915, max_long_notes: 362, max_vol_notes:878},
             <SongDifficulty>{difficulty_name:"GRAVITY", difficulty_level:19, difficulty_release_date:"8/21/2015", max_chain: 2641, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197}
@@ -79,7 +79,7 @@ results.value = [{
         bpm: "236",
         song_artist: "かねこちはる",
         song_difficulties: [
-            <SongDifficulty>{difficulty_name:"NOVICE", difficulty_level:8, difficulty_release_date:"1/1/1969"}, 
+            <SongDifficulty>{difficulty_name:"NOVICE", difficulty_level:8, difficulty_release_date:"1/1/1969", rank_tier: "S"}, 
             <SongDifficulty>{difficulty_name:"ADVANCED", difficulty_level:15, difficulty_release_date:"1/1/1969"}, 
             <SongDifficulty>{difficulty_name:"EXHAUST", difficulty_level:18, difficulty_release_date:"1/1/1969"}, 
             <SongDifficulty>{difficulty_name:"HEAVENLY", difficulty_level:20, difficulty_release_date:"1/1/1969"}
@@ -97,7 +97,7 @@ results.value = [{
         bpm: "222",
         song_artist: "ryhki",
         song_difficulties: [
-            <SongDifficulty>{difficulty_name:"NOVICE", difficulty_level:7, difficulty_release_date:"1/1/1969"}, 
+            <SongDifficulty>{difficulty_name:"NOVICE", difficulty_level:7, difficulty_release_date:"1/1/1969", rank_tier: "D"}, 
             <SongDifficulty>{difficulty_name:"ADVANCED", difficulty_level:14, difficulty_release_date:"1/1/1969"}, 
             <SongDifficulty>{difficulty_name:"EXHAUST", difficulty_level:17, difficulty_release_date:"1/1/1969"},
             <SongDifficulty>{difficulty_name:"MAXIMUM", difficulty_level:19, difficulty_release_date:"1/1/1969"}
