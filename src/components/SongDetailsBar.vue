@@ -14,6 +14,8 @@ ChartJS.register(
 const props = defineProps(['song_info'])
 const hover_konasute_desc_popup = ref(false)
 const hover_tierlist_desc_popup = ref(false)
+const difficulty_dropdown_menu = ref(false)
+const currentDifficultyState = ref(props.song_info.song_difficulties[props.song_info.song_difficulties.length-1])
 
 const selected = reactive({
   details: true,
@@ -32,6 +34,18 @@ const diffBGColorLookupTable: { [key:string]:string } = {
   "EXCEED": "bg-cyan-600"
 }
 
+const diffTextColorLookupTable: { [key:string]:string } = {
+  "NOVICE": "text-indigo-400",
+  "ADVANCED": "text-yellow-400",
+  "EXHAUST": "text-red-400",
+  "HEAVENLY": "text-cyan-400",
+  "INFINITE": "text-pink-400",
+  "GRAVITY": "text-orange-400",
+  "VIVID": "text-pink-400",
+  "MAXIMUM": "text-gray-400",
+  "EXCEED": "text-cyan-400"
+}
+
 const rankColorLookupTable: { [key:string]:string } = {
   "SS": "text-cyan-400",
   "S" : "text-red-900",
@@ -44,8 +58,8 @@ const rankColorLookupTable: { [key:string]:string } = {
   "E": "text-green-400",
   "F": "text-gray-400",
   "F-": "text-gray-400",
+  '': "text-gray-400"
 }
-
 
 const radarData = reactive({
   labels: ['NOTES', 'PEAK', 'TSUMAMI ', 'TRICKY', 'HAND TRIP', 'ONE HAND'],
@@ -71,9 +85,13 @@ const radarComputed = computed(() => {
   }
 })
 
-const setRadarData = (notes:number, peak:number, tsumami:number, tricky:number, handtrip: number, onehand: number) => {
-  radarData.datasets.data = [notes, peak, tsumami, tricky, handtrip, onehand]
-}
+const hasRadarData = computed(() => {
+  return radarData.datasets.data.length > 0
+})
+
+const getRankTier = computed(() => {
+  return currentDifficultyState.value.rank_tier.length > 0 ? currentDifficultyState.value.rank_tier : 'N/A'
+})
 
 const radar_options = {
   responsive: true,
@@ -91,6 +109,14 @@ const radar_options = {
       }
     }
   }
+}
+
+const setRadarData = (notes:number, peak:number, tsumami:number, tricky:number, handtrip: number, onehand: number) => {
+  radarData.datasets.data = [notes, peak, tsumami, tricky, handtrip, onehand]
+}
+
+const updateDifficultyState = (idx:number) => {
+  currentDifficultyState.value = props.song_info.song_difficulties[idx]
 }
 
 onMounted(() => {
@@ -126,15 +152,22 @@ onMounted(() => {
             <p class="py-4">{{ props.song_info.title }} was initially released on {{ props.song_info.song_release_date }}</p>
           </div>
           
-          <div id="effect_radar_chart_container" class="my-3.5" :setRadarData="setRadarData(props.song_info.song_difficulties[0].song_effect_radar_notes, props.song_info.song_difficulties[0].song_effect_radar_peak, props.song_info.song_difficulties[0].song_effect_radar_tsumami, props.song_info.song_difficulties[0].song_effect_radar_tricky, props.song_info.song_difficulties[0].song_effect_radar_handtrip, props.song_info.song_difficulties[0].song_effect_radar_onehanded)">
-            <div class="relative w-96">
-                <div class="pt-2 text-center text-lg">
-                  <h1 class="text-3xl font-semibold text-center text-orange-400">
-                  Gravity
-                  </h1>
-                  <h2 class="font-thin">Difficulty Style Radar</h2>
+          <div id="effect_radar_chart_container" class="my-3.5" :setRadarData="setRadarData(currentDifficultyState.song_effect_radar_notes, currentDifficultyState.song_effect_radar_peak, currentDifficultyState.song_effect_radar_tsumami, currentDifficultyState.song_effect_radar_tricky, currentDifficultyState.song_effect_radar_handtrip, currentDifficultyState.song_effect_radar_onehanded)">
+            <div class="relative w-96 text-center text-lg">
+                <div class="pt-2">
+                  <button class="text-3xl font-semibold text-center hover: cursor-pointer" :class="diffTextColorLookupTable[currentDifficultyState.difficulty_name]" @click="difficulty_dropdown_menu = true">{{ currentDifficultyState.difficulty_name }}</button>
+                  <div v-if="difficulty_dropdown_menu" class="absolute my-1 pt-2 pb-2 flex flex-col w-full shadow-xl bg-indigo-950 rounded-xl" @mouseleave="difficulty_dropdown_menu = false">
+                    <div v-for="(diff, index) in props.song_info.song_difficulties" @click="updateDifficultyState(index); difficulty_dropdown_menu = false" class="p-2 hover:cursor-pointer hover:bg-indigo-800">
+                      {{ diff.difficulty_name }}
+                    </div>
+                  </div>
+
                 </div>
+                <h2 class="font-thin">Difficulty Style Radar</h2>
                 <Radar :data="radarComputed" :options="radar_options"></Radar>
+                <span v-if="!hasRadarData">
+                  No Radar Data, Please contribute this through the contacts. Thanks!
+                </span>
             </div>
 
             <div id='tier_list_rank' class="flex items-center text-lg">
@@ -145,7 +178,7 @@ onMounted(() => {
                 </span>
               </div>
               <p class="px-2">Rank:</p>
-              <p class="text-3xl flex-1 mr-3" :class="rankColorLookupTable[props.song_info.song_difficulties[0].rank_tier]">{{ props.song_info.song_difficulties[0].rank_tier }}</p>
+              <p class="text-3xl flex-1 mr-3 w-10" :class="rankColorLookupTable[currentDifficultyState.rank_tier]">{{ getRankTier }}</p>
             </div>
           </div>
         </div>
