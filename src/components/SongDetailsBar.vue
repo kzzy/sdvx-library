@@ -153,17 +153,25 @@ onMounted(() => {
           </div>
           
           <div id="effect_radar_chart_container" class="my-3.5" :setRadarData="setRadarData(currentDifficultyState.song_effect_radar_notes, currentDifficultyState.song_effect_radar_peak, currentDifficultyState.song_effect_radar_tsumami, currentDifficultyState.song_effect_radar_tricky, currentDifficultyState.song_effect_radar_handtrip, currentDifficultyState.song_effect_radar_onehanded)">
-            <div class="relative w-96 text-center text-lg">
-                <div class="pt-2">
-                  <button class="text-3xl font-semibold text-center hover: cursor-pointer" :class="diffTextColorLookupTable[currentDifficultyState.difficulty_name]" @click="difficulty_dropdown_menu = true">{{ currentDifficultyState.difficulty_name }}</button>
-                  <div v-if="difficulty_dropdown_menu" class="absolute my-1 pt-2 pb-2 flex flex-col w-full shadow-xl bg-indigo-950 rounded-xl" @mouseleave="difficulty_dropdown_menu = false">
-                    <div v-for="(diff, index) in props.song_info.song_difficulties" @click="updateDifficultyState(index); difficulty_dropdown_menu = false" class="p-2 hover:cursor-pointer hover:bg-indigo-800">
-                      {{ diff.difficulty_name }}
+            <div class="relative w-96 text-lg">
+                <div class="pt-2 flex flex-col items-center text-center">
+                  <div class="hover:bg-gray-950 w-2/3 rounded-xl hover: cursor-pointer">
+                    <div @click="difficulty_dropdown_menu = true">
+                      <button class="text-3xl font-semibold hover: cursor-pointer" :class="diffTextColorLookupTable[currentDifficultyState.difficulty_name]" @click="difficulty_dropdown_menu = true">{{ currentDifficultyState.difficulty_name }}
+                      </button>
+                      <span class="absolute">
+                          <img class="mx-4 my-1.5 w-6 h-6" src="dropdown-arrow.png">
+                      </span>
+                    </div>
+                    <div v-if="difficulty_dropdown_menu" class="absolute my-1 pt-2 pb-2 flex flex-col w-2/3 shadow-xl bg-indigo-950 rounded-xl" @mouseleave="difficulty_dropdown_menu = false">
+                      <div v-for="(diff, index) in props.song_info.song_difficulties" :key="diff" @click="updateDifficultyState(index); difficulty_dropdown_menu = false" class="p-2 hover:cursor-pointer hover:bg-indigo-800">
+                        {{ diff.difficulty_name }}
+                      </div>
                     </div>
                   </div>
 
+                  <h2 class="font-thin">Difficulty Style Radar</h2>
                 </div>
-                <h2 class="font-thin">Difficulty Style Radar</h2>
                 <Radar :data="radarComputed" :options="radar_options"></Radar>
                 <span v-if="!hasRadarData">
                   No Radar Data, Please contribute this through the contacts. Thanks!
@@ -172,7 +180,7 @@ onMounted(() => {
 
             <div id='tier_list_rank' class="flex items-center text-lg">
               <div class="relative w-fit :hover cursor-pointer" @mouseover="hover_tierlist_desc_popup = true" @mouseleave="hover_tierlist_desc_popup = false">
-                <span class="text-emerald-300">Community First Clear Difficulty Tier List</span>
+                <span class="text-emerald-300">Song Level Relative Clear Difficulty</span>
                 <span v-if="hover_tierlist_desc_popup">
                   <HelpDescriptionPopup :description="'tierlist'"/>
                 </span>
@@ -194,7 +202,7 @@ onMounted(() => {
                 <th class="w-40">Max Volume Notes (Lasers)</th>
               </tr>
             </thead>
-            <tbody class="hover:bg-gray-800" v-for="difficulty in props.song_info.song_difficulties">
+            <tbody class="hover:bg-gray-800" v-for="difficulty in props.song_info.song_difficulties" :key="difficulty">
               <tr class="border-b" :class="diffBGColorLookupTable[difficulty.difficulty_name]">
                 <td class="m-6 w-32 border-l">{{ difficulty.difficulty_name }}</td>
                 <td class="w-32">{{ difficulty.difficulty_level }}</td>
