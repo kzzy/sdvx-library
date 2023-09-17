@@ -55,17 +55,16 @@ results.value = [
     {
         title: "Lachryma(Re:Queen'M)",
         jacket: "Lachryma(Re_Queen'M)_GRV",
-        jacket_artist: "第十のセフィラ - 亡国のGRACE ‡ 蒼弐 Michael",
         charter: "Chiharu Kaneko",
         duration: "2:01",
         album: "",
         bpm: "236",
         song_artist: "かねこちはる",
         song_difficulties: [
-            <SongDifficulty>{difficulty_name:"NOVICE", difficulty_level:8, difficulty_release_date:"1/1/1969", rank_tier: "", max_chain: 861, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197, song_effect_radar_notes:63, song_effect_radar_peak:77, song_effect_radar_handtrip:10, song_effect_radar_onehanded:25, song_effect_radar_tricky:20, song_effect_radar_tsumami:45}, 
-            <SongDifficulty>{difficulty_name:"ADVANCED", difficulty_level:13, difficulty_release_date:"1/1/1969", rank_tier: "", max_chain: 861, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197, song_effect_radar_notes:125, song_effect_radar_peak:125, song_effect_radar_handtrip:23, song_effect_radar_onehanded:75, song_effect_radar_tricky:20, song_effect_radar_tsumami:33}, 
-            <SongDifficulty>{difficulty_name:"EXHAUST", difficulty_level:18, difficulty_release_date:"1/1/1969", rank_tier: "C", max_chain: 861, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197, song_effect_radar_notes:125, song_effect_radar_peak:125, song_effect_radar_handtrip:23, song_effect_radar_onehanded:75, song_effect_radar_tricky:20, song_effect_radar_tsumami:33}, 
-            <SongDifficulty>{difficulty_name:"GRAVITY", difficulty_level:20, difficulty_release_date:"1/1/1969", rank_tier: "B", max_chain: 861, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197, song_effect_radar_notes:125, song_effect_radar_peak:125, song_effect_radar_handtrip:33, song_effect_radar_onehanded:100, song_effect_radar_tricky:48, song_effect_radar_tsumami:51}
+            <SongDifficulty>{difficulty_name:"NOVICE", difficulty_level:8, difficulty_release_date:"1/1/1969", isKonasute: true, jacket_artist:"第十のセフィラ - 亡国のGRACE ‡ 蒼弐 Michael", rank_tier: "", max_chain: 861, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197, song_effect_radar_notes:63, song_effect_radar_peak:77, song_effect_radar_handtrip:10, song_effect_radar_onehanded:25, song_effect_radar_tricky:20, song_effect_radar_tsumami:45}, 
+            <SongDifficulty>{difficulty_name:"ADVANCED", difficulty_level:13, difficulty_release_date:"1/1/1969", isKonasute: true, jacket_artist:"第十のセフィラ - 亡国のGRACE ‡ 蒼弐 Michael", rank_tier: "", max_chain: 861, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197}, 
+            <SongDifficulty>{difficulty_name:"EXHAUST", difficulty_level:18, difficulty_release_date:"1/1/1969", isKonasute: false, jacket_artist:"第十のセフィラ - 亡国のGRACE ‡ 蒼弐 Michael", rank_tier: "C", max_chain: 861, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197, song_effect_radar_notes:125, song_effect_radar_peak:125, song_effect_radar_handtrip:23, song_effect_radar_onehanded:75, song_effect_radar_tricky:20, song_effect_radar_tsumami:33}, 
+            <SongDifficulty>{difficulty_name:"GRAVITY", difficulty_level:20, difficulty_release_date:"1/1/1969", isKonasute: true,jacket_artist:"第十のセフィラ - 亡国のGRACE ‡ 蒼弐 Michael", rank_tier: "B", max_chain: 861, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197, song_effect_radar_notes:125, song_effect_radar_peak:125, song_effect_radar_handtrip:33, song_effect_radar_onehanded:100, song_effect_radar_tricky:48, song_effect_radar_tsumami:51}
             ],
         song_release_date: "September 7, 2016",
         expanded: false
@@ -80,10 +79,10 @@ results.value = [
         bpm: "222",
         song_artist: "cosMo＠暴走Ultimate",
         song_difficulties: [
-            <SongDifficulty>{difficulty_name:"NOVICE", difficulty_level:6, difficulty_release_date:"8/21/2015", rank_tier: "B", max_chain: 861, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197, song_effect_radar_notes:10, song_effect_radar_peak:10, song_effect_radar_handtrip:10, song_effect_radar_onehanded:100, song_effect_radar_tricky:10, song_effect_radar_tsumami:60},
-            <SongDifficulty>{difficulty_name:"ADVANCED", difficulty_level:12, difficulty_release_date:"8/21/2015", rank_tier: "A+",max_chain: 1361, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197, song_effect_radar_notes:25, song_effect_radar_peak:25, song_effect_radar_handtrip:25, song_effect_radar_onehanded:100, song_effect_radar_tricky:25, song_effect_radar_tsumami:60}, 
-            <SongDifficulty>{difficulty_name:"EXHAUST", difficulty_level:18, difficulty_release_date:"8/21/2015", rank_tier: "S",max_chain: 2073, max_chip_notes: 915, max_long_notes: 362, max_vol_notes:878, song_effect_radar_notes:50, song_effect_radar_peak:50, song_effect_radar_handtrip:50, song_effect_radar_onehanded:100, song_effect_radar_tricky:50, song_effect_radar_tsumami:60},
-            <SongDifficulty>{difficulty_name:"GRAVITY", difficulty_level:19, difficulty_release_date:"8/21/2015", rank_tier: "SS",max_chain: 2641, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197, song_effect_radar_notes:100, song_effect_radar_peak:100, song_effect_radar_handtrip:100, song_effect_radar_onehanded:100, song_effect_radar_tricky:100, song_effect_radar_tsumami:60}
+            <SongDifficulty>{difficulty_name:"NOVICE", difficulty_level:6, difficulty_release_date:"8/21/2015", isKonasute: false, jacket_artist: "球Q - 結! - 玄武-", rank_tier: "B", max_chain: 861, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197, song_effect_radar_notes:10, song_effect_radar_peak:10, song_effect_radar_handtrip:10, song_effect_radar_onehanded:100, song_effect_radar_tricky:10, song_effect_radar_tsumami:60},
+            <SongDifficulty>{difficulty_name:"ADVANCED", difficulty_level:12, difficulty_release_date:"8/21/2015", isKonasute: false, jacket_artist: "球Q - 結! - 玄武-", rank_tier: "A+",max_chain: 1361, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197, song_effect_radar_notes:25, song_effect_radar_peak:25, song_effect_radar_handtrip:25, song_effect_radar_onehanded:100, song_effect_radar_tricky:25, song_effect_radar_tsumami:60}, 
+            <SongDifficulty>{difficulty_name:"EXHAUST", difficulty_level:18, difficulty_release_date:"8/21/2015", isKonasute: false, jacket_artist: "球Q - 結! - 玄武-", rank_tier: "S",max_chain: 2073, max_chip_notes: 915, max_long_notes: 362, max_vol_notes:878, song_effect_radar_notes:50, song_effect_radar_peak:50, song_effect_radar_handtrip:50, song_effect_radar_onehanded:100, song_effect_radar_tricky:50, song_effect_radar_tsumami:60},
+            <SongDifficulty>{difficulty_name:"GRAVITY", difficulty_level:19, difficulty_release_date:"8/21/2015", isKonasute: false, jacket_artist: "球Q - 結! - 玄武-", rank_tier: "SS",max_chain: 2641, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197, song_effect_radar_notes:100, song_effect_radar_peak:100, song_effect_radar_handtrip:100, song_effect_radar_onehanded:100, song_effect_radar_tricky:100, song_effect_radar_tsumami:60}
             ],
         song_release_date: "August 21, 2015",
         expanded: false
@@ -91,7 +90,6 @@ results.value = [
     {
         title: "赫焉のヴァルキュリア -Ragnarøk-",
         jacket: "Kakuen_no_valkyria_-Ragnarok-",
-        jacket_artist: "アユタ",
         charter: "ryhki",
         duration: "2:00",
         album: "",

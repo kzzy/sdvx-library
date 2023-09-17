@@ -14,7 +14,12 @@ export interface ChartEffectDescription {
     song_effect_radar_tricky?: number;
 }
 
-export interface SongDifficulty extends ChartMaxNotesDescription, ChartEffectDescription{
+export interface ChartUniqueInfo {
+    isKonasute?: boolean;
+    jacket_artist: string;
+}
+
+export interface SongDifficulty extends ChartUniqueInfo, ChartMaxNotesDescription, ChartEffectDescription{
     difficulty_name: string;
     difficulty_level: number;
     difficulty_release_date: string;
@@ -33,11 +38,9 @@ export interface BasicSongDataInterface {
 }
 
 export interface AdvancedSongDataInterface extends BasicSongDataInterface {
-    jacket_artist: string;
     charter: string;
     album: string;
 
-    isKonasute?: boolean;
     konasute_vol_pack?: number;
 
     konasute_unlock_method?: string;

@@ -3,6 +3,7 @@ import { onMounted, reactive, computed, ref} from 'vue'
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler } from 'chart.js'
 import { Radar } from 'vue-chartjs'
 import HelpDescriptionPopup from './HelpDescriptionPopup.vue'
+import { isArgumentsObject } from 'util/types';
 
 ChartJS.register(
   RadialLinearScale,
@@ -61,6 +62,10 @@ const rankColorLookupTable: { [key:string]:string } = {
   '': "text-gray-400"
 }
 
+const getKonasuteResultIcon = ((isKonasute:boolean):string => {
+  return isKonasute ? 'checkmark.png' : 'xmark.png'
+})
+
 const radarData = reactive({
   labels: ['NOTES', 'PEAK', 'TSUMAMI ', 'TRICKY', 'HAND TRIP', 'ONE HAND'],
   datasets: [
@@ -112,7 +117,12 @@ const radar_options = {
 }
 
 const setRadarData = (notes:number, peak:number, tsumami:number, tricky:number, handtrip: number, onehand: number) => {
-  radarData.datasets.data = [notes, peak, tsumami, tricky, handtrip, onehand]
+  /* Check if data exists by checking if any arguments are undefined */
+  if(notes == undefined || peak == undefined || tsumami == undefined || tricky == undefined || handtrip == undefined || onehand == undefined) {
+    radarData.datasets.data = []
+  } else {
+    radarData.datasets.data = [notes, peak, tsumami, tricky, handtrip, onehand]
+  }
 }
 
 const updateDifficultyState = (idx:number) => {
@@ -138,21 +148,25 @@ onMounted(() => {
       </nav>
     </header>
     <body id="expanded_details_body_container" v-if="selected.details">
-      <div class="m-5 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80 flex flex-col min-w-fit">
-        <div id='details-text-container' class="flex justify-around">
-          <div id="jacket_info" class="mx-5 text-xl mt-auto">
+      <div class="m-4 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80 flex flex-col min-w-fit">
+        <div id='details-text-container' class="m-3 flex justify-around">
+          <div class="text-xl mt-auto">
             <p class="py-4">Charted by {{ props.song_info.charter }}</p>
-            <p class="py-4">Jacket Artist: {{ props.song_info.jacket_artist }}</p>
+            <p class="py-4">Jacket Artist: {{ currentDifficultyState.jacket_artist }}</p>
             <p class="py-4">Album: {{ props.song_info.album }}</p>
-            <p class="py-4">Arcade {{ }}</p>
-            <div class="relative my-4 w-fit hover: cursor-pointer" @mouseover="hover_konasute_desc_popup = true" @mouseleave="hover_konasute_desc_popup = false">
-              <span class="text-emerald-300">Konasute</span>
-              <span v-if="hover_konasute_desc_popup"> <HelpDescriptionPopup :description="'konasute'"/></span>
+            <div class="relative my-4 flex">
+              <div class="hover: cursor-pointer w-fit" @mouseover="hover_konasute_desc_popup = true" @mouseleave="hover_konasute_desc_popup = false">
+                <span class="text-emerald-300">Konasute</span>
+                <span v-if="hover_konasute_desc_popup"> <HelpDescriptionPopup :description="'konasute'"/></span>
+              </div>
+              <span class="mx-4">
+                <img class='w-6 h-6' :src="getKonasuteResultIcon(currentDifficultyState.isKonasute)">
+              </span>
             </div>
             <p class="py-4">{{ props.song_info.title }} was initially released on {{ props.song_info.song_release_date }}</p>
           </div>
           
-          <div id="effect_radar_chart_container" class="my-3.5" :setRadarData="setRadarData(currentDifficultyState.song_effect_radar_notes, currentDifficultyState.song_effect_radar_peak, currentDifficultyState.song_effect_radar_tsumami, currentDifficultyState.song_effect_radar_tricky, currentDifficultyState.song_effect_radar_handtrip, currentDifficultyState.song_effect_radar_onehanded)">
+          <div id="effect_radar_chart_container" class="" :setRadarData="setRadarData(currentDifficultyState.song_effect_radar_notes, currentDifficultyState.song_effect_radar_peak, currentDifficultyState.song_effect_radar_tsumami, currentDifficultyState.song_effect_radar_tricky, currentDifficultyState.song_effect_radar_handtrip, currentDifficultyState.song_effect_radar_onehanded)">
             <div class="relative w-96 text-lg">
                 <div class="pt-2 flex flex-col items-center text-center">
                   <div class="hover:bg-gray-950 w-2/3 rounded-xl hover: cursor-pointer">
@@ -173,20 +187,20 @@ onMounted(() => {
                   <h2 class="font-thin">Difficulty Style Radar</h2>
                 </div>
                 <Radar :data="radarComputed" :options="radar_options"></Radar>
-                <span v-if="!hasRadarData">
-                  No Radar Data, Please contribute this through the contacts. Thanks!
+                <span v-if="!hasRadarData" class="absolute bottom-40 text-center bg-yellow-500 bg-opacity-20 rounded-xl right-2">
+                  No Radar Data Found, Please help contribute this information. Thanks!
                 </span>
             </div>
 
             <div id='tier_list_rank' class="flex items-center text-lg">
-              <div class="relative w-fit :hover cursor-pointer" @mouseover="hover_tierlist_desc_popup = true" @mouseleave="hover_tierlist_desc_popup = false">
-                <span class="text-emerald-300">Song Level Relative Clear Difficulty</span>
+              <div class="relative :hover cursor-pointer" @mouseover="hover_tierlist_desc_popup = true" @mouseleave="hover_tierlist_desc_popup = false">
+                <span class="text-emerald-300">Level Relative Clear Difficulty</span>
                 <span v-if="hover_tierlist_desc_popup">
                   <HelpDescriptionPopup :description="'tierlist'"/>
                 </span>
               </div>
               <p class="px-2">Rank:</p>
-              <p class="text-3xl flex-1 mr-3 w-10" :class="rankColorLookupTable[currentDifficultyState.rank_tier]">{{ getRankTier }}</p>
+              <p class="text-3xl w-10 mr-4" :class="rankColorLookupTable[currentDifficultyState.rank_tier]">{{ getRankTier }}</p>
             </div>
           </div>
         </div>
