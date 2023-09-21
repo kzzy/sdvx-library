@@ -6,6 +6,7 @@ export interface ChartMaxNotesDescription {
 }
 
 export interface ChartEffectDescription {
+    isEmp
     song_effect_radar_notes?: number;
     song_effect_radar_peak?: number;
     song_effect_radar_tsumami?: number;
@@ -16,6 +17,7 @@ export interface ChartEffectDescription {
 
 export interface ChartUniqueInfo {
     isKonasute?: boolean;
+    jacket: string;
     jacket_artist: string;
 }
 
@@ -28,7 +30,6 @@ export interface SongDifficulty extends ChartUniqueInfo, ChartMaxNotesDescriptio
 
 export interface BasicSongDataInterface {
     title: string;
-    jacket: string;
     duration: string;
     bpm: string;
     song_artist: string;

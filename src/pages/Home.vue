@@ -32,14 +32,14 @@ const search = debounce((input:string) => {
         </header>
 
         <main>
-            <video id="video_background" class="absolute brightness-5 min-w-[1300px] w-screen z-0 object-fill min-h-screen max-h-screen" oncontextmenu="return false;" autoplay loop muted>
+            <video id="video_background" class="absolute brightness-2 min-w-[1300px] w-screen z-0 object-fill min-h-screen max-h-screen" oncontextmenu="return false;" autoplay loop muted>
                     <source src="../assets/homepage_cmp_15.mp4" type="video/mp4"/>
                     Your browser does not support the video tag.
             </video>
 
-            <div id="background_container" class="relative flex shadow-inner border min-h-screen">
-                <div id="search_container" :class="(active_search)?'max-w-xs border':'m-auto'">
-                    <div id="search_main" class="border">
+            <div id="background_container" class="relative flex min-h-screen">
+                <div id="search_container" :class="(active_search)?'max-w-xs border':'m-auto border-4 border-white rounded-xl'">
+                    <div id="search_main" class="">
                         <img class="w-12 h-16 m-auto pt-3" src="../assets/pixel_grace.png" alt=":)">
                         <h1 class="text-white text-3xl text-center pt-2 pb-8">Sound Voltex Library</h1>
                         <form>

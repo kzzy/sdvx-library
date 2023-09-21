@@ -11,7 +11,7 @@ module.exports = {
         'diff-grv-bg': "url('/grv_diff_label_bg.png')"
       },
       brightness: {
-        "5": ".05",
+        "2": ".02",
         '10': ".10"
       },
       translate: {
