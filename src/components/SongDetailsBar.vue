@@ -3,7 +3,6 @@ import { onMounted, reactive, computed, ref} from 'vue'
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler } from 'chart.js'
 import { Radar } from 'vue-chartjs'
 import HelpDescriptionPopup from './HelpDescriptionPopup.vue'
-import { isArgumentsObject } from 'util/types';
 
 ChartJS.register(
   RadialLinearScale,
@@ -98,6 +97,10 @@ const getRankTier = computed(() => {
   return currentDifficultyState.value.rank_tier.length > 0 ? currentDifficultyState.value.rank_tier : 'N/A'
 })
 
+const getAlbum = computed(() => {
+  return props.song_info.album.length > 0 ? props.song_info.album : 'N/A'
+})
+
 const radar_options = {
   responsive: true,
   maintainAspectRatio: true,
@@ -150,31 +153,35 @@ onMounted(() => {
     <body id="expanded_details_body_container" v-if="selected.details">
       <div class="m-4 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80 flex flex-col min-w-fit">
         <div id='details-text-container' class="m-3 flex justify-around">
-          <div class="text-xl mt-auto">
-            <p class="py-4">Charted by {{ props.song_info.charter }}</p>
-            <p class="py-4">Jacket Artist: {{ currentDifficultyState.jacket_artist }}</p>
-            <p class="py-4">Album: {{ props.song_info.album }}</p>
+          <div class="text-xl">
+            <div class="relative flex flex-col my-1 items-center">
+              <img src="../assets/jacket_overlay.png" class="w-48 h-48 z-0 shadow-lg shadow-black">
+              <img :src="'/' + currentDifficultyState.jacket + '.png'" class="absolute w-44 h-44 mt-2 z-10">
+            </div>
+            <p class="py-4">Effected by {{ props.song_info.effector }}</p>
+            <p class="py-4">Jacket Illustrated by {{ currentDifficultyState.jacket_artist }}</p>
+            <p class="py-4">Album: {{ getAlbum }}</p>
             <div class="relative my-4 flex">
               <div class="hover: cursor-pointer w-fit" @mouseover="hover_konasute_desc_popup = true" @mouseleave="hover_konasute_desc_popup = false">
                 <span class="text-emerald-300">Konasute</span>
                 <span v-if="hover_konasute_desc_popup"> <HelpDescriptionPopup :description="'konasute'"/></span>
               </div>
-              <span class="mx-4">
+              <span class="mx-4 my-1">
                 <img class='w-6 h-6' :src="getKonasuteResultIcon(currentDifficultyState.isKonasute)">
               </span>
             </div>
             <p class="py-4">{{ props.song_info.title }} was initially released on {{ props.song_info.song_release_date }}</p>
           </div>
           
-          <div id="effect_radar_chart_container" class="" :setRadarData="setRadarData(currentDifficultyState.song_effect_radar_notes, currentDifficultyState.song_effect_radar_peak, currentDifficultyState.song_effect_radar_tsumami, currentDifficultyState.song_effect_radar_tricky, currentDifficultyState.song_effect_radar_handtrip, currentDifficultyState.song_effect_radar_onehanded)">
+          <div id="effect_radar_chart_container" :setRadarData="setRadarData(currentDifficultyState.song_effect_radar_notes, currentDifficultyState.song_effect_radar_peak, currentDifficultyState.song_effect_radar_tsumami, currentDifficultyState.song_effect_radar_tricky, currentDifficultyState.song_effect_radar_handtrip, currentDifficultyState.song_effect_radar_onehanded)">
             <div class="relative w-96 text-lg">
                 <div class="pt-2 flex flex-col items-center text-center">
                   <div class="hover:bg-gray-950 w-2/3 rounded-xl hover: cursor-pointer">
-                    <div @click="difficulty_dropdown_menu = true">
+                    <div @click="difficulty_dropdown_menu = true" >
                       <button class="text-3xl font-semibold hover: cursor-pointer" :class="diffTextColorLookupTable[currentDifficultyState.difficulty_name]" @click="difficulty_dropdown_menu = true">{{ currentDifficultyState.difficulty_name }}
                       </button>
                       <span class="absolute">
-                          <img class="mx-4 my-1.5 w-6 h-6" src="dropdown-arrow.png">
+                          <img class="mx-4 my-1.5 w-6 h-6"  src="dropdown-arrow.png">
                       </span>
                     </div>
                     <div v-if="difficulty_dropdown_menu" class="absolute my-1 pt-2 pb-2 flex flex-col w-2/3 shadow-xl bg-indigo-950 rounded-xl" @mouseleave="difficulty_dropdown_menu = false">
@@ -232,9 +239,34 @@ onMounted(() => {
     </body>
 
     <body id="expanded_unlock_body_container" v-if="selected.unlock" class="">
-      <div class="m-5 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80">
-        <p class="m-5">
-        </p>
+      <div class="m-4 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80">
+        <div class="m-4 flex flex-col items-center text-3xl">
+          <h2 class="text-4xl my-5 font-semibold">ARCADE</h2>
+          <p class="font-thin text-xl">
+            {{ props.song_info.title }} is unlockable on Arcade Cabinets using PCB<br>
+            <span class="text-base">If you're playing through a custom network such as Project Flower, this may not apply</span>
+          </p>
+          <h2 class="text-4xl my-5 font-semibold">KONASUTE</h2>
+          <div class="font-thin text-xl">
+            <p v-if="props.song_info.konasute_unlock_method == 'VolumePack'" >{{ props.song_info.title }} is unlockable on Konasute by purchasing the {{ props.song_info.konasute_unlock_method }}</p>
+            <p v-if="props.song_info.konasute_unlock_method == 'BlasterGate'" >{{ props.song_info.title }} is unlockable on Konasute through the Blaster Gate</p>
+          </div>
+          <div v-if="props.song_info.konasute_unlock_method == 'VolumePack'" class="my-3 font-thin text-xl">
+            <div>
+              <div class="inline" v-for="diff in props.song_info.song_difficulties" :key="diff">
+                <span v-if="diff.isKonasute == true">{{ diff.difficulty_name }}&nbsp;</span>
+              </div>
+              <span class="font-thin text-xl">Difficulties are available on Volume Pack {{ props.song_info.konasute_vol_pack }}</span>
+            </div>
+            <div>
+              <div class="inline mt-2" v-for="diff in props.song_info.song_difficulties" :key="diff">
+                <span v-if="diff.isKonasute == false">{{ diff.difficulty_name }}
+                  <span class="font-thin text-xl">Difficulty is not available on Konasute</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </body>
 </template>

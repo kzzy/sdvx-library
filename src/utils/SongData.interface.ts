@@ -6,7 +6,6 @@ export interface ChartMaxNotesDescription {
 }
 
 export interface ChartEffectDescription {
-    isEmp
     song_effect_radar_notes?: number;
     song_effect_radar_peak?: number;
     song_effect_radar_tsumami?: number;
@@ -39,7 +38,7 @@ export interface BasicSongDataInterface {
 }
 
 export interface AdvancedSongDataInterface extends BasicSongDataInterface {
-    charter: string;
+    effector: string;
     album: string;
 
     konasute_vol_pack?: number;
