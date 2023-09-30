@@ -6,10 +6,17 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        main: '#0A0A0A'
+      },
+      backgroundColor: {
+        'main': '#0A0A0A'
+      },
       backgroundImage: {
         'headerbg': "linear-gradient(to right,rgba(30,58,138,0.7),rgba(0,0,0,1),rgba(131,24,67,0.7))",
-        'diff-grv-bg': "url('/grv_diff_label_bg.png')"
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },
+
       brightness: {
         "2": ".02",
         '10': ".10"
@@ -25,7 +32,10 @@ module.exports = {
       },
       outlineOffset: {
         '16': "16px"
-      }
+      },
+      boxShadow: {
+        'imgEdge': '0 0 32px 32px #0A0A0A inset'
+      },
     },
   },
   plugins: [],
