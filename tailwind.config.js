@@ -14,7 +14,7 @@ module.exports = {
       },
       backgroundImage: {
         'headerbg': "linear-gradient(to right,rgba(30,58,138,0.7),rgba(0,0,0,1),rgba(131,24,67,0.7))",
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-radial': 'radial-gradient(ellipse at center, rgba(10,10,10,1) 0%, rgba(164,164,250,0.01) 0%, rgba(10,10,10,1) 100%)',
       },
 
       brightness: {
@@ -32,10 +32,7 @@ module.exports = {
       },
       outlineOffset: {
         '16': "16px"
-      },
-      boxShadow: {
-        'imgEdge': '0 0 32px 32px #0A0A0A inset'
-      },
+      }
     },
   },
   plugins: [],

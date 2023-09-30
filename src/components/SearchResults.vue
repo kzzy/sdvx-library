@@ -133,9 +133,7 @@ results.value = [
                     </div>
                 </div>
             </div>
-            <div id="search_result_expanded_details" v-if="result.expanded">
-                <SongDetailsBar :song_info="result"/>
-            </div>
+            <SongDetailsBar v-if="result.expanded" :song_info="result"/>
         </div>
         <div class="min-w-fit min-h-fit border" @click="addSong('My Hottest Mixtape', 'kazu ofc', 'some guy in tokyo', 'some guy not in tokyo', '6:42', 'none', '999', 'Me', [], '01/01/2001')">
                 ADD NEW SONG
