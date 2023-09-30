@@ -1,0 +1,221 @@
+<script setup lang="ts">
+import HelpDescriptionPopup from './HelpDescriptionPopup.vue'
+import { onMounted, reactive, computed, ref } from 'vue'
+import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler } from 'chart.js'
+import { Radar } from 'vue-chartjs'
+
+ChartJS.register(
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler
+)
+
+const props = defineProps(['song_info'])
+
+const hover_konasute_desc_popup = ref(false)
+const hover_tierlist_desc_popup = ref(false)
+const difficulty_dropdown_menu = ref(false)
+const currentDifficultyState = ref(props.song_info.song_difficulties[props.song_info.song_difficulties.length-1])
+
+const diffBGColorLookupTable: { [key:string]:string } = {
+  "NOVICE": "bg-indigo-900",
+  "ADVANCED": "bg-yellow-600",
+  "EXHAUST": "bg-red-600",
+  "HEAVENLY": "bg-cyan-700",
+  "INFINITE": "bg-pink-700",
+  "GRAVITY": "bg-orange-600",
+  "VIVID": "bg-pink-600",
+  "MAXIMUM": "bg-gray-600",
+  "EXCEED": "bg-cyan-600"
+}
+
+const diffTextColorLookupTable: { [key:string]:string } = {
+  "NOVICE": "text-indigo-400",
+  "ADVANCED": "text-yellow-400",
+  "EXHAUST": "text-red-400",
+  "HEAVENLY": "text-cyan-400",
+  "INFINITE": "text-pink-400",
+  "GRAVITY": "text-orange-400",
+  "VIVID": "text-pink-400",
+  "MAXIMUM": "text-gray-400",
+  "EXCEED": "text-cyan-400"
+}
+
+const rankColorLookupTable: { [key:string]:string } = {
+  "SS": "text-cyan-400",
+  "S" : "text-red-900",
+  "A+" : "text-red-300",
+  "A": "text-red-300",
+  "B+": "text-orange-400",
+  "B": "text-orange-400",
+  "C": "text-yellow-400",
+  "D": "text-lime-400",
+  "E": "text-green-400",
+  "F": "text-gray-400",
+  "F-": "text-gray-400",
+  '': "text-gray-400"
+}
+
+const getKonasuteResultIcon = ((isKonasute:boolean):string => {
+  return isKonasute ? 'checkmark.png' : 'xmark.png'
+})
+
+const radarData = reactive({
+  labels: ['NOTES', 'PEAK', 'TSUMAMI ', 'TRICKY', 'HAND TRIP', 'ONE HAND'],
+  datasets: [
+    {
+      backgroundColor: 'rgba(255,99,132,0.2)',
+      borderColor: 'rgba(255,99,132,1)',
+      data: []
+    }
+  ]
+})
+
+const radarComputed = computed(() => {
+  return {
+    labels: ['NOTES', 'PEAK', 'TSUMAMI ', 'TRICKY', 'HAND TRIP', 'ONE HAND'],
+    datasets: [
+      {
+        backgroundColor: 'rgba(255,99,132,0.2)',
+        borderColor: 'rgba(255,99,132,1)',
+        data: radarData.datasets.data
+      }
+    ]
+  }
+})
+
+const hasRadarData = computed(() => {
+  return radarData.datasets.data.length > 0
+})
+
+const getRankTier = computed(() => {
+  return currentDifficultyState.value.rank_tier.length > 0 ? currentDifficultyState.value.rank_tier : 'N/A'
+})
+
+const getAlbum = computed(() => {
+  return props.song_info.album.length > 0 ? props.song_info.album : 'N/A'
+})
+
+const radar_options = {
+  responsive: true,
+  maintainAspectRatio: true,
+  scale: {
+    r: {
+      min: 0,
+      max: 100,
+      color: 'white',
+      /* For some reason, this hides the tick labels??? the maxTicksLimit 1 is required */
+      ticks: {
+        display: false,
+        maxTicksLimit: 1,
+        color: 'white'
+      }
+    }
+  }
+}
+
+const setRadarData = (notes:number, peak:number, tsumami:number, tricky:number, handtrip: number, onehand: number) => {
+  /* Check if data exists by checking if any arguments are undefined */
+  if(notes == undefined || peak == undefined || tsumami == undefined || tricky == undefined || handtrip == undefined || onehand == undefined) {
+    radarData.datasets.data = []
+  } else {
+    radarData.datasets.data = [notes, peak, tsumami, tricky, handtrip, onehand]
+  }
+}
+
+const updateDifficultyState = (idx:number) => {
+  currentDifficultyState.value = props.song_info.song_difficulties[idx]
+}
+
+onMounted(() => {
+  console.log(props.song_info)
+})
+</script>
+
+<template>
+    <div class="m-4 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80 flex flex-col min-w-fit">
+        <div id='details-text-container' class="m-3 flex justify-around">
+            <div class="text-xl">
+                <div class="relative flex flex-col my-1 items-center">
+                    <img src="../assets/jacket_overlay.png" class="w-48 h-48 z-0 shadow-lg shadow-black">
+                    <img :src="'/' + currentDifficultyState.jacket + '.png'" class="absolute w-44 h-44 mt-2 z-10">
+                </div>
+                <p class="py-4">Effected by {{ props.song_info.effector }}</p>
+                <p class="py-4">Jacket Illustrated by {{ currentDifficultyState.jacket_artist }}</p>
+                <p class="py-4">Album: {{ getAlbum }}</p>
+                <div class="relative my-4 flex">
+                    <div class="hover: cursor-pointer w-fit" @mouseover="hover_konasute_desc_popup = true" @mouseleave="hover_konasute_desc_popup = false">
+                        <span class="text-emerald-300">Konasute</span>
+                        <HelpDescriptionPopup v-if="hover_konasute_desc_popup" :description="'konasute'"/>
+                    </div>
+                    <span class="mx-4 my-1">
+                        <img class='w-6 h-6' :src="getKonasuteResultIcon(currentDifficultyState.isKonasute)">
+                    </span>
+                </div>
+                <p class="py-4">{{ props.song_info.title }} was initially released on {{ props.song_info.song_release_date }}</p>
+            </div>
+            
+            <div id="effect_radar_chart_container" :setRadarData="setRadarData(currentDifficultyState.song_effect_radar_notes, currentDifficultyState.song_effect_radar_peak, currentDifficultyState.song_effect_radar_tsumami, currentDifficultyState.song_effect_radar_tricky, currentDifficultyState.song_effect_radar_handtrip, currentDifficultyState.song_effect_radar_onehanded)">
+                <div class="relative w-96 text-lg">
+                    <div class="pt-2 flex flex-col items-center text-center">
+                        <div class="hover:bg-gray-950 w-2/3 rounded-xl hover: cursor-pointer">
+                            <div @click="difficulty_dropdown_menu = true" >
+                                <button class="text-3xl font-semibold hover: cursor-pointer" :class="diffTextColorLookupTable[currentDifficultyState.difficulty_name]" @click="difficulty_dropdown_menu = true">{{ currentDifficultyState.difficulty_name }}
+                                </button>
+                                <span class="absolute">
+                                    <img class="mx-4 my-1.5 w-6 h-6"  src="dropdown-arrow.png">
+                                </span>
+                            </div>
+                            <div v-if="difficulty_dropdown_menu" class="absolute my-1 pt-2 pb-2 flex flex-col w-2/3 shadow-xl bg-indigo-950 rounded-xl" @mouseleave="difficulty_dropdown_menu = false">
+                                <div v-for="(diff, index) in props.song_info.song_difficulties" :key="diff" @click="updateDifficultyState(index); difficulty_dropdown_menu = false" class="p-2 hover:cursor-pointer hover:bg-indigo-800">
+                                    {{ diff.difficulty_name }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 class="font-thin">Difficulty Style Radar</h2>
+                    </div>
+                    <Radar :data="radarComputed" :options="radar_options"></Radar>
+                    <span v-if="!hasRadarData" class="absolute bottom-40 text-center bg-yellow-500 bg-opacity-20 rounded-xl right-2">
+                        No Radar Data Found, Please help contribute this information. Thanks!
+                    </span>
+                </div>
+
+                <div id='tier_list_rank' class="flex items-center text-lg">
+                    <div class="relative :hover cursor-pointer" @mouseover="hover_tierlist_desc_popup = true" @mouseleave="hover_tierlist_desc_popup = false">
+                        <span class="text-emerald-300">Level Relative Clear Difficulty</span>
+                        <HelpDescriptionPopup v-if="hover_tierlist_desc_popup" :description="'tierlist'"/>
+                    </div>
+                    <p class="px-2">Rank:</p>
+                    <p class="text-3xl w-10 mr-4" :class="rankColorLookupTable[currentDifficultyState.rank_tier]">{{ getRankTier }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="m-8">
+            <table class="table-auto text-center m-auto font-semibold outline outline-offset-16 rounded-lg outline-emerald-900">
+                <thead>
+                    <tr class="border-b">
+                    <th class="w-32">Difficulty</th>
+                    <th class="w-32">Level</th>
+                    <th class="w-32">Max Chain</th>
+                    <th class="w-32">Max Chip Notes (Tap)</th>
+                    <th class="w-32">Max Long Notes (Holding)</th>
+                    <th class="w-40">Max Volume Notes (Lasers)</th>
+                    </tr>
+                </thead>
+                <tbody class="hover:bg-gray-800" v-for="difficulty in props.song_info.song_difficulties" :key="difficulty">
+                    <tr class="border-b" :class="diffBGColorLookupTable[difficulty.difficulty_name]">
+                    <td class="m-6 w-32 border-l">{{ difficulty.difficulty_name }}</td>
+                    <td class="w-32">{{ difficulty.difficulty_level }}</td>
+                    <td class="w-32">{{ difficulty.max_chain }}</td>
+                    <td class="w-32">{{ difficulty.max_chip_notes }}</td>
+                    <td class="w-32">{{ difficulty.max_long_notes }}</td>
+                    <td class="w-40 border-r">{{ difficulty.max_vol_notes }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>
