@@ -1,30 +1,29 @@
 <script setup lang="ts">
 let filter_game_entry_toggle = false
 
-
 </script>
 <template>
-    <div class="text-white border text-md">
+    <div class="text-white text-lg w-fit">
         <h2 class="text-center text-xl my-2">Filters</h2>
-        <div id="search_simple_filters" class="mx-10 border min-w-fit w-64">
-            <div id="filter_game_entry">Game Entry
+        <div id="search_simple_filters" class="mx-10 min-w-fit w-64">
+            <div id="filter_game_entry" class="mb-2">Game Entry
                 <button @click="filter_game_entry_toggle = !filter_game_entry_toggle; console.log(filter_game_entry_toggle)" class="float-right">All</button>
             </div>
-            <div id="filter_level" >
+            <div id="filter_level"  class="mb-2">
                 Level Range
-                <span class="float-right">
-                    <a href="#min">1</a>
-                    <a href="#max">20 </a>
+                <span class="float-right text-base">
+                    <input href="#min" class='mr-2 rounded-lg bg-white text-gray-700 text-center w-12 focus:outline-none hover: cursor-pointer' type='text' placeholder="Min" minlength='1' maxlength="2">
+                    <input href="#max" class='rounded-lg bg-white text-gray-700 text-center w-12 focus:outline-none hover: cursor-pointer' type='text' placeholder="Max" minlength='1' maxlength="2">
                 </span>
             </div>
-            <div id="filter_is_arcade">
-                Arcade
+
+            <div id="filter_is_konasute"  class="mb-2">
+                Konasute
                 <span class="float-right">Test</span>
             </div>
-            <div id="filter_is_konasute">Konasute</div>
         </div>
         <h2 class="text-center text-xl my-2">Advanced Filters</h2>
-        <div id="search_advanced_filters" class="mx-10 border">
+        <div id="search_advanced_filters" class="mx-10">
         </div>
     </div>
 </template>

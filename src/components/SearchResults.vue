@@ -105,17 +105,17 @@ results.value = [
 </script>
 
 <template>
-    <div class="max-h-screen text-white overflow-auto">
-        <div class="border" v-for="result in results">
+    <div class="h-screen text-white overflow-y-scroll border-l-2 border-indigo-900">
+        <div class="rounded-2xl mx-5 my-3 shadow-white shadow-sm overflow-hidden" v-for="result in results">
             <div id="search_result_cell" @click="result.expanded = !result.expanded">
-                <div id="result_cell" class="p-6 flex relative overflow-hidden hover:cursor-pointer">
+                <div id="result_cell" class="p-6 flex relative overflow-hidden bg-[#050505] bg-opacity-95 hover:cursor-pointer hover:bg-[#0F0F0F] hover:bg-opacity-95">
                     <div class="min-h-full min-w-fit flex items-center">
                         <img class="w-32 h-32" :src="'/' + result.song_difficulties[result.song_difficulties.length-1].jacket + '.png'" >
                     </div>
 
                     <div class="ml-5 z-10">
                         <div class="font-thin font-sans text-5xl sm:w-64 xl:w-128">{{ result.title }}</div>
-                        <div class="bg-gray-950 w-36 flex-col border-slate-500 border-2 rounded-lg flex xl:flex-row xl:w-fit mt-10 max-w-lg justify-between">
+                        <div class="w-36 flex-col  flex xl:flex-row xl:w-fit mt-10 max-w-lg justify-between">
                             <div class="m-2 bg-center bg-no-repeat text-center min-w-fit" :class=getDiffBackground(difficulty.difficulty_name) v-for="difficulty in result.song_difficulties">
                                 <p class="mx-2 font-semibold">{{difficulty.difficulty_name}} {{difficulty.difficulty_level}} </p>
                             </div>
@@ -128,7 +128,7 @@ results.value = [
                         <p>Song Length - {{ result.duration }}</p>
                     </div>
                     <div class="absolute -top-2 -right-28 z-0 overflow-hidden visible max-2xl:hidden">
-                        <span class="absolute w-48 h-96 z-10 bg-gradient-to-l from-transparent via-black to-black "></span>
+                        <span class="absolute w-48 h-96 z-10 bg-gradient-to-l from-transparent via-[#050505] to-[#050505] bg-opacity-95"></span>
                         <img class="w-128 h-96 opacity-20" :src="'/' + result.song_difficulties[result.song_difficulties.length-1].jacket + '.png'" >
                     </div>
                 </div>

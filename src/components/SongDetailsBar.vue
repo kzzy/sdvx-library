@@ -12,6 +12,7 @@ const selected = reactive({
 </script>
 
 <template>
+  <div class="bg-[#050505] bg-opacity-95">
     <header>
       <nav>
         <ul class="flex justify-center text-xl">
@@ -25,5 +26,6 @@ const selected = reactive({
       </nav>
     </header>
     <ExpandedDetailsDescription v-if="selected.details" :song_info="props.song_info"/>
-    <ExpandedUnlockDescription v-if="selected.unlock" :title="props.song_info.title" :konasuteUnlockMethod="props.song_info.konasute_unlock_method" :konasuteVolPack="props.song_info.konasute_vol_pack" :songDiffs="props.song_info.song_difficulties" />
+    <ExpandedUnlockDescription v-if="selected.unlock" :title="props.song_info.title" :konasuteUnlockMethod="props.song_info.konasute_unlock_method" :konasuteVolPack="props.song_info.konasute_vol_pack" :songDiffs="props.song_info.song_difficulties"/>
+  </div>
 </template>
