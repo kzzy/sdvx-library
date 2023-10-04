@@ -57,7 +57,7 @@ results.value = [
         duration: "2:01",
         album: "",
         bpm: "236",
-        song_artist: "かねこちはる / Chiharu Kaneko",
+        song_artist: "かねこちはる",
         song_difficulties: [
             <SongDifficulty>{difficulty_name:"NOVICE", difficulty_level:8, difficulty_release_date:"1/1/1969", isKonasute: true, jacket:"Lachryma(Re_Queen'M)_NVC", jacket_artist:"第十のセフィラ - 亡国のGRACE ‡ 蒼弐 Michael", rank_tier: "", max_chain: 861, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197, song_effect_radar_notes:63, song_effect_radar_peak:77, song_effect_radar_handtrip:10, song_effect_radar_onehanded:25, song_effect_radar_tricky:20, song_effect_radar_tsumami:45}, 
             <SongDifficulty>{difficulty_name:"ADVANCED", difficulty_level:13, difficulty_release_date:"1/1/1969", isKonasute: true, jacket:"Lachryma(Re_Queen'M)_ADV", jacket_artist:"第十のセフィラ - 亡国のGRACE ‡ 蒼弐 Michael", rank_tier: "", max_chain: 861, max_chip_notes: 976, max_long_notes: 468, max_vol_notes:1197}, 
@@ -105,17 +105,19 @@ results.value = [
 </script>
 
 <template>
-    <div class="h-screen text-white overflow-y-scroll border-l-2 border-indigo-900">
+    <div class="max-h-screen text-white overflow-y-scroll border-l-2 border-indigo-900">
         <div class="rounded-2xl mx-5 my-3 shadow-white shadow-sm overflow-hidden" v-for="result in results">
             <div id="search_result_cell" @click="result.expanded = !result.expanded">
-                <div id="result_cell" class="p-6 flex relative overflow-hidden bg-[#050505] bg-opacity-95 hover:cursor-pointer hover:bg-[#0F0F0F] hover:bg-opacity-95">
+                <div id="result_cell" class="p-6 flex relative overflow-hidden min-w-fit bg-mainNight bg-opacity-100 hover:cursor-pointer hover:brightness-125">
                     <div class="min-h-full min-w-fit flex items-center">
                         <img class="w-32 h-32" :src="'/' + result.song_difficulties[result.song_difficulties.length-1].jacket + '.png'" >
                     </div>
 
                     <div class="ml-5 z-10">
-                        <div class="font-thin font-sans text-5xl sm:w-64 xl:w-128">{{ result.title }}</div>
-                        <div class="w-36 flex-col  flex xl:flex-row xl:w-fit mt-10 max-w-lg justify-between">
+                        <div class="@container font-thin font-sans max-w-xl sm:w-64 xl:w-160">
+                            <div class="@lg:text-4xl text-3xl">{{ result.title }}</div>
+                        </div>
+                        <div class="w-36 flex-col flex xl:flex-row xl:w-fit mt-10 max-w-lg justify-between">
                             <div class="m-2 bg-center bg-no-repeat text-center min-w-fit" :class=getDiffBackground(difficulty.difficulty_name) v-for="difficulty in result.song_difficulties">
                                 <p class="mx-2 font-semibold">{{difficulty.difficulty_name}} {{difficulty.difficulty_level}} </p>
                             </div>
@@ -128,18 +130,13 @@ results.value = [
                         <p>Song Length - {{ result.duration }}</p>
                     </div>
                     <div class="absolute -top-2 -right-28 z-0 overflow-hidden visible max-2xl:hidden">
-                        <span class="absolute w-48 h-96 z-10 bg-gradient-to-l from-transparent via-[#050505] to-[#050505] bg-opacity-95"></span>
-                        <img class="w-128 h-96 opacity-20" :src="'/' + result.song_difficulties[result.song_difficulties.length-1].jacket + '.png'" >
+                        <div class="absolute z-10 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-transparent via-70% via-mainNight to-80% to-mainNight"></div>
+                        <img class="w-160 h-96 brightness-75" :src="'/' + result.song_difficulties[result.song_difficulties.length-1].jacket + '.png'" >
                     </div>
                 </div>
             </div>
             <SongDetailsBar v-if="result.expanded" :song_info="result"/>
         </div>
-        <div class="min-w-fit min-h-fit border" @click="addSong('My Hottest Mixtape', 'kazu ofc', 'some guy in tokyo', 'some guy not in tokyo', '6:42', 'none', '999', 'Me', [], '01/01/2001')">
-                ADD NEW SONG
-        </div>
-        <div class="min-w-fit min-h-fit border" @click="removeSong()">
-                REMOVE SONG
-        </div>
+
     </div>
 </template>

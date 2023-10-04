@@ -23,7 +23,7 @@ const search = debounce((input:string) => {
 </script>
 
 <template>
-    <div id="search_container" :class="(toggle_search)?'max-w-xs border':'rounded-3xl bg-[#040404] bg-opacity-95 outline-indigo-900 outline outline-1 shadow-green-500 shadow-md w-fit'">
+    <div id="search_container" :class="(toggle_search)?'max-w-xs border':'rounded-3xl bg-mainNight bg-opacity-95 outline-indigo-900 outline outline-1 shadow-green-500 shadow-md w-fit'">
         <img class="w-12 h-16 m-auto pt-3" src="../assets/pixel_grace.png" alt=":)">
         <h1 class="text-white text-3xl text-center pt-2 pb-8 font-bold">Sound Voltex Library</h1>
         <form>

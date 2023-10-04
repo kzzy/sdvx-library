@@ -134,7 +134,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="m-4 rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80 flex flex-col min-w-fit">
+    <div class="rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80 flex flex-col min-w-fit">
         <div id='details-text-container' class="m-3 flex justify-around">
             <div class="text-xl">
                 <div class="relative flex flex-col my-1 items-center">
@@ -178,7 +178,7 @@ onMounted(() => {
                     </div>
                     <Radar :data="radarComputed" :options="radar_options"></Radar>
                     <span v-if="!hasRadarData" class="absolute bottom-40 text-center bg-yellow-500 bg-opacity-20 rounded-xl right-2">
-                        No Radar Data Found, Please help contribute this information. Thanks!
+                        No Radar Data Found<br>Please help contribute this information. Thanks!
                     </span>
                 </div>
 

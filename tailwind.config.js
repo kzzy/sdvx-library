@@ -7,10 +7,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        main: '#0A0A0A'
+        main: '#0A0A0A',
+        mainNight: '#050505'
       },
       backgroundColor: {
-        'main': '#0A0A0A'
+        'main': '#0A0A0A',
+        'mainNight': '#050505'
       },
       backgroundImage: {
         'headerbg': "linear-gradient(to right,rgba(30,58,138,0.7),rgba(0,0,0,1),rgba(131,24,67,0.7))",
@@ -25,7 +27,9 @@ module.exports = {
         '4/5': "80%"
       },
       width: {
-        '128': "48rem"
+        '192': "48rem",
+        '128': "32rem",
+        '160': "40rem"
       },
       height: {
         'expanded-drop': "82vh"
@@ -35,6 +39,8 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/container-queries'),
+  ],
 }
 
