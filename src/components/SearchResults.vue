@@ -255,12 +255,7 @@ results.value = [
                                 </div>
                             </div>
                         </div>
-
-                        <div class="text-xl min-w-fit leading-loose text-left flex flex-col justify-center z-10 visible xl:hidden">
-                            <p>Artist - {{ result.song_artist }}</p>
-                            <p>BPM - {{ result.bpm }}</p>
-                            <p>Song Length - {{ result.duration }}</p>
-                        </div>
+                        
                         <div class="absolute -top-2 -right-28 z-0 overflow-hidden visible max-2xl:hidden">
                             <div class="absolute z-10 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-transparent via-70% via-mainNight to-80% to-mainNight"></div>
                             <img class="w-160 h-96 brightness-75" :src="'/' + result.song_difficulties[result.song_difficulties.length-1].jacket + '.png'" >
