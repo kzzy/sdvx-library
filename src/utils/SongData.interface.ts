@@ -15,6 +15,7 @@ export interface ChartEffectDescription {
 }
 
 export interface ChartUniqueInfo {
+    isArcade?: boolean;
     isKonasute?: boolean;
     jacket: string;
     jacket_artist: string;

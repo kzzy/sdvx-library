@@ -15,11 +15,11 @@ const selected = reactive({
   <div class="bg-[#050505] p-4">
     <header>
       <nav>
-        <ul class="flex justify-center text-2xl mb-2">
-          <li class="px-4 hover:text-indigo-400 cursor-pointer" :class="(selected.details)?'text-indigo-400':'text-white'" @click="selected.details=true;selected.unlock=false">
+        <ul class="min-w-fit flex justify-center text-2xl mb-2 font-semibold">
+          <li class="mx-4 hover:text-indigo-400 cursor-pointer" :class="(selected.details)?'text-indigo-400 border-b-2 border-white rounded-sm':'text-white'" @click="selected.details=true;selected.unlock=false">
             <div>Details</div>
           </li>
-          <li class="px-4 hover:text-indigo-400 cursor-pointer" :class="(selected.unlock)?'text-indigo-400':'text-white'" @click="selected.details=false;selected.unlock=true">
+          <li class="mx-4 hover:text-indigo-400 cursor-pointer" :class="(selected.unlock)?'text-indigo-400 border-b-2 rounded-sm':'text-white'" @click="selected.details=false;selected.unlock=true">
             <div>Unlocking</div>
           </li>
         </ul>

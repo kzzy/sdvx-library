@@ -61,6 +61,10 @@ const getKonasuteResultIcon = ((isKonasute:boolean):string => {
   return isKonasute ? 'checkmark.png' : 'xmark.png'
 })
 
+const getArcadeResultIcon = ((isArcade:boolean):string => {
+  return isArcade ? 'checkmark.png' : 'xmark.png'
+})
+
 const radarData = reactive({
   labels: ['NOTES', 'PEAK', 'TSUMAMI ', 'TRICKY', 'HAND TRIP', 'ONE HAND'],
   datasets: [
@@ -141,19 +145,42 @@ onMounted(() => {
                     <img src="../assets/jacket_overlay.png" class="w-48 h-48 z-0 shadow-lg shadow-black">
                     <img :src="'/' + currentDifficultyState.jacket + '.png'" class="absolute w-44 h-44 mt-2 z-10">
                 </div>
-                <p class="py-4">Effected by {{ props.song_info.effector }}</p>
-                <p class="py-4">Jacket Illustrated by {{ currentDifficultyState.jacket_artist }}</p>
-                <p class="py-4">Album: {{ getAlbum }}</p>
-                <div class="relative my-4 flex">
-                    <div class="hover: cursor-pointer w-fit" @mouseover="hover_konasute_desc_popup = true" @mouseleave="hover_konasute_desc_popup = false">
+                <div class="py-4">
+                  <h3 class="font-bold">Artist</h3>
+                  <span class="font-light text-lg">{{ props.song_info.song_artist }}</span>
+                </div>
+                <div class="py-4">
+                  <h3 class="font-bold">Effector</h3>
+                  <span class="font-light text-lg">{{ props.song_info.effector }}</span>
+                </div>
+                <div class="py-4">
+                  <h3 class="font-bold">Jacket Illustrator</h3>
+                  <span class="font-light text-lg">{{ currentDifficultyState.jacket_artist }}</span>
+                </div>
+                <div class="py-4">
+                  <h3 class="font-bold">Album</h3>
+                  <span class="font-light text-lg">{{ getAlbum }}</span>
+                </div>
+                <div class="relative my-2 flex">
+                    <div class="hover: cursor-pointer w-fit">
+                        <span class="text-emerald-300">Arcade</span>
+                    </div>
+                    <span class="mx-4 my-1">
+                        <img class='w-6 h-6' :src="getArcadeResultIcon(currentDifficultyState.isArcade)">
+                    </span>
+                </div>
+                <div class="relative my-2 flex">
+                    <div class="hover: cursor-pointer w-fit">
+                      <div @mouseover="hover_konasute_desc_popup = true" @mouseleave="hover_konasute_desc_popup = false">
                         <span class="text-emerald-300">Konasute</span>
                         <HelpDescriptionPopup v-if="hover_konasute_desc_popup" :description="'konasute'"/>
+                      </div>
                     </div>
                     <span class="mx-4 my-1">
                         <img class='w-6 h-6' :src="getKonasuteResultIcon(currentDifficultyState.isKonasute)">
                     </span>
                 </div>
-                <p class="py-4">{{ props.song_info.title }} was initially released on {{ props.song_info.song_release_date }}</p>
+                <p class="py-4">{{ props.song_info.title }} was released on {{ props.song_info.song_release_date }}</p>
             </div>
             
             <div id="effect_radar_chart_container" :setRadarData="setRadarData(currentDifficultyState.song_effect_radar_notes, currentDifficultyState.song_effect_radar_peak, currentDifficultyState.song_effect_radar_tsumami, currentDifficultyState.song_effect_radar_tricky, currentDifficultyState.song_effect_radar_handtrip, currentDifficultyState.song_effect_radar_onehanded)">
@@ -167,7 +194,7 @@ onMounted(() => {
                                     <img class="mx-4 my-1.5 w-6 h-6"  src="dropdown-arrow.png">
                                 </span>
                             </div>
-                            <div v-if="difficulty_dropdown_menu" class="absolute my-1 pt-2 pb-2 flex flex-col w-2/3 shadow-xl bg-indigo-950 rounded-xl" @mouseleave="difficulty_dropdown_menu = false">
+                            <div v-if="difficulty_dropdown_menu" class="absolute my-1 pt-2 pb-2 flex flex-col w-2/3 shadow-xl bg-indigo-950 rounded-xl z-10" @mouseleave="difficulty_dropdown_menu = false">
                                 <div v-for="(diff, index) in props.song_info.song_difficulties" :key="diff" @click="updateDifficultyState(index); difficulty_dropdown_menu = false" class="p-2 hover:cursor-pointer hover:bg-indigo-800">
                                     {{ diff.difficulty_name }}
                                 </div>

@@ -3,7 +3,7 @@ const props = defineProps(['title', 'konasuteUnlockMethod', 'konasuteVolPack', '
 </script>
 
 <template>
-    <div class="rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80">
+    <div class="rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80 min-w-fit">
         <div class="m-4 flex flex-col items-center text-3xl">
             <h2 class="text-4xl my-5 font-semibold">ARCADE</h2>
             <p class="font-thin text-xl">
