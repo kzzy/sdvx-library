@@ -240,7 +240,7 @@ results.value = [
             </div>
             <div class="w-4/6 rounded-2xl mx-5 my-3 shadow-sky-200 shadow-sm overflow-hidden" v-for="result in results">
                 <div id="search_result_cell" @click="result.expanded = !result.expanded">
-                    <div id="result_cell" class="p-6 flex relative overflow-hidden min-w-fit bg-mainNight bg-opacity-100 hover:cursor-pointer hover:brightness-125">
+                    <div id="result_cell" class="p-6 flex relative overflow-hidden min-w-fit bg-mainNight hover:cursor-pointer hover:brightness-125">
                         <div class="min-h-full min-w-fit flex items-center">
                             <img class="w-32 h-32" :src="'/' + result.song_difficulties[result.song_difficulties.length-1].jacket + '.png'" >
                         </div>

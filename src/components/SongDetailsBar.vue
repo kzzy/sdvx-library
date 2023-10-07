@@ -12,14 +12,14 @@ const selected = reactive({
 </script>
 
 <template>
-  <div class="bg-[#050505] p-4">
+  <div class="bg-[#050505] bg-opacity-90 p-4">
     <header>
       <nav>
-        <ul class="min-w-fit flex justify-center text-2xl mb-2 font-semibold">
-          <li class="mx-4 hover:text-slate-500 cursor-pointer" :class="(selected.details)?'text-white border-b-2 border-sky-400 rounded-sm':'text-white'" @click="selected.details=true;selected.unlock=false">
+        <ul class="relative min-w-fit flex justify-center text-2xl mb-2 font-semibold">
+          <li class="mx-4 hover:text-blue-200 cursor-pointer" :class="(selected.details)?'text-blue-300 border-b-2 border-sky-400 rounded-sm':'text-blue-300'" @click="selected.details=true;selected.unlock=false">
             <div>Details</div>
           </li>
-          <li class="mx-4 hover:text-slate-500 cursor-pointer" :class="(selected.unlock)?'text-white border-b-2 border-sky-400 rounded-sm':'text-white'" @click="selected.details=false;selected.unlock=true">
+          <li class="mx-4 hover:text-blue-200 cursor-pointer" :class="(selected.unlock)?'text-blue-300 border-b-2 border-sky-400 rounded-sm':'text-blue-300'" @click="selected.details=false;selected.unlock=true">
             <div>Unlocking</div>
           </li>
         </ul>

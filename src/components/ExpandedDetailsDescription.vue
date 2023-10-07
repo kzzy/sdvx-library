@@ -138,7 +138,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="rounded-xl border-indigo-900 border-4 bg-gray-900 bg-opacity-80 flex flex-col min-w-fit">
+    <div class="rounded-xl flex flex-col min-w-fit">
         <div id='details-text-container' class="m-3 flex justify-around">
             <div class="text-xl">
                 <div class="relative flex flex-col my-1 items-center">
