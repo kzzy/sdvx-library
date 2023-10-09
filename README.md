@@ -7,6 +7,10 @@
 - [ ] Transition animations
 - [ ] Add About, Changelog, Contact components with links from the search field component
 - [ ] Fix mouse hover and leave Vue reactivity warning
+- [ ] Setup Django backend
+- [ ] Setup GraphQL and Apollo
+- [ ] Investigate webpack
+- [ ] Change database from SQLite to Postgres
 
 
 ## Project Setup
