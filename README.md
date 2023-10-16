@@ -3,13 +3,13 @@
 # To Do List
 - [x] Separate Song Details Component into smaller components with their logic
 - [x] Fix margins to prevent vertical scrolling overflow when expanding the song details, or standardize whether to assume overflow or not
+- [x] Setup Django backend
+- [x] Setup GraphQL and Apollo
 - [ ] Stylize unlock container
 - [ ] Transition animations
 - [ ] Add About, Changelog, Contact components with links from the search field component
 - [ ] Fix mouse hover and leave Vue reactivity warning
-- [ ] Setup Django backend
-- [ ] Setup GraphQL and Apollo
-- [ ] Investigate webpack
+- [ ] Investigate webpack bundling to replace vite
 - [ ] Change database from SQLite to Postgres
 
 
