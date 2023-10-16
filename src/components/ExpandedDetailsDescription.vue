@@ -138,12 +138,12 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="rounded-xl flex flex-col min-w-fit">
-        <div id='details-text-container' class="m-3 flex justify-around">
+    <div class="flex flex-wrap min-w-fit justify-center w-[40rem] max-md:w-[422px]">
+        <div id='details-text-container' class="justify-around w-[414px]">
             <div class="text-xl">
                 <div class="relative flex flex-col my-1 items-center">
                     <img src="../assets/jacket_overlay.png" class="w-48 h-48 z-0 shadow-lg shadow-black">
-                    <img :src="'/' + currentDifficultyState.jacket + '.png'" class="absolute w-44 h-44 mt-2 z-10">
+                    <img :src="'/' + currentDifficultyState.jacket" class="absolute w-44 h-44 mt-2 z-10">
                 </div>
                 <div class="py-4 flex">
                   <div class="mr-12">
@@ -200,46 +200,46 @@ onMounted(() => {
                       </span>
                   </div>
                 </div>
-            </div>
-            
-            <div id="effect_radar_chart_container" :setRadarData="setRadarData(currentDifficultyState.song_effect_radar_notes, currentDifficultyState.song_effect_radar_peak, currentDifficultyState.song_effect_radar_tsumami, currentDifficultyState.song_effect_radar_tricky, currentDifficultyState.song_effect_radar_handtrip, currentDifficultyState.song_effect_radar_onehanded)">
-                <div class="relative w-96 text-lg">
-                    <div class="pt-2 flex flex-col items-center text-center">
-                        <div class="hover:bg-gray-950 w-2/3 rounded-xl hover: cursor-pointer">
-                            <div @click="difficulty_dropdown_menu = true" >
-                                <button class="text-3xl font-semibold hover: cursor-pointer" :class="diffTextColorLookupTable[currentDifficultyState.difficulty_name]" @click="difficulty_dropdown_menu = true">{{ currentDifficultyState.difficulty_name }}
-                                </button>
-                                <span class="absolute">
-                                    <img class="mx-4 my-1.5 w-6 h-6"  src="dropdown-arrow.png">
-                                </span>
-                            </div>
-                            <div v-if="difficulty_dropdown_menu" class="absolute my-1 pt-2 pb-2 flex flex-col w-2/3 shadow-xl bg-indigo-950 rounded-xl z-10" @mouseleave="difficulty_dropdown_menu = false">
-                                <div v-for="(diff, index) in props.song_info.song_difficulties" :key="diff" @click="updateDifficultyState(index); difficulty_dropdown_menu = false" class="p-2 hover:cursor-pointer hover:bg-indigo-800">
-                                    {{ diff.difficulty_name }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <h2 class="font-thin">Difficulty Style Radar</h2>
-                    </div>
-                    <Radar :data="radarComputed" :options="radar_options"></Radar>
-                    <span v-if="!hasRadarData" class="absolute bottom-40 text-center bg-yellow-500 bg-opacity-20 rounded-xl right-2">
-                        No Radar Data Found<br>Please help contribute this information. Thanks!
-                    </span>
+            </div>      
+        </div>
+        <div id="effect_radar_chart_container" class="w-[386px] flex flex-col" :setRadarData="setRadarData(currentDifficultyState.song_effect_radar_notes, currentDifficultyState.song_effect_radar_peak, currentDifficultyState.song_effect_radar_tsumami, currentDifficultyState.song_effect_radar_tricky, currentDifficultyState.song_effect_radar_handtrip, currentDifficultyState.song_effect_radar_onehanded)">
+          <div class="relative w-96 text-lg">
+            <div class="pt-2 flex flex-col items-center text-center">
+              <div class="hover:bg-gray-950 w-2/3 rounded-xl hover: cursor-pointer">
+                <div @click="difficulty_dropdown_menu = true" >
+                  <button class="text-3xl font-semibold hover: cursor-pointer" :class="diffTextColorLookupTable[currentDifficultyState.difficulty_name]" @click="difficulty_dropdown_menu = true">{{ currentDifficultyState.difficulty_name }}
+                  </button>
+                  <span class="absolute">
+                      <img class="mx-4 my-1.5 w-6 h-6"  src="dropdown-arrow.png">
+                  </span>
                 </div>
-
-                <div id='tier_list_rank' class="flex items-center text-lg">
-                    <div class="relative :hover cursor-pointer" @mouseover="hover_tierlist_desc_popup = true" @mouseleave="hover_tierlist_desc_popup = false">
-                        <span class="text-emerald-300">Level Relative Clear Difficulty</span>
-                        <HelpDescriptionPopup v-if="hover_tierlist_desc_popup" :description="'tierlist'"/>
-                    </div>
-                    <p class="px-2">Rank:</p>
-                    <p class="text-3xl w-10 mr-4" :class="rankColorLookupTable[currentDifficultyState.rank_tier]">{{ getRankTier }}</p>
+                <div v-if="difficulty_dropdown_menu" class="absolute my-1 pt-2 pb-2 flex flex-col w-2/3 shadow-xl bg-indigo-950 rounded-xl z-10" @mouseleave="difficulty_dropdown_menu = false">
+                  <div v-for="(diff, index) in props.song_info.song_difficulties" :key="diff" @click="updateDifficultyState(index); difficulty_dropdown_menu = false" class="p-2 hover:cursor-pointer hover:bg-indigo-800">
+                      {{ diff.difficulty_name }}
+                  </div>
                 </div>
+              </div>
+
+              <h2 class="font-thin">Difficulty Style Radar</h2>
             </div>
+            <Radar :data="radarComputed" :options="radar_options"></Radar>
+            <span v-if="!hasRadarData" class="absolute bottom-40 text-center bg-yellow-500 bg-opacity-20 rounded-xl right-2">
+                No Radar Data Found<br>Please help contribute this information. Thanks!
+            </span>
+          </div>
+
+          <div id='tier_list_rank' class="mt-auto flex items-center text-lg pb-2">
+            <div class="relative :hover cursor-pointer" @mouseover="hover_tierlist_desc_popup = true" @mouseleave="hover_tierlist_desc_popup = false">
+                <span class="text-emerald-300">Level Relative Clear Difficulty</span>
+                <HelpDescriptionPopup v-if="hover_tierlist_desc_popup" :description="'tierlist'"/>
+            </div>
+            <p class="px-2">Rank:</p>
+            <p class="text-3xl w-10 mr-4" :class="rankColorLookupTable[currentDifficultyState.rank_tier]">{{ getRankTier }}</p>
+          </div>
         </div>
 
-        <div class="m-8">
+
+        <div class="m-8 border h-fit">
             <table class="table-auto text-center m-auto font-semibold">
                 <thead>
                     <tr class="border-b">

@@ -1,12 +1,59 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import debounce from 'lodash.debounce'
 
+import { useQuery } from "@vue/apollo-composable"
+import gql from "graphql-tag"
 
 const search_field = ref('')
 const toggle_search = ref(false)
 const emit = defineEmits(['toggle_search'])
 
+/*
+const { result } = useQuery(gql`
+    query {
+        songResults {
+            title
+            duration
+            bpm
+            artist
+            effector
+            album
+            isArcade
+            isKonasute
+            konasuteVolumePack
+            releaseDate
+            konasuteUnlockMethod
+            arcadeUnlockMethod
+        },
+        charts {
+            songTitle {
+                title
+            }
+            difficultyName
+            level
+            releaseDate
+            tier
+            diffIsArcade
+            diffIsKonasute
+            jacketFilename
+            jacketArtist
+            maxChain
+            maxChipNotes
+            maxLongNotes
+            maxVolNotes
+            radarNotes
+            radarPeak
+            radarTsumami
+            radarOnehanded
+            radarHandtrip
+            radarTricky
+        }
+    }
+`)
+
+const res = computed(() => result ?? [])
+*/
 watch(search_field, (value) => {
     if(value.length > 0) {
         emit('toggle_search', [value, true])
@@ -31,4 +78,5 @@ const search = debounce((input:string) => {
         </form>
         <p class="text-white text-sm pt-10 text-center p-4">Replace special characters with english character equivalents except for Japanese songs</p>
     </div>
+    
 </template>

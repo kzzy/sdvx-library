@@ -36,7 +36,10 @@ module.exports = {
       },
       outlineOffset: {
         '16': "16px"
-      }
+      },
+      screens: {
+        '1.5xl': '1400px'
+      },
     },
   },
   plugins: [

@@ -12,10 +12,10 @@ const selected = reactive({
 </script>
 
 <template>
-  <div class="bg-[#050505] bg-opacity-90 p-4">
+  <div class="bg-[#050505] bg-opacity-90 p-4 min-w-fit">
     <header>
       <nav>
-        <ul class="relative min-w-fit flex justify-center text-2xl mb-2 font-semibold">
+        <ul class="relative flex justify-center text-2xl mb-2 font-semibold">
           <li class="mx-4 hover:text-blue-200 cursor-pointer" :class="(selected.details)?'text-blue-300 border-b-2 border-sky-400 rounded-sm':'text-blue-300'" @click="selected.details=true;selected.unlock=false">
             <div>Details</div>
           </li>
