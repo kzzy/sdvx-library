@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { AdvancedSongDataInterface, SongDifficulty } from '../utils/SongData.interface.ts'
+import type { AdvancedSongDataInterface, SongDifficulty } from '@/utils/SongData.interface.ts'
 import SongDetailsBar from './SongDetailsBar.vue';
 
 const results = ref<AdvancedSongDataInterface[]>([]);
@@ -237,7 +237,7 @@ results.value = [
                             </div>
                         </div>
                         
-                        <div class="absolute -top-2 -right-28 z-0 overflow-hidden visible max-1.5xl:hidden">
+                        <div class="absolute -top-2 -right-28 z-0 overflow-hidden visible max-lg:hidden">
                             <div class="absolute z-10 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-transparent via-70% via-mainNight to-80% to-mainNight"></div>
                             <img class="w-160 h-96 brightness-75" :src="'/' + result.song_difficulties[result.song_difficulties.length-1].jacket" >
                         </div>

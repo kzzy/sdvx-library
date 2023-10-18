@@ -1,9 +1,10 @@
 import './styles.css'
 import { createApp, provide, h } from 'vue'
+import router from '@/router/index'
 import App from './App.vue'
 
-import { ApolloClient, HttpLink, InMemoryCache} from "@apollo/client/core"
-import { DefaultApolloClient} from '@vue/apollo-composable'
+import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client/core"
+import { provideApolloClient } from '@vue/apollo-composable'
 
 const httpLink = new HttpLink({
     uri: "http://127.0.0.1:8000/graphql",
@@ -18,8 +19,8 @@ const apolloClient = new ApolloClient({
 
 createApp({
     setup () {
-        provide(DefaultApolloClient, apolloClient)
+        provideApolloClient(apolloClient)
     },
 
     render: () => h(App),
-}).mount('#app')
+}).use(router).mount('#app')

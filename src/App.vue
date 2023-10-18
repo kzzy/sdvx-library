@@ -1,7 +1,8 @@
 <script setup lang="ts">  
-import HomePage from './pages/HomePage.vue'
+import Background from '@/pages/Background.vue'
 </script>
 
 <template>
-      <HomePage />
+      <Background/>
+      <router-view></router-view>
 </template>

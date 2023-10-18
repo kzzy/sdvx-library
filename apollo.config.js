@@ -7,6 +7,7 @@ module.exports = {
     },
     includes: [
       'src/**/*.vue',
+      'src/**/*.ts',
       'src/**/*.js'
     ]
   };

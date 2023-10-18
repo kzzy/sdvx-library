@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import type { SearchFilterInterface } from '@/utils/SearchFilter.interface.ts'
+
+const filters = ref<SearchFilterInterface>();
 let filter_game_entry_toggle = false
 
 </script>
