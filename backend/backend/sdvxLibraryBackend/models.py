@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
-class SongResult(models.Model):
+class Song(models.Model):
     class Meta:
         verbose_name = "Song"
         verbose_name_plural = "Songs"
@@ -23,6 +23,7 @@ class SongResult(models.Model):
         return self.title
 
     title = models.CharField(max_length=200, unique=True)
+    alternateTitle = models.CharField(max_length=200, blank=True)
     duration = models.CharField(max_length=5)
     bpm = models.CharField(max_length=20) # Store as string to support bpm ranges
     artist = models.CharField(max_length=75)
@@ -41,20 +42,20 @@ class Chart(models.Model):
         verbose_name_plural = "Charts"
 
     class DifficultyNames(models.TextChoices):
-        NOVICE = "NVC", "Novice"
-        ADVANCED = "ADV", "Advanced"
-        EXHAUST = "EXH", "Exhaust"
-        INFINITE = "INF", "Infinite"
-        GRAVITY = "GRV", "Gravity"
-        MAXIMUM = "MXM", "Maximum"
-        HEAVENLY = "HVN", "Heavenly"
-        VIVID = "VVD", "Vivid"
-        EXCEED = "XCD", "Exceed"
+        NOVICE = "NOVICE", "Novice"
+        ADVANCED = "ADVANCED", "Advanced"
+        EXHAUST = "EXHAUST", "Exhaust"
+        INFINITE = "INFINITE", "Infinite"
+        GRAVITY = "GRAVITY", "Gravity"
+        MAXIMUM = "MAXIMUM", "Maximum"
+        HEAVENLY = "HEAVENLY", "Heavenly"
+        VIVID = "VIVID", "Vivid"
+        EXCEED = "EXCEED", "Exceed"
 
     def __str__(self):
         return self.songTitle.title + " " + self.difficultyName
 
-    songTitle = models.ForeignKey('SongResult', on_delete=models.CASCADE)
+    songTitle = models.ForeignKey('Song', on_delete=models.CASCADE)
     difficultyName = models.CharField(max_length=10, choices=DifficultyNames.choices)
     level = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(20)])
     releaseDate = models.DateField()

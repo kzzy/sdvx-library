@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import type { AdvancedSongDataInterface, SongDifficulty } from '@/utils/SongData.interface.ts'
 import SongDetailsBar from './SongDetailsBar.vue';
 
+const props = defineProps(['updateSongs'])
 const results = ref<AdvancedSongDataInterface[]>([]);
+
+watch(() => props.updateSongs, () => {
+    results.value = props.updateSongs
+}) 
 
 function getDiffBackground(diff:string) : string {
     // Using class binding does not seem to register custom tailwind extensions on bg, so I am opting for this method for now
@@ -210,16 +215,17 @@ results.value = [
         song_release_date: "August 21, 2015",
         expanded: false
     }
-]
+] 
+
 </script>
 
 <template>
     <div class="max-h-screen text-white overflow-y-scroll">
-        <div class="flex flex-col items-center justify-center">
+        <div v-if="results" class="flex flex-col items-center justify-center">
             <div class="w-4/6 text-6xl font-light">
                 <h3 class="pl-6 py-4">Results</h3>
             </div>
-            <div class="min-w-fit w-4/6 rounded-2xl mx-5 my-3 shadow-sky-200 shadow-sm overflow-hidden" v-for="result in results">
+            <div class="min-w-fit w-4/6 rounded-2xl mx-5 my-3 shadow-sky-200 shadow-sm overflow-hidden" v-for="result in results" :key="result.title">
                 <div id="search_result_cell" @click="result.expanded = !result.expanded">
                     <div id="result_cell" class="p-6 flex relative overflow-hidden min-w-fit bg-mainNight hover:cursor-pointer hover:brightness-125">
                         <div class="min-h-full min-w-fit flex items-center">
@@ -231,7 +237,7 @@ results.value = [
                                 <div class="text-4xl max-md:text-3xl">{{ result.title }}</div>
                             </div>
                             <div class="w-fit flex max-md:w-64 max-md:flex-wrap mt-10 max-w-lg justify-between">
-                                <div class="m-2 bg-center bg-no-repeat text-center min-w-fit" :class=getDiffBackground(difficulty.difficulty_name) v-for="difficulty in result.song_difficulties">
+                                <div class="m-2 bg-center bg-no-repeat text-center min-w-fit" :class=getDiffBackground(difficulty.difficulty_name) v-for="difficulty in result.song_difficulties" :key="difficulty.difficulty_name">
                                     <p class="mx-2 font-semibold">{{difficulty.difficulty_name}} {{difficulty.difficulty_level}} </p>
                                 </div>
                             </div>

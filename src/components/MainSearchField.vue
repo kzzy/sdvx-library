@@ -19,7 +19,6 @@ const debounceInput = debounce((input:string) => {
 function search(input:string) {
     emit('toggle_search', input)
     console.log("Execute search using: " + input)
-    // Execute API call using the search term and filters applied
 }
 </script>
 

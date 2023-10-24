@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import SongResult, Chart
+from .models import Song, Chart
 
 # Register your models here.
-admin.site.register(SongResult)
+admin.site.register(Song)
 admin.site.register(Chart)
