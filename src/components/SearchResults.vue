@@ -10,6 +10,10 @@ watch(() => props.updateSongs, () => {
     results.value = props.updateSongs
 }) 
 
+const getDifficultyJacket = (songDifficulties:SongDifficulty[]) => {
+    return songDifficulties.length > 0 ? songDifficulties[songDifficulties.length-1].jacket : ''
+}
+
 function getDiffBackground(diff:string) : string {
     // Using class binding does not seem to register custom tailwind extensions on bg, so I am opting for this method for now
     switch(diff) {
@@ -220,16 +224,13 @@ results.value = [
 </script>
 
 <template>
-    <div class="max-h-screen text-white overflow-y-scroll">
+    <div class=" text-white">
         <div v-if="results" class="flex flex-col items-center justify-center">
-            <div class="w-4/6 text-6xl font-light">
-                <h3 class="pl-6 py-4">Results</h3>
-            </div>
             <div class="min-w-fit w-4/6 rounded-2xl mx-5 my-3 shadow-sky-200 shadow-sm overflow-hidden" v-for="result in results" :key="result.title">
                 <div id="search_result_cell" @click="result.expanded = !result.expanded">
                     <div id="result_cell" class="p-6 flex relative overflow-hidden min-w-fit bg-mainNight hover:cursor-pointer hover:brightness-125">
                         <div class="min-h-full min-w-fit flex items-center">
-                            <img class="w-32 h-32 z-50" :src="'/' + result.song_difficulties[result.song_difficulties.length-1].jacket" >
+                            <img class="w-32 h-32 z-50" :src="'/' + getDifficultyJacket(result.song_difficulties)" >
                         </div>
 
                         <div class="ml-5 z-10">
@@ -245,7 +246,7 @@ results.value = [
                         
                         <div class="absolute -top-2 -right-28 z-0 overflow-hidden visible max-lg:hidden">
                             <div class="absolute z-10 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-transparent via-70% via-mainNight to-80% to-mainNight"></div>
-                            <img class="w-160 h-96 brightness-75" :src="'/' + result.song_difficulties[result.song_difficulties.length-1].jacket" >
+                            <img class="w-160 h-96 brightness-75" :src="'/' + getDifficultyJacket(result.song_difficulties)" >
                         </div>
                     </div>
                 </div>

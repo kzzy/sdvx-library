@@ -7,9 +7,7 @@ const toggle_search = ref(false)
 const emit = defineEmits(['toggle_search'])
 
 watch(search_field, (value) => {
-    if(value.length > 0) {
-        debounceInput(value)
-    }
+    debounceInput(value)
 })
 
 const debounceInput = debounce((input:string) => {

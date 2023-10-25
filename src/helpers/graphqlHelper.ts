@@ -5,6 +5,25 @@ let variables = {
     title: ''
 }
 
+const allSongsQuery = gql`
+    query {
+        songs {
+            title
+            duration
+            bpm
+            artist
+            effector
+            album
+            isArcade
+            isKonasute
+            konasuteVolumePack
+            releaseDate
+            konasuteUnlockMethod
+            arcadeUnlockMethod
+        }
+    }
+    `
+
 const songQuery = gql`
     query ($title: String!) {
         songsLikeName (title: $title) {
@@ -47,20 +66,23 @@ const chartQuery = gql`
         }
     }
 `
+export function runAllSongsQuery() {
+    const { result, loading, error } = useQuery(allSongsQuery, {}, { fetchPolicy: 'network-only' })
+    return { result, loading, error }
+}
 
-
-export function runSongQuery(value: string) {
+export function runSearchSongsQuery(value: string) {
     variables = {
         title:value,
     }
-    const { result } = useQuery(songQuery, variables, { fetchPolicy: 'network-only' })
-    return result
+    const { result, loading, error } = useQuery(songQuery, variables, { fetchPolicy: 'network-only' })
+    return { result, loading, error }
 }
 
 export function runChartQuery(value: string) {
     variables = {
         songTitle:value,
     }
-    const { result } = useQuery(chartQuery, variables, { fetchPolicy: 'network-only' })
-    return result
+    const { result, loading, error } = useQuery(chartQuery, variables, { fetchPolicy: 'network-only' })
+    return { result, loading, error }
 }
