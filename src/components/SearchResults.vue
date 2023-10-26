@@ -39,7 +39,7 @@ function getDiffBackground(diff:string) : string {
             throw new Error("Returned invalid difficulty of " + diff)
     }
 }
-
+/*
 results.value = [
     {
         title: "Lachryma(Re:Queen'M)",
@@ -219,7 +219,7 @@ results.value = [
         song_release_date: "August 21, 2015",
         expanded: false
     }
-] 
+]  */
 
 </script>
 

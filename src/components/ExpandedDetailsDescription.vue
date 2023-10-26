@@ -12,7 +12,6 @@ ChartJS.register(
 )
 
 const props = defineProps(['song_info'])
-
 const hover_konasute_desc_popup = ref(false)
 const hover_tierlist_desc_popup = ref(false)
 const difficulty_dropdown_menu = ref(false)
@@ -239,7 +238,7 @@ onMounted(() => {
         </div>
 
 
-        <div class="m-8 border h-fit">
+        <div class="m-8 h-fit">
             <table class="table-auto text-center m-auto font-semibold">
                 <thead>
                     <tr class="border-b">
