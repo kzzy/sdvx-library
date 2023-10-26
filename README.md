@@ -1,7 +1,8 @@
 # sdvxlibrary
 
 # Currently Working on
-- [ ] Search Filters
+- [ ] Transition animations and other UX
+- [ ] Search Filters (In progress)
 
 # To Do List
 - [x] Separate Song Details Component into smaller components with their logic
@@ -9,7 +10,6 @@
 - [x] Setup Django backend
 - [x] Setup GraphQL and Apollo
 - [x] Frontend GraphQL querying, transformation of response into objects
-- [ ] 
 - [ ] Stylize unlock container
 - [ ] Transition animations
 - [ ] Add About, Changelog, Contact components with links from the search field component
