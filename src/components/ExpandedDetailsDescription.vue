@@ -2,6 +2,7 @@
 import HelpDescriptionPopup from './HelpDescriptionPopup.vue'
 import { onMounted, reactive, computed, ref } from 'vue'
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler } from 'chart.js'
+import { diffTextColorLookupTable } from '@/helpers/LookupTables'
 import { Radar } from 'vue-chartjs'
 
 ChartJS.register(
@@ -27,18 +28,6 @@ const diffBGColorLookupTable: { [key:string]:string } = {
   "VIVID": "bg-pink-600",
   "MAXIMUM": "bg-gray-600",
   "EXCEED": "bg-cyan-600"
-}
-
-const diffTextColorLookupTable: { [key:string]:string } = {
-  "NOVICE": "text-indigo-400",
-  "ADVANCED": "text-yellow-400",
-  "EXHAUST": "text-red-400",
-  "HEAVENLY": "text-cyan-400",
-  "INFINITE": "text-pink-400",
-  "GRAVITY": "text-orange-400",
-  "VIVID": "text-pink-400",
-  "MAXIMUM": "text-gray-400",
-  "EXCEED": "text-cyan-400"
 }
 
 const rankColorLookupTable: { [key:string]:string } = {
@@ -181,7 +170,7 @@ onMounted(() => {
                 <div class="my-2 flex">
                   <div class="relative flex">
                       <div class="hover: cursor-pointer w-fit">
-                          <span class="text-emerald-300">Arcade</span>
+                          <span class="text-blue-700 font-semibold">Arcade</span>
                       </div>
                       <span class="mx-4 my-1">
                           <img class='w-6 h-6' :src="getArcadeResultIcon(currentDifficultyState.isArcade)">
@@ -190,7 +179,7 @@ onMounted(() => {
                   <div class="relative flex">
                       <div class="hover: cursor-pointer w-fit">
                         <div @mouseover="hover_konasute_desc_popup = true" @mouseleave="hover_konasute_desc_popup = false">
-                          <span class="text-emerald-300">Konasute</span>
+                          <span class="text-blue-700 font-semibold">Konasute</span>
                           <HelpDescriptionPopup v-if="hover_konasute_desc_popup" :description="'konasute'"/>
                         </div>
                       </div>
@@ -204,15 +193,15 @@ onMounted(() => {
         <div id="effect_radar_chart_container" class="w-[386px] flex flex-col" :setRadarData="setRadarData(currentDifficultyState.song_effect_radar_notes, currentDifficultyState.song_effect_radar_peak, currentDifficultyState.song_effect_radar_tsumami, currentDifficultyState.song_effect_radar_tricky, currentDifficultyState.song_effect_radar_handtrip, currentDifficultyState.song_effect_radar_onehanded)">
           <div class="relative w-96 text-lg">
             <div class="pt-2 flex flex-col items-center text-center">
-              <div class="hover:bg-gray-950 w-2/3 rounded-xl hover: cursor-pointer">
+              <div class="w-2/3 rounded-xl hover:cursor-pointer">
                 <div @click="difficulty_dropdown_menu = true" >
-                  <button class="text-3xl font-semibold hover: cursor-pointer" :class="diffTextColorLookupTable[currentDifficultyState.difficulty_name]" @click="difficulty_dropdown_menu = true">{{ currentDifficultyState.difficulty_name }}
+                  <button class="text-3xl font-semibold" :class="diffTextColorLookupTable[currentDifficultyState.difficulty_name]" @click="difficulty_dropdown_menu = true">{{ currentDifficultyState.difficulty_name }}
                   </button>
                   <span class="absolute">
                       <img class="mx-4 my-1.5 w-6 h-6"  src="dropdown-arrow.png">
                   </span>
                 </div>
-                <div v-if="difficulty_dropdown_menu" class="absolute my-1 pt-2 pb-2 flex flex-col w-2/3 shadow-xl bg-indigo-950 rounded-xl z-10" @mouseleave="difficulty_dropdown_menu = false">
+                <div v-if="difficulty_dropdown_menu" class="absolute pt-2 pb-2 flex flex-col w-2/3 shadow-xl bg-indigo-950 rounded-xl z-10">
                   <div v-for="(diff, index) in props.song_info.song_difficulties" :key="diff" @click="updateDifficultyState(index); difficulty_dropdown_menu = false" class="p-2 hover:cursor-pointer hover:bg-indigo-800">
                       {{ diff.difficulty_name }}
                   </div>
@@ -246,7 +235,7 @@ onMounted(() => {
                     <th class="w-32">Level</th>
                     <th class="w-32">Max Chain</th>
                     <th class="w-32">Max Chip Notes (Tap)</th>
-                    <th class="w-32">Max Long Notes (Holding)</th>
+                    <th class="w-32">Max Long Notes (Hold)</th>
                     <th class="w-40">Max Volume Notes (Lasers)</th>
                     </tr>
                 </thead>
@@ -263,4 +252,4 @@ onMounted(() => {
             </table>
         </div>
     </div>
-</template>
+</template>@/helpers/LookupTables

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { toRaw, watch } from 'vue'
 const props = defineProps(['description'])
 
 const descriptionLookup: { [key:string]:string } = {
@@ -10,6 +11,6 @@ const descriptionLookup: { [key:string]:string } = {
 
 <template>
     <div class="absolute bottom-8 border-2 w-64 h-fit bg-gray-800 rounded-lg text-sm z-10">
-        <p class="m-1">{{ descriptionLookup[props.description] }}</p>
+        <p class="m-1">{{ descriptionLookup[toRaw(props).description] }}</p>
     </div>
 </template>

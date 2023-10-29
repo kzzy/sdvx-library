@@ -144,17 +144,17 @@ onMounted(() => {
         </div>
         <div class="relative w-full flex flex-col items-center max-h-screen overflow-y-scroll overflow-x-hidden">
             <div class="w-fit" v-if="!emptySearchResults">
-                <div class="w-full text-white text-6xl font-light h-20">
-                    <h3 class="pl-12 py-2 w-fit h-fit">Results</h3>
+                <div class="w-[876px] text-white text-6xl font-light h-20 max-[875px]:w-full">
+                    <h3 class="pl-12 py-2">Results</h3>
                 </div>
                 <SearchResults :class="[isLoading ? 'transition-opacity ease-out duration-200 opacity-0':'transition-opacity ease-in duration-200 opacity-100']" :updateSongs="filteredSongList"/>
             </div>
             <div v-else class="h-screen w-full flex items-center justify-center text-center">
                 <div>
                     <img src="../assets/miku.webp" class="w-80 h-80">
-                    <p class="text-white text-3xl font-light">We found nothing :(</p>
+                    <p class="text-white text-3xl font-light pb-2 drop-shadow-2xl">We found nothing :(</p>
                 </div>
             </div>
         </div>
-    </div>  
+    </div>
 </template>

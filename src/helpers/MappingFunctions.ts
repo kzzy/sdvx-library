@@ -10,6 +10,7 @@ export function mapSongResponseToSongData(song, diffs) {
         song_artist: song.artist,
         song_difficulties: diffs,
         song_release_date: song.releaseDate,
+        arcade_unlock_method: song.arcadeUnlockMethod,
         konasute_unlock_method: song.konasuteUnlockMethod,
         konasute_vol_pack: song.konasuteVolumePack,
         expanded: false

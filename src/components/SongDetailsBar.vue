@@ -26,6 +26,6 @@ const selected = reactive({
       </nav>
     </header>
     <ExpandedDetailsDescription v-if="selected.details" :song_info="props.song_info"/>
-    <ExpandedUnlockDescription v-if="selected.unlock" :title="props.song_info.title" :konasuteUnlockMethod="props.song_info.konasute_unlock_method" :konasuteVolPack="props.song_info.konasute_vol_pack" :songDiffs="props.song_info.song_difficulties"/>
+    <ExpandedUnlockDescription v-if="selected.unlock" :title="props.song_info.title" :arcadeUnlockMethod="props.song_info.arcade_unlock_method" :konasuteUnlockMethod="props.song_info.konasute_unlock_method" :konasuteVolPack="props.song_info.konasute_vol_pack" :songDiffs="props.song_info.song_difficulties"/>
   </div>
 </template>
