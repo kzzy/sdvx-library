@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import HelpDescriptionPopup from './HelpDescriptionPopup.vue'
-import { onMounted, reactive, computed, ref } from 'vue'
+import { onMounted, reactive, computed, ref, watch } from 'vue'
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler } from 'chart.js'
 import { diffTextColorLookupTable } from '@/helpers/LookupTables'
 import { Radar } from 'vue-chartjs'
@@ -13,10 +13,29 @@ ChartJS.register(
 )
 
 const props = defineProps(['song_info'])
+const hover_arcade_desc_popup = ref(false)
 const hover_konasute_desc_popup = ref(false)
 const hover_tierlist_desc_popup = ref(false)
 const difficulty_dropdown_menu = ref(false)
 const currentDifficultyState = ref(props.song_info.song_difficulties[props.song_info.song_difficulties.length-1])
+
+const radarData = reactive({
+  labels: ['NOTES', 'PEAK', 'TSUMAMI ', 'TRICKY', 'HAND TRIP', 'ONE HAND'],
+  datasets: [
+    {
+      backgroundColor: 'rgba(255,99,132,0.2)',
+      borderColor: 'rgba(255,99,132,1)',
+      data: [currentDifficultyState.value.song_effect_radar_notes, currentDifficultyState.value.song_effect_radar_peak, currentDifficultyState.value.song_effect_radar_tsumami, currentDifficultyState.value.song_effect_radar_tricky, currentDifficultyState.value.song_effect_radar_handtrip, currentDifficultyState.value.song_effect_radar_onehanded]
+    }
+  ]
+})
+
+const radarComputed = computed(() => {
+  return {
+    labels: ['NOTES', 'PEAK', 'TSUMAMI ', 'TRICKY', 'HAND TRIP', 'ONE HAND'],
+    datasets: radarData.datasets,
+  }
+})
 
 const diffBGColorLookupTable: { [key:string]:string } = {
   "NOVICE": "bg-indigo-900",
@@ -53,32 +72,8 @@ const getArcadeResultIcon = ((isArcade:boolean):string => {
   return isArcade ? 'checkmark.png' : 'xmark.png'
 })
 
-const radarData = reactive({
-  labels: ['NOTES', 'PEAK', 'TSUMAMI ', 'TRICKY', 'HAND TRIP', 'ONE HAND'],
-  datasets: [
-    {
-      backgroundColor: 'rgba(255,99,132,0.2)',
-      borderColor: 'rgba(255,99,132,1)',
-      data: []
-    }
-  ]
-})
-
-const radarComputed = computed(() => {
-  return {
-    labels: ['NOTES', 'PEAK', 'TSUMAMI ', 'TRICKY', 'HAND TRIP', 'ONE HAND'],
-    datasets: [
-      {
-        backgroundColor: 'rgba(255,99,132,0.2)',
-        borderColor: 'rgba(255,99,132,1)',
-        data: radarData.datasets.data
-      }
-    ]
-  }
-})
-
 const hasRadarData = computed(() => {
-  return radarData.datasets.data.length > 0
+  return radarData.datasets[0].data.length > 0
 })
 
 const getRankTier = computed(() => {
@@ -107,17 +102,17 @@ const radar_options = {
   }
 }
 
-const setRadarData = (notes:number, peak:number, tsumami:number, tricky:number, handtrip: number, onehand: number) => {
-  /* Check if data exists by checking if any arguments are undefined */
-  if(notes == undefined || peak == undefined || tsumami == undefined || tricky == undefined || handtrip == undefined || onehand == undefined) {
-    radarData.datasets.data = []
-  } else {
-    radarData.datasets.data = [notes, peak, tsumami, tricky, handtrip, onehand]
-  }
-}
-
 const updateDifficultyState = (idx:number) => {
   currentDifficultyState.value = props.song_info.song_difficulties[idx]
+
+  // Update radar chart
+  radarData.datasets = [
+    {
+      backgroundColor: 'rgba(255,99,132,0.2)',
+      borderColor: 'rgba(255,99,132,1)',
+      data: [currentDifficultyState.value.song_effect_radar_notes, currentDifficultyState.value.song_effect_radar_peak, currentDifficultyState.value.song_effect_radar_tsumami, currentDifficultyState.value.song_effect_radar_tricky, currentDifficultyState.value.song_effect_radar_handtrip, currentDifficultyState.value.song_effect_radar_onehanded]
+    }
+  ]
 }
 
 onMounted(() => {
@@ -170,7 +165,10 @@ onMounted(() => {
                 <div class="my-2 flex">
                   <div class="relative flex">
                       <div class="hover: cursor-pointer w-fit">
+                        <div @mouseover="hover_arcade_desc_popup = true" @mouseleave="hover_arcade_desc_popup = false">
                           <span class="text-blue-700 font-semibold">Arcade</span>
+                          <HelpDescriptionPopup v-if="hover_arcade_desc_popup" :description="'arcade'"/>
+                        </div>
                       </div>
                       <span class="mx-4 my-1">
                           <img class='w-6 h-6' :src="getArcadeResultIcon(currentDifficultyState.isArcade)">
@@ -190,7 +188,7 @@ onMounted(() => {
                 </div>
             </div>      
         </div>
-        <div id="effect_radar_chart_container" class="w-[386px] flex flex-col" :setRadarData="setRadarData(currentDifficultyState.song_effect_radar_notes, currentDifficultyState.song_effect_radar_peak, currentDifficultyState.song_effect_radar_tsumami, currentDifficultyState.song_effect_radar_tricky, currentDifficultyState.song_effect_radar_handtrip, currentDifficultyState.song_effect_radar_onehanded)">
+        <div id="effect_radar_chart_container" class="w-[386px] flex flex-col">
           <div class="relative w-96 text-lg">
             <div class="pt-2 flex flex-col items-center text-center">
               <div class="w-2/3 rounded-xl hover:cursor-pointer">
@@ -252,4 +250,4 @@ onMounted(() => {
             </table>
         </div>
     </div>
-</template>@/helpers/LookupTables
+</template>

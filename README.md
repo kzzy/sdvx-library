@@ -1,7 +1,6 @@
 # sdvxlibrary
 
 # Currently Working on
-- [ ] Fix mouse hover and leave Vue reactivity warning
 - [ ] Transition animations and other UX
 - [ ] Search Filters (Partially completed, On hold)
 
@@ -12,6 +11,7 @@
 - [x] Setup GraphQL and Apollo
 - [x] Frontend GraphQL querying, transformation of response into objects
 - [x] Stylize unlock container
+- [x] Fix mouse hover and leave Vue reactivity warning
 - [ ] Add About, Changelog, Contact components with links from the search field component
 - [ ] Change database from SQLite to Postgres
 - [ ] Strongly type GraphQL related functions
