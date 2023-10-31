@@ -22,7 +22,6 @@ watch(() => [
             filters.bpm_range_min, 
             filters.bpm_range_max
         ], () => {
-    console.log("Detected Filter Change")
     emit('search_filters', filters)
 })
 
@@ -58,8 +57,9 @@ watch(() => [
                 Volume Pack
                 <div class="ml-auto w-4 h-4 outline-dashed outline-2 rounded-full"></div>
             </div>
-            <div id="filter_game_entry" class="mb-2">Game Entry
-                <button @click="filter_game_entry_toggle = !filter_game_entry_toggle; console.log(filter_game_entry_toggle)" class="float-right">All</button>
+            <div id="filter_game_entry" class="mb-2 flex items-center">
+                Game Entry
+                <div class="ml-auto w-4 h-4 outline-dashed outline-2 rounded-full"></div>
             </div>
         </div>
     </div>

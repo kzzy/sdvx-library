@@ -122,38 +122,34 @@ onMounted(() => {
 
 <template>
     <div class="flex flex-wrap min-w-fit justify-center w-[40rem] max-md:w-[422px]">
-        <div id='details-text-container' class="justify-around w-[414px]">
+        <div id='details-text-container' class="w-[414px]">
             <div class="text-xl">
-                <div class="relative flex flex-col my-1 items-center">
+                <div class="relative flex flex-col my-3 items-center">
                     <img src="../assets/jacket_overlay.png" class="w-48 h-48 z-0 shadow-lg shadow-black">
                     <img :src="'/' + currentDifficultyState.jacket" class="absolute w-44 h-44 mt-2 z-10">
                 </div>
-                <div class="py-4 flex">
-                  <div class="mr-12">
+                <div class="grid grid-cols-3 gap-4">
+                  <div>
                     <h3 class="font-bold">Artist</h3>
                     <span class="font-light text-lg">{{ props.song_info.song_artist }}</span>
                   </div>
-                  <div class="mr-12">
+                  <div>
                     <h3 class="font-bold">Effector</h3>
                     <span class="font-light text-lg">{{ props.song_info.effector }}</span>
                   </div>
-                  <div class="">
+                  <div>
                     <h3 class="font-bold">BPM</h3>
                     <span class="font-light text-lg">{{ props.song_info.bpm }}</span>
                   </div>
-                </div>
-                <div class="py-4 flex">
-                  <div class="mr-12">
+                  <div class="col-span-3">
                     <h3 class="font-bold">Jacket Illustrator</h3>
                     <span class="font-light text-lg">{{ currentDifficultyState.jacket_artist }}</span>
                   </div>
-                </div>
-                <div class="py-4 flex">
-                  <div class="mr-12">
+                  <div>
                     <h3 class="font-bold">Album</h3>
                     <span class="font-light text-lg">{{ getAlbum }}</span>
                   </div>
-                  <div class="mr-12">
+                  <div>
                     <h3 class="font-bold">Length</h3>
                     <span class="font-light text-lg">{{ props.song_info.duration }}</span>
                   </div>
@@ -161,29 +157,29 @@ onMounted(() => {
                     <h3 class="font-bold">Release Date</h3>
                     <span class="font-light text-lg">{{ props.song_info.song_release_date }}</span>
                   </div>
-                </div>
-                <div class="my-2 flex">
-                  <div class="relative flex">
-                      <div class="hover: cursor-pointer w-fit">
-                        <div @mouseover="hover_arcade_desc_popup = true" @mouseleave="hover_arcade_desc_popup = false">
-                          <span class="text-blue-700 font-semibold">Arcade</span>
-                          <HelpDescriptionPopup v-if="hover_arcade_desc_popup" :description="'arcade'"/>
+                  <div class="mt-2 flex col-span-2">
+                    <div class="relative flex">
+                        <div class="hover: cursor-pointer w-fit">
+                          <div @mouseover="hover_arcade_desc_popup = true" @mouseleave="hover_arcade_desc_popup = false">
+                            <span class="text-blue-700 font-semibold">Arcade</span>
+                            <HelpDescriptionPopup v-if="hover_arcade_desc_popup" :description="'arcade'"/>
+                          </div>
                         </div>
-                      </div>
-                      <span class="mx-4 my-1">
-                          <img class='w-6 h-6' :src="getArcadeResultIcon(currentDifficultyState.isArcade)">
-                      </span>
-                  </div>
-                  <div class="relative flex">
-                      <div class="hover: cursor-pointer w-fit">
-                        <div @mouseover="hover_konasute_desc_popup = true" @mouseleave="hover_konasute_desc_popup = false">
-                          <span class="text-blue-700 font-semibold">Konasute</span>
-                          <HelpDescriptionPopup v-if="hover_konasute_desc_popup" :description="'konasute'"/>
+                        <span class="mx-4 my-1">
+                            <img class='w-6 h-6' :src="getArcadeResultIcon(currentDifficultyState.isArcade)">
+                        </span>
+                    </div>
+                    <div class="relative flex">
+                        <div class="hover: cursor-pointer w-fit">
+                          <div @mouseover="hover_konasute_desc_popup = true" @mouseleave="hover_konasute_desc_popup = false">
+                            <span class="text-blue-700 font-semibold">Konasute</span>
+                            <HelpDescriptionPopup v-if="hover_konasute_desc_popup" :description="'konasute'"/>
+                          </div>
                         </div>
-                      </div>
-                      <span class="mx-4 my-1">
-                          <img class='w-6 h-6' :src="getKonasuteResultIcon(currentDifficultyState.isKonasute)">
-                      </span>
+                        <span class="mx-4 my-1">
+                            <img class='w-6 h-6' :src="getKonasuteResultIcon(currentDifficultyState.isKonasute)">
+                        </span>
+                    </div>
                   </div>
                 </div>
             </div>      
@@ -214,7 +210,7 @@ onMounted(() => {
             </span>
           </div>
 
-          <div id='tier_list_rank' class="mt-auto flex items-center text-lg pb-2">
+          <div id='tier_list_rank' class="mt-auto flex items-center text-lg">
             <div class="relative :hover cursor-pointer" @mouseover="hover_tierlist_desc_popup = true" @mouseleave="hover_tierlist_desc_popup = false">
                 <span class="text-emerald-300">Level Relative Clear Difficulty</span>
                 <HelpDescriptionPopup v-if="hover_tierlist_desc_popup" :description="'tierlist'"/>

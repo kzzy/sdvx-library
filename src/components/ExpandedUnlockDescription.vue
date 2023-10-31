@@ -8,7 +8,7 @@ console.log(props)
 <template>
     <div class="w-[798px] max-md:w-[422px]">
         <div class="m-4 flex flex-col text-3xl">
-            <div class="border-b-[1px] pb-2 border-white/30">
+            <div class="border-b-[1px] mb-2 border-white/30">
                 <div class="px-6 pb-8">
                     <h2 class="text-4xl my-5 font-semibold text-blue-700">ARCADE</h2>
                     <p v-if="props.arcadeUnlockMethod == 'PCB'" class="font-thin text-xl">{{ props.title }} is unlockable on Arcade Cabinets using PCB<br></p>
@@ -18,7 +18,7 @@ console.log(props)
                     <span class="text-sm text-gray-400">* If the cabinet is using a custom network, this may not apply</span>
                 </div>
             </div>
-            <div class="border-b-[1px] pb-2 border-white/30">
+            <div class="border-b-[1px] mb-2 border-white/30">
                 <div class="px-6 pb-8">
                     <h2 class="text-4xl my-5 font-semibold text-blue-700">KONASUTE</h2>
                     <div class="font-thin text-xl">
