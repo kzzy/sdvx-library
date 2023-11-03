@@ -21,8 +21,8 @@ const showContacts = ref(false)
 		<div class="mt-32 text-lg text-gray-400">
 			2023-10-31 - First release of SDVX Library
 		</div>
-		<div class="mt-4 text-lg flex">
-			<div class="px-4 border-r border-white/70 hover:text-blue-400 hover:cursor-pointer" @click="showChangeLog = !showChangeLog; showContacts = false">
+		<div class="mt-4 text-lg flex select-none">
+			<div class="px-4 border-r border-white/20 hover:text-blue-400 hover:cursor-pointer" @click="showChangeLog = !showChangeLog; showContacts = false">
 				Changelog
 			</div>		
 			<div class="px-4 hover:text-blue-400 hover:cursor-pointer" @click="showContacts = !showContacts;showChangeLog = false">
@@ -32,7 +32,7 @@ const showContacts = ref(false)
 		<footer class="mt-auto hidden">
 			SDVX Library was made by kazu, I can be reached at kazu#1635 on Discord
 		</footer>
-		<div v-if="showChangeLog" class="min-w-fit w-[706px] max-md:w-[300px] bg-black/80 mt-4">
+		<div v-if="showChangeLog" class="h-24 min-w-fit w-[706px] max-md:w-[300px] bg-black/80 mt-4">
 			<div class="m-8 text-lg inline-flex">
 				<div class="text-yellow-400">
 					2023-10-31
@@ -42,7 +42,7 @@ const showContacts = ref(false)
 				</div>
 			</div>
 		</div>
-		<div v-if="showContacts" class="min-w-fit w-[706px] max-md:w-[300px] bg-black/80 mt-4">
+		<div v-if="showContacts" class="h-24 -w-fit w-[706px] max-md:w-[300px] bg-black/80 mt-4">
 			<div class="m-8 text-lg inline-flex">
 				<img class="w-10 h-8" src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png">
 				<div class="text-white">

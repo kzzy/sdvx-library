@@ -124,7 +124,7 @@ onMounted(() => {
     <div class="flex flex-wrap min-w-fit justify-center w-[40rem] max-md:w-[422px]">
         <div id='details-text-container' class="w-[414px]">
             <div class="text-xl">
-                <div class="relative flex flex-col my-3 items-center">
+                <div class="relative flex flex-col my-3 items-center select-none pointer-events-none">
                     <img src="../assets/jacket_overlay.png" class="w-48 h-48 z-0 shadow-lg shadow-black">
                     <img :src="'/' + currentDifficultyState.jacket" class="absolute w-44 h-44 mt-2 z-10">
                 </div>
