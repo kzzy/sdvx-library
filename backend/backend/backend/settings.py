@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'sdvxLibraryBackend',
     'graphene_django',
+    'django_filters',
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
