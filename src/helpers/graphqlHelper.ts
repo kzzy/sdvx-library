@@ -10,8 +10,8 @@ let variables = {
 }
 
 const allSongsQuery = gql`
-    query ($cursor: String!) {
-        songs (all: "a", first: QUERY_SETTINGS.REQUEST_LIMIT, after: $cursor) {
+    query ($cursor: String!, $first: Int!) {
+        songs (all: "a", first: $first, after: $cursor) {
             pageInfo {
                 startCursor
                 endCursor
@@ -40,8 +40,8 @@ const allSongsQuery = gql`
 `
 
 const songQuery = gql`
-    query ($title: String!, $cursor: String!) {
-        songs (q: $title, first: QUERY_SETTINGS.REQUEST_LIMIT, after: $cursor) {
+    query ($title: String!, $cursor: String!, $first: Int!) {
+        songs (q: $title, first: $first, after: $cursor) {
             pageInfo {
                 startCursor
                 endCursor
@@ -105,6 +105,7 @@ const chartQuery = gql`
 export function runAllSongsQuery(cursor="") {
     variables = {
         cursor: cursor,
+        first: QUERY_SETTINGS.REQUEST_LIMIT
     }
     const { result, loading, error } = useQuery(allSongsQuery, variables, { fetchPolicy: 'network-only' })
 
@@ -114,7 +115,8 @@ export function runAllSongsQuery(cursor="") {
 export function runSearchSongsQuery(searchTerm: string, cursor="") {
     variables = {
         title: searchTerm,
-        cursor: cursor
+        cursor: cursor,
+        first: QUERY_SETTINGS.REQUEST_LIMIT
     }
     const { result, loading, error } = useQuery(songQuery, variables, { fetchPolicy: 'network-only' })
     return { result, loading, error }
