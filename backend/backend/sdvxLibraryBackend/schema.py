@@ -7,12 +7,16 @@ from django.db.models import Q
 from .models import Song, Chart
 
 class SongFilter(FilterSet):
-    q = CharFilter(method="search_by_term", label="Search")
+    q = CharFilter(method="search_by_term")
+    all = CharFilter(method="search_all")
 
     class Meta:
         model = Song
-        fields = ['q']
+        fields = ['q', 'all']
 
+    def search_all(self, queryset, name, value):
+        return queryset.order_by('title')
+    
     def search_by_term(self, queryset, name, value):
         return queryset.filter(
             Q(title__icontains=value) | Q(alternateTitle__icontains=value)
@@ -53,7 +57,7 @@ class ChartNode(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     song = relay.Node.Field(SongNode)
-    songs = DjangoFilterConnectionField(SongNode, filter)
+    songs = DjangoFilterConnectionField(SongNode)
     
     chart = relay.Node.Field(ChartNode)
     charts = DjangoFilterConnectionField(ChartNode)

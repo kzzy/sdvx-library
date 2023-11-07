@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import HelpDescriptionPopup from './HelpDescriptionPopup.vue'
-import { onMounted, reactive, computed, ref, watch } from 'vue'
+import { onMounted, reactive, computed, ref } from 'vue'
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler } from 'chart.js'
 import { diffTextColorLookupTable } from '@/helpers/LookupTables'
 import { Radar } from 'vue-chartjs'

@@ -1,7 +1,7 @@
 # sdvxlibrary
 
 # Currently Working on
-- [ ] Transition animations and other UX
+- [ ] Improve on transitions (Ongoing)
 - [ ] Search Filters (Partially completed, On hold)
 
 # To Do List
@@ -12,9 +12,11 @@
 - [x] Frontend GraphQL querying, transformation of response into objects
 - [x] Stylize unlock container
 - [x] Fix mouse hover and leave Vue reactivity warning
-- [ ] Add About, Changelog, Contact components with links from the search field component
+- [x] Add Changelog, Contact
+- [x] Pagination on results (Setup cursor-based using Relay)
 - [ ] Change database from SQLite to Postgres
 - [ ] Strongly type GraphQL related functions
+
 
 
 ## Project Setup

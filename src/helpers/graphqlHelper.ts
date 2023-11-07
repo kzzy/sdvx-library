@@ -1,79 +1,120 @@
 import { useQuery } from "@vue/apollo-composable"
 import gql from "graphql-tag"
 
+enum QUERY_SETTINGS {
+    REQUEST_LIMIT = 7
+}
+
 let variables = {
     title: ''
 }
 
 const allSongsQuery = gql`
-    query {
-        songs {
-            title
-            duration
-            bpm
-            artist
-            effector
-            album
-            isArcade
-            isKonasute
-            konasuteVolumePack
-            releaseDate
-            konasuteUnlockMethod
-            arcadeUnlockMethod
+    query ($cursor: String!) {
+        songs (all: "a", first: QUERY_SETTINGS.REQUEST_LIMIT, after: $cursor) {
+            pageInfo {
+                startCursor
+                endCursor
+                hasNextPage
+            }
+            edges {
+                cursor
+                node {
+                    id
+                    title
+                    duration
+                    bpm
+                    artist
+                    effector
+                    album
+                    isArcade
+                    isKonasute
+                    konasuteVolumePack
+                    releaseDate
+                    konasuteUnlockMethod
+                    arcadeUnlockMethod
+                }
+            }
         }
     }
-    `
+`
 
 const songQuery = gql`
-    query ($title: String!) {
-        songsLikeName (title: $title) {
-            title
-            duration
-            bpm
-            artist
-            effector
-            album
-            isArcade
-            isKonasute
-            konasuteVolumePack
-            releaseDate
-            konasuteUnlockMethod
-            arcadeUnlockMethod
+    query ($title: String!, $cursor: String!) {
+        songs (q: $title, first: QUERY_SETTINGS.REQUEST_LIMIT, after: $cursor) {
+            pageInfo {
+                startCursor
+                endCursor
+                hasNextPage
+            }
+            edges {
+                cursor
+                node {
+                    id
+                    title
+                    duration
+                    bpm
+                    artist
+                    effector
+                    album
+                    isArcade
+                    isKonasute
+                    konasuteVolumePack
+                    releaseDate
+                    konasuteUnlockMethod
+                    arcadeUnlockMethod
+                }
+            }
         }
     }
 `
+
 const chartQuery = gql`
-    query ($songTitle: String!) {
-        chartsByName (songTitle: $songTitle) {
-            difficultyName
-            level
-            jacketFilename
-            jacketArtist
-            diffIsArcade
-            diffIsKonasute
-            releaseDate
-            tier
-            maxChain
-            maxChipNotes
-            maxLongNotes
-            maxVolNotes
-            radarHandtrip
-            radarNotes
-            radarOnehanded
-            radarPeak
-            radarTricky
-            radarTsumami
+    query ($songTitle: ID!) {
+        charts (songTitle: $songTitle) {
+            edges {
+                node {
+                    songTitle {
+                        title
+                    }
+                    difficultyName
+                    level
+                    jacketFilename
+                    jacketArtist
+                    diffIsArcade
+                    diffIsKonasute
+                    releaseDate
+                    tier
+                    maxChain
+                    maxChipNotes
+                    maxLongNotes
+                    maxVolNotes
+                    radarHandtrip
+                    radarNotes
+                    radarOnehanded
+                    radarPeak
+                    radarTricky
+                    radarTsumami
+                }
+            }
         }
     }
 `
-export function runAllSongsQuery() {
-    const { result, loading, error } = useQuery(allSongsQuery, {}, { fetchPolicy: 'network-only' })
+
+
+export function runAllSongsQuery(cursor="") {
+    variables = {
+        cursor: cursor,
+    }
+    const { result, loading, error } = useQuery(allSongsQuery, variables, { fetchPolicy: 'network-only' })
+
     return { result, loading, error }
 }
 
-export function runSearchSongsQuery(value: string) {
+export function runSearchSongsQuery(searchTerm: string, cursor="") {
     variables = {
-        title:value,
+        title: searchTerm,
+        cursor: cursor
     }
     const { result, loading, error } = useQuery(songQuery, variables, { fetchPolicy: 'network-only' })
     return { result, loading, error }
@@ -81,7 +122,7 @@ export function runSearchSongsQuery(value: string) {
 
 export function runChartQuery(value: string) {
     variables = {
-        songTitle:value,
+        songTitle: value,
     }
     const { result, loading, error } = useQuery(chartQuery, variables, { fetchPolicy: 'network-only' })
     return { result, loading, error }

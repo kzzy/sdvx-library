@@ -39,6 +39,7 @@ function getDiffBackground(diff:string) : string {
             throw new Error("Returned invalid difficulty of " + diff)
     }
 }
+
 </script>
 
 <template>
