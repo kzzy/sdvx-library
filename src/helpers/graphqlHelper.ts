@@ -17,6 +17,7 @@ const allSongsQuery = gql`
                 endCursor
                 hasNextPage
             }
+            totalCount
             edges {
                 cursor
                 node {
@@ -47,6 +48,7 @@ const songQuery = gql`
                 endCursor
                 hasNextPage
             }
+            totalCount
             edges {
                 cursor
                 node {

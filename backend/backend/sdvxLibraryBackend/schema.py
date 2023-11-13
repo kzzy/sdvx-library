@@ -1,5 +1,5 @@
 import graphene
-from graphene import relay
+from graphene import relay, Connection, Int
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 from django_filters import FilterSet, CharFilter
@@ -22,11 +22,21 @@ class SongFilter(FilterSet):
             Q(title__icontains=value) | Q(alternateTitle__icontains=value)
         ).order_by('title')
 
+class SongExtendedConneciton(Connection):
+    class Meta:
+        abstract = True
+
+    total_count = Int()
+
+    def resolve_total_count(root, info, **kwargs):
+        return root.length
+
 class SongNode(DjangoObjectType):
     class Meta:
         model = Song
         interfaces = (relay.Node, )
         filterset_class = SongFilter
+        connection_class = SongExtendedConneciton
 
 class ChartNode(DjangoObjectType):
     class Meta:

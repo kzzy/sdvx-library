@@ -40,6 +40,40 @@ module.exports = {
       screens: {
         '1.5xl': '1400px'
       },
+      keyframes: {
+        fadeInUp: {
+          '0%': { transform: 'translateY(20%)', opacity: '0' },
+          '100%': { transform: 'translateY(0%)', opacity: '1' }
+        },
+        fadeInUpTitle: {
+          '0%': { transform: 'translateY(60%)', opacity: '0', 'animation-timing-function': 'cubic-bezier(0.175, 0.885, 0.32, 1.575)' },
+          '100%': { transform: 'translateY(0%)', opacity: '1' }
+        },
+        widthChangeIncreaseBox: {
+          '0%': { width: '4rem', 'animation-timing-function': 'ease-in-out' },
+          '100%': { width: '18rem' }
+        },
+        widthChangeIncreaseText: {
+          '0%': { width: '0rem', 'animation-timing-function': 'ease-in-out' },
+          '100%': { width: '14rem' }
+        },
+        expandFull: {
+          '0%': { height:'0px' },
+          '100%': { height:'836px' }
+        },
+        expandMin: {
+          '0%': { height:'0px' },
+          '100%': { height:'1377px' }
+        },
+      },
+      animation: {
+        fadeInUp: 'fadeInUp 0.45s',
+        fadeInUpTitle: 'fadeInUpTitle 0.7s',
+        widthChangeIncreaseBox: 'widthChangeIncreaseBox 0.5s',
+        widthChangeIncreaseText: 'widthChangeIncreaseText 0.5s',
+        expandFull: 'expandFull 0.7s',
+        expandMin: 'expandMin 1s',
+      },
     },
   },
   plugins: [

@@ -11,6 +11,7 @@ const routes: Array<RouteRecordRaw> = [
         path: "/search",
         name: "Search",
         component: () => import('@/pages/SearchPage.vue'),
+        props: route => ({ q: route.query.q })
     }
 ]
 

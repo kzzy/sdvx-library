@@ -9,7 +9,7 @@ const descriptionLookup: { [key:string]:string } = {
 </script>
 
 <template>
-    <div class="absolute bottom-8 w-64 h-fit bg-gray-800 rounded-lg text-sm z-10 text-orange-200">
+    <div class="absolute bottom-8 w-64 h-fit bg-gray-800 rounded-lg text-sm z-10 text-orange-200 animate-fadeInUp">
         <p class="m-1.5">{{ descriptionLookup[props.description] }}</p>
     </div>
 </template>
