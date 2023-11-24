@@ -65,14 +65,19 @@ module.exports = {
           '0%': { height:'0px' },
           '100%': { height:'1377px' }
         },
+        bounceUpwards: {
+          '0%, 100%': { transform: 'translateY(0%)', 'animation-timing-function':'animation-timing-function: cubic-bezier(0.8, 0, 1, 1)'},
+          '50%': { transform: 'translateY(20%)', 'animation-timing-function':'animation-timing-function: cubic-bezier(0, 0, 0.2, 1)'}
+        }
       },
       animation: {
         fadeInUp: 'fadeInUp 0.45s',
         fadeInUpTitle: 'fadeInUpTitle 0.7s',
-        widthChangeIncreaseBox: 'widthChangeIncreaseBox 0.5s',
-        widthChangeIncreaseText: 'widthChangeIncreaseText 0.5s',
+        widthChangeIncreaseBox: 'widthChangeIncreaseBox 0.3s',
+        widthChangeIncreaseText: 'widthChangeIncreaseText 0.3s',
         expandFull: 'expandFull 0.7s',
         expandMin: 'expandMin 1s',
+        bounceUpwards: 'bounceUpwards 1s infinite',
       },
     },
   },

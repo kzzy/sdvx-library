@@ -64,6 +64,11 @@ const rankColorLookupTable: { [key:string]:string } = {
   '': "text-gray-400"
 }
 
+// Used to validate potentially null data fields
+const checkDataForEmpty = ((data:number|string|null):number|string|null => {
+  return (data == null || data.length == 0) ? '-': data
+})
+
 const getKonasuteResultIcon = ((isKonasute:boolean):string => {
   return isKonasute ? 'checkmark.png' : 'xmark.png'
 })
@@ -73,15 +78,11 @@ const getArcadeResultIcon = ((isArcade:boolean):string => {
 })
 
 const hasRadarData = computed(() => {
-  return radarData.datasets[0].data.length > 0
+  return radarData.datasets[0].data[0] != null
 })
 
 const getRankTier = computed(() => {
   return currentDifficultyState.value.rank_tier.length > 0 ? currentDifficultyState.value.rank_tier : 'N/A'
-})
-
-const getAlbum = computed(() => {
-  return props.song_info.album.length > 0 ? props.song_info.album : 'N/A'
 })
 
 const radar_options = {
@@ -125,43 +126,43 @@ onMounted(() => {
         <div id='details-text-container' class="w-[414px]">
             <div class="text-xl">
                 <div class="relative flex flex-col my-3 items-center select-none pointer-events-none">
-                    <img src="../assets/jacket_overlay.png" class="w-48 h-48 z-0 shadow-lg shadow-black">
-                    <img :src="'/' + currentDifficultyState.jacket" class="absolute w-44 h-44 mt-2 z-10">
+                    <img src="/src/assets/jacket_overlay.png" class="w-48 h-48 z-0 shadow-lg shadow-black">
+                    <img :src="'/src/assets/jackets/' + currentDifficultyState.jacket" class="absolute w-44 h-44 mt-2 z-10">
                 </div>
                 <div class="grid grid-cols-3 gap-4">
                   <div>
                     <h3 class="font-bold">Artist</h3>
-                    <span class="font-light text-lg">{{ props.song_info.song_artist }}</span>
+                    <span class="font-light text-lg">{{ checkDataForEmpty(props.song_info.song_artist) }}</span>
                   </div>
                   <div>
                     <h3 class="font-bold">Effector</h3>
-                    <span class="font-light text-lg">{{ props.song_info.effector }}</span>
+                    <span class="font-light text-lg">{{ checkDataForEmpty(props.song_info.effector) }}</span>
                   </div>
                   <div>
                     <h3 class="font-bold">BPM</h3>
-                    <span class="font-light text-lg">{{ props.song_info.bpm }}</span>
+                    <span class="font-light text-lg">{{ checkDataForEmpty(props.song_info.bpm) }}</span>
                   </div>
                   <div class="col-span-3">
                     <h3 class="font-bold">Jacket Illustrator</h3>
-                    <span class="font-light text-lg">{{ currentDifficultyState.jacket_artist }}</span>
+                    <span class="font-light text-lg">{{ checkDataForEmpty(currentDifficultyState.jacket_artist) }}</span>
                   </div>
                   <div>
                     <h3 class="font-bold">Album</h3>
-                    <span class="font-light text-lg">{{ getAlbum }}</span>
+                    <span class="font-light text-lg">{{ checkDataForEmpty(props.song_info.album) }}</span>
                   </div>
                   <div>
                     <h3 class="font-bold">Length</h3>
-                    <span class="font-light text-lg">{{ props.song_info.duration }}</span>
+                    <span class="font-light text-lg">{{ checkDataForEmpty(props.song_info.duration) }}</span>
                   </div>
                   <div>
                     <h3 class="font-bold">Release Date</h3>
-                    <span class="font-light text-lg">{{ props.song_info.song_release_date }}</span>
+                    <span class="font-light text-lg">{{ checkDataForEmpty(props.song_info.song_release_date) }}</span>
                   </div>
                   <div class="mt-2 flex col-span-2">
                     <div class="relative flex">
                         <div class="hover: cursor-pointer w-fit">
                           <div @mouseover="hover_arcade_desc_popup = true" @mouseleave="hover_arcade_desc_popup = false">
-                            <span class="text-blue-700 font-semibold">Arcade</span>
+                            <span class="text-blue-700 font-semibold hover:text-blue-500">Arcade</span>
                             <HelpDescriptionPopup v-if="hover_arcade_desc_popup" :description="'arcade'"/>
                           </div>
                         </div>
@@ -172,7 +173,7 @@ onMounted(() => {
                     <div class="relative flex">
                         <div class="hover: cursor-pointer w-fit">
                           <div @mouseover="hover_konasute_desc_popup = true" @mouseleave="hover_konasute_desc_popup = false">
-                            <span class="text-blue-700 font-semibold">Konasute</span>
+                            <span class="text-blue-700 font-semibold hover:text-blue-500">Konasute</span>
                             <HelpDescriptionPopup v-if="hover_konasute_desc_popup" :description="'konasute'"/>
                           </div>
                         </div>
@@ -212,7 +213,7 @@ onMounted(() => {
 
           <div id='tier_list_rank' class="mt-auto flex items-center text-lg">
             <div class="relative :hover cursor-pointer" @mouseover="hover_tierlist_desc_popup = true" @mouseleave="hover_tierlist_desc_popup = false">
-                <span class="text-emerald-300">Level Relative Clear Difficulty</span>
+                <span class="text-emerald-400 hover:text-emerald-200">Level Relative Clear Difficulty</span>
                 <HelpDescriptionPopup v-if="hover_tierlist_desc_popup" :description="'tierlist'"/>
             </div>
             <p class="px-2">Rank:</p>
@@ -237,10 +238,10 @@ onMounted(() => {
                     <tr class="border-b" :class="diffBGColorLookupTable[difficulty.difficulty_name]">
                     <td class="m-6 w-32 border-l">{{ difficulty.difficulty_name }}</td>
                     <td class="w-32">{{ difficulty.difficulty_level }}</td>
-                    <td class="w-32">{{ difficulty.max_chain }}</td>
-                    <td class="w-32">{{ difficulty.max_chip_notes }}</td>
-                    <td class="w-32">{{ difficulty.max_long_notes }}</td>
-                    <td class="w-40 border-r">{{ difficulty.max_vol_notes }}</td>
+                    <td class="w-32">{{ checkDataForEmpty(difficulty.max_chain) }}</td>
+                    <td class="w-32">{{ checkDataForEmpty(difficulty.max_chip_notes) }}</td>
+                    <td class="w-32">{{ checkDataForEmpty(difficulty.max_long_notes) }}</td>
+                    <td class="w-40 border-r">{{ checkDataForEmpty(difficulty.max_vol_notes) }}</td>
                     </tr>
                 </tbody>
             </table>

@@ -34,6 +34,7 @@ export interface BasicSongDataInterface {
     bpm: string;
     song_artist: string;
     song_difficulties: SongDifficulty[];
+    banner_filename: string;
 
     expanded: boolean;
 }

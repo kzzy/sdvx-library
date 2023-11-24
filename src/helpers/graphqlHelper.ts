@@ -34,6 +34,7 @@ const allSongsQuery = gql`
                     releaseDate
                     konasuteUnlockMethod
                     arcadeUnlockMethod
+                    bannerFilename
                 }
             }
         }
@@ -65,6 +66,7 @@ const songQuery = gql`
                     releaseDate
                     konasuteUnlockMethod
                     arcadeUnlockMethod
+                    bannerFilename
                 }
             }
         }

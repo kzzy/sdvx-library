@@ -28,6 +28,7 @@ watch(searchTerm, (value) => {
 const debounceInput = debounce((input:string) => {
     console.log("Execute search using: " + input)
     resetCoreSettings()
+    router.replace({ query: {q: input}})
     runSearch(input)
 }, 800)
 
@@ -160,7 +161,7 @@ onMounted(() => {
     }
 })
 
-const onResultHitBottomScroll = (e) => {
+const onResultHitBottomScroll = (e:any) => {
     const scrollTop = e.target.scrollTop
     const scrollHeight = e.target.scrollHeight
     const clientHeight = e.target.clientHeight
@@ -180,8 +181,10 @@ const onResultHitBottomScroll = (e) => {
         <div class="w-min bg-[#050505] bg-opacity-95 border-r-2 border-indigo-900 max-[1240px]:hidden">
             <div class="mx-5 py-5 flex flex-col">
                 <div class="rounded-3xl bg-mainNight bg-opacity-95 outline-indigo-900 outline outline-1 shadow-green-500 shadow-md w-fit">
-                    <img class="w-12 h-16 m-auto pt-3 hover:cursor-pointer" src="../assets/pixel_grace.png" alt=":)" @click="router.push({ path: '/' })">
-                    <h1 class="text-white text-3xl text-center pt-2 pb-8 font-bold">SDVX Library</h1>
+                    <img class="w-12 h-16 m-auto pt-3 hover:cursor-pointer" src="/src/assets/pixel_grace.png" alt=":)" @click="router.push({ path: '/' })">
+                    <div class="text-white text-3xl text-center pt-2 pb-8 font-bold">
+                        <h1>SDVX Library</h1>
+                    </div>
                     <form>
                         <input v-model="searchTerm" class="text-center block m-auto py-2.5 px-0 w-1/2 font-mono text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" onkeypress="return event.keyCode != 13;" autocomplete="off" type="text" autofocus id="home_search" placeholder="Song Name">
                     </form>
@@ -200,17 +203,17 @@ const onResultHitBottomScroll = (e) => {
                         <h3 class="pl-12 py-2">Results</h3>
                         <p class="text-2xl ml-12 max-md:text-xl">Showing {{ currentSongCountView }} songs out of {{ totalSongCountView }}</p>
                     </div>
-                    <SearchResults :class="[isLoading && hasMoreSearchResults ? 'transition-opacity ease-out duration-200 opacity-0':'transition-opacity ease-in duration-200 opacity-100']" :updateSongs="filteredSongList"/>
+                    <SearchResults :class="[isLoading && hasMoreSearchResults ? '':'']" :updateSongs="filteredSongList"/>
                 </div>
                 <div v-show="emptySearchResults" class="h-screen w-full flex items-center justify-center text-center">
                     <div>
-                        <img src="../assets/miku.webp" class="w-80 h-80">
+                        <img src="/src/assets/miku.webp" class="w-80 h-80">
                         <p class="text-white text-3xl font-light pb-2 drop-shadow-2xl">We found nothing :(</p>
                     </div>
                 </div>
             </div>
             <div v-show="isLoading" class="h-screen w-full flex items-center justify-center text-center">
-                <img class="w-40 h-40" src="../assets/spinner.svg">
+                <img class="w-40 h-40" src="/src/assets/spinner.svg">
             </div>
         </div>
     </div>
