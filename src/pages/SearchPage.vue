@@ -197,14 +197,14 @@ const onResultHitBottomScroll = (e:any) => {
             </div>
         </div>
         <div class="relative w-full flex flex-col items-center max-h-screen overflow-y-scroll overflow-x-hidden" @scroll="onResultHitBottomScroll">
-            <div v-show="!isLoading">
-                <div v-show="!emptySearchResults" class="w-fit">
+            <div v-show="!emptySearchResults" class="w-fit">
                     <div class="w-[876px] text-white text-6xl font-light h-20 flex items-center max-[875px]:w-full">
                         <h3 class="pl-12 py-2">Results</h3>
                         <p class="text-2xl ml-12 max-md:text-xl">Showing {{ currentSongCountView }} songs out of {{ totalSongCountView }}</p>
                     </div>
-                    <SearchResults :class="[isLoading && hasMoreSearchResults ? '':'']" :updateSongs="filteredSongList"/>
-                </div>
+                    <SearchResults :updateSongs="filteredSongList"/>
+            </div>
+            <div v-show="!isLoading">
                 <div v-show="emptySearchResults" class="h-screen w-full flex items-center justify-center text-center">
                     <div>
                         <img src="/src/assets/miku.webp" class="w-80 h-80">

@@ -50,33 +50,31 @@ const getDifficultyJacket = (songDifficulties:SongDifficulty[]) => {
 </script>
 
 <template>
-    <div class="text-white">
-        <div v-if="results" class="flex flex-col items-center justify-center">
-            <div class="min-w-fit w-4/6 rounded-2xl mx-5 my-3  shadow-sky-200 shadow-sm overflow-hidden" v-for="result in results" :key="result.title">
-                <div id="search_result_cell" class="group" @click="result.expanded = !result.expanded">
-                    <div id="result_cell" class="bg-mainNight group-hover:bg-[#060606] p-6 flex relative overflow-hidden min-w-fit select-none hover:cursor-pointer">
-                        <div class="min-h-full min-w-fit flex items-center pointer-events-none">
-                            <img class="w-32 h-32 z-50" :src="'/src/assets/jackets/' + getDifficultyJacket(result.song_difficulties)" >
+    <div v-if="results" class="flex flex-col items-center justify-center text-white">
+        <div class="min-w-fit w-4/6 rounded-2xl mx-5 my-3  shadow-sky-200 shadow-sm overflow-hidden" v-for="result in results" :key="result.title">
+            <div id="search_result_cell" class="group" @click="result.expanded = !result.expanded">
+                <div id="result_cell" class="bg-mainNight group-hover:bg-[#060606] p-6 flex relative overflow-hidden min-w-fit select-none hover:cursor-pointer">
+                    <div class="min-h-full min-w-fit flex items-center pointer-events-none">
+                        <img class="w-32 h-32 z-50" :src="'/src/assets/jackets/' + getDifficultyJacket(result.song_difficulties)" >
+                    </div>
+                    <div class="ml-5 z-10">
+                        <div class="@container w-160 h-10 font-thin font-sans max-md:w-72 group-hover:brightness-125">
+                            <h2 :class="getResultTitleStyling(result.title)">{{ result.title }}</h2>
                         </div>
-                        <div class="ml-5 z-10">
-                            <div class="@container w-160 h-10 font-thin font-sans max-md:w-72 group-hover:brightness-125">
-                                <h2 :class="getResultTitleStyling(result.title)">{{ result.title }}</h2>
+                        <div class="w-fit flex max-md:w-[17rem] max-md:flex-wrap mt-10 max-w-lg justify-between">
+                            <div class="m-2 bg-center bg-no-repeat text-center w-[116px]" :class=getDiffBackground(difficulty.difficulty_name) v-for="difficulty in result.song_difficulties" :key="difficulty.difficulty_name">
+                                <p class="font-semibold">{{difficulty.difficulty_name}} {{difficulty.difficulty_level}} </p>
                             </div>
-                            <div class="w-fit flex max-md:w-[17rem] max-md:flex-wrap mt-10 max-w-lg justify-between">
-                                <div class="m-2 bg-center bg-no-repeat text-center w-[116px]" :class=getDiffBackground(difficulty.difficulty_name) v-for="difficulty in result.song_difficulties" :key="difficulty.difficulty_name">
-                                    <p class="font-semibold">{{difficulty.difficulty_name}} {{difficulty.difficulty_level}} </p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="absolute top-0 -right-28 z-0 overflow-hidden visible max-md:hidden group-hover:brightness-125">
-                            <div class="absolute z-10 w-full h-[300px] bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-transparent via-70% via-mainNight to-80% to-mainNight"></div>
-                            <img class="w-[514px] h-[176px] brightness-75" :src="'/src/assets/banners/' + result.banner_filename" >
                         </div>
                     </div>
+                    
+                    <div class="absolute top-0 -right-28 z-0 overflow-hidden visible max-md:hidden group-hover:brightness-125">
+                        <div class="absolute z-10 w-full h-[300px] bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-transparent via-70% via-mainNight to-80% to-mainNight"></div>
+                        <img class="w-[514px] h-[176px] brightness-75" :src="'/src/assets/banners/' + result.banner_filename" >
+                    </div>
                 </div>
-                <SongDetailsBar v-if="result.expanded" :song_info="result"/>
             </div>
+            <SongDetailsBar v-if="result.expanded" :song_info="result"/>
         </div>
     </div>
 </template>

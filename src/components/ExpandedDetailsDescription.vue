@@ -115,10 +115,6 @@ const updateDifficultyState = (idx:number) => {
     }
   ]
 }
-
-onMounted(() => {
-  console.log(props.song_info)
-})
 </script>
 
 <template>
@@ -188,19 +184,21 @@ onMounted(() => {
         <div id="effect_radar_chart_container" class="w-[386px] flex flex-col">
           <div class="relative w-96 text-lg">
             <div class="pt-2 flex flex-col items-center text-center">
-              <div class="w-2/3 rounded-xl hover:cursor-pointer">
-                <div @click="difficulty_dropdown_menu = true" >
-                  <button class="text-3xl font-semibold" :class="diffTextColorLookupTable[currentDifficultyState.difficulty_name]" @click="difficulty_dropdown_menu = true">{{ currentDifficultyState.difficulty_name }}
+              <div class="w-2/3 rounded-sm hover:cursor-pointer">
+                <div class="hover:brightness-125" @click="difficulty_dropdown_menu = !difficulty_dropdown_menu" >
+                  <button class="text-3xl font-semibold select-none" :class="diffTextColorLookupTable[currentDifficultyState.difficulty_name]">{{ currentDifficultyState.difficulty_name }}
                   </button>
                   <span class="absolute">
-                      <img class="mx-4 my-1.5 w-6 h-6"  src="dropdown-arrow.png">
+                      <img class="mx-4 my-1.5 w-6 h-6 select-none"  src="dropdown-arrow.png">
                   </span>
                 </div>
-                <div v-if="difficulty_dropdown_menu" class="absolute pt-2 pb-2 flex flex-col w-2/3 shadow-xl bg-indigo-950 rounded-xl z-10">
-                  <div v-for="(diff, index) in props.song_info.song_difficulties" :key="diff" @click="updateDifficultyState(index); difficulty_dropdown_menu = false" class="p-2 hover:cursor-pointer hover:bg-indigo-800">
-                      {{ diff.difficulty_name }}
+                <Transition enter-active-class="transition-opacity ease-linear duration-150" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition-opacity ease-linear duration-150" leave-class="opacity-100" leave-to-class="opacity-0">
+                  <div v-if="difficulty_dropdown_menu" class="absolute flex flex-col w-2/3 shadow-sm shadow-black bg-[#030303] border-l border-gray-700 z-10">
+                    <div v-for="(diff, index) in props.song_info.song_difficulties" :key="diff" @click="updateDifficultyState(index); difficulty_dropdown_menu = false" class="-ml-0.5 p-2 hover:cursor-pointer border-l-2 hover:border-indigo-500 hover:text-indigo-400">
+                        {{ diff.difficulty_name }}
+                    </div>
                   </div>
-                </div>
+                </Transition>
               </div>
 
               <h2 class="font-thin">Difficulty Style Radar</h2>
@@ -236,8 +234,8 @@ onMounted(() => {
                 </thead>
                 <tbody class="hover:bg-gray-800" v-for="difficulty in props.song_info.song_difficulties" :key="difficulty">
                     <tr class="border-b" :class="diffBGColorLookupTable[difficulty.difficulty_name]">
-                    <td class="m-6 w-32 border-l">{{ difficulty.difficulty_name }}</td>
-                    <td class="w-32">{{ difficulty.difficulty_level }}</td>
+                    <td class="m-6 w-32 border-l">{{ checkDataForEmpty(difficulty.difficulty_name) }}</td>
+                    <td class="w-32">{{ checkDataForEmpty(difficulty.difficulty_level) }}</td>
                     <td class="w-32">{{ checkDataForEmpty(difficulty.max_chain) }}</td>
                     <td class="w-32">{{ checkDataForEmpty(difficulty.max_chip_notes) }}</td>
                     <td class="w-32">{{ checkDataForEmpty(difficulty.max_long_notes) }}</td>
