@@ -8,6 +8,7 @@ const results = ref<AdvancedSongDataInterface[]>([]);
 
 watch(() => props.updateSongs, () => {
     results.value = props.updateSongs
+    console.log(results)
 }) 
 
 function getResultTitleStyling(title:string) {

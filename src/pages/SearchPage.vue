@@ -22,10 +22,10 @@ const currentSongCountView = ref(0)
 const totalSongCountView = ref(0)
 
 watch(searchTerm, (value) => {
-    debounceInput(value)
+    debounceRunSearch(value)
 })
 
-const debounceInput = debounce((input:string) => {
+const debounceRunSearch = debounce((input:string) => {
     console.log("Execute search using: " + input)
     resetCoreSettings()
     router.replace({ query: {q: input}})
@@ -33,9 +33,15 @@ const debounceInput = debounce((input:string) => {
 }, 800)
 
 watch(searchFilters, (value) => {
-    console.log("Parent reading Filter emit event:", value)
-    //applySearchFilters(value)
+    debounceApplySearchFilters(value)
+}, {
+    deep: true
 })
+
+const debounceApplySearchFilters = debounce((input:any) => {
+    console.log("Parent reading Filter emit event:", input)
+    applySearchFilters(input)
+}, 800)
 
 const resetCoreSettings = () => {
     searchFilters.value = []
@@ -109,7 +115,10 @@ const updateState = (newTotalSongCountView?: number, newEmptySearchResults?: boo
     if(newEmptySearchResults != undefined) { emptySearchResults.value = newEmptySearchResults }
     if(newSongResults != undefined) { filteredSongList.value = filteredSongList.value.concat(newSongResults); currentSongCountView.value = filteredSongList.value.length }
     if(newHasMoreSearchResults != undefined) { hasMoreSearchResults.value = newHasMoreSearchResults }
-    if(newQueryCursor != undefined) { savedQueryCursor.value = newQueryCursor}
+    if(newQueryCursor != undefined) { 
+        savedQueryCursor.value = newQueryCursor
+        console.log(savedQueryCursor, newQueryCursor)
+    }
     isLoading.value = false
 }
 
@@ -119,15 +128,23 @@ const filterLookupTable = (filter, filter_val:any, song:AdvancedSongDataInterfac
     
     switch(filter) {
         case "level_range_min":
+            let containsMinDiff:boolean = false
             for(let diff of song.song_difficulties) {
-                if(diff.difficulty_level < filter_val) return false
+                if(diff.difficulty_level >= filter_val) {
+                    containsMinDiff = true
+                    break
+                }
             }
-            return true
+            return containsMinDiff
         case "level_range_max":
+            let containsMaxDiff:boolean = false
             for(let diff of song.song_difficulties) {
-                if(diff.difficulty_level > filter_val) return false
+                if(diff.difficulty_level <= filter_val) {
+                    containsMaxDiff = true
+                    break
+                }
             }
-            return true
+            return containsMaxDiff
         default:
             return true
     }
@@ -137,15 +154,53 @@ const applySearchFilters = (filters:SearchFilterInterface) => {
     let newRes = []
     
     for(let song of originalSongList.value) {
-        let passedFilter = true
-        for(const filter in filters) {
+        if((typeof filters['level_range_min'] != 'undefined' && filters['level_range_min']) && (typeof filters['level_range_max'] != 'undefined' && filters['level_range_max']))  {
+            console.log("Both not null")
+            let satisfyLevelFilter = false
+
+            for(let diff of song.song_difficulties) {
+                if(diff.difficulty_level >= filters['level_range_min'] && diff.difficulty_level <= filters['level_range_max']) {
+                    satisfyLevelFilter = true
+                    break
+                }
+            }
+
+            if(!satisfyLevelFilter) continue
+
+        } else if(filters['level_range_min'] != null && filters['level_range_max'] == null) {
+            console.log("min not null")
+            let satisfyLevelFilter = false
+
+            for(let diff of song.song_difficulties) {
+                if(diff.difficulty_level >= filters['level_range_min']) {
+                    satisfyLevelFilter = true
+                    break
+                }
+            }
+
+            if(!satisfyLevelFilter) continue
+        } else if(filters['level_range_min'] == null && filters['level_range_max'] != null) {
+        console.log("max not null")
+            let satisfyLevelFilter = false
+
+            for(let diff of song.song_difficulties) {
+                if(diff.difficulty_level <= filters['level_range_max']) {
+                    satisfyLevelFilter = true
+                    break
+                }
+            }
+
+            if(!satisfyLevelFilter) continue
+        }
+
+        /*for(const filter in filters) {
             if(filterLookupTable(filter, filters[filter], song) == false) {
                 console.log("Confirmed filter removal of a song")
                 passedFilter = false
                 break
             }
-        }
-        if(passedFilter) newRes.push(song)
+        } */
+        newRes.push(song)
     }
     console.log(newRes)
     filteredSongList.value = newRes

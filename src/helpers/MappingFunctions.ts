@@ -13,6 +13,7 @@ export function mapSongResponseToSongData(song, diffs) {
         arcade_unlock_method: song.arcadeUnlockMethod,
         konasute_unlock_method: song.konasuteUnlockMethod,
         konasute_vol_pack: song.konasuteVolumePack,
+        banner_filename: song.bannerFilename,
         expanded: false
     } as AdvancedSongDataInterface
 }
