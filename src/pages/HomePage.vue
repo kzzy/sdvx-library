@@ -17,7 +17,7 @@ const runHomepageSearch = () => {
 <template>
 	<div class="h-screen w-full font-mono text-white overflow-x-hidden">
 		<div class="h-fit">
-			<img class="w-14 h-14 mt-9 ml-12 hover:animate-bounce cursor-pointer -translate-y-1/4" src="../assets/pixel_grace.png" alt=":)">
+			<img class="w-14 h-14 mt-9 ml-12 hover:animate-bounce cursor-pointer -translate-y-1/4" src="@/assets/pixel_grace.png" alt=":)">
 		</div>
 		<div class="h-1/5"></div>
 		<div class="w-full flex flex-col items-center">
