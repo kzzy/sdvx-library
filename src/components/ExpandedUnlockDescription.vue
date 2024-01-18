@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { diffTextColorLookupTable } from '@/helpers/LookupTables'
+import { diffTextColorLookupTable, SDVXCommunityDiscordURL, OniiChanURL } from '@/helpers/LookupTables'
 const props = defineProps(['title', 'arcadeUnlockMethod','konasuteUnlockMethod', 'konasuteVolPack', 'songDiffs'])
 console.log(props)
 
@@ -7,10 +7,10 @@ console.log(props)
 
 <template>
     <div class="w-[798px] max-md:w-[422px]">
-        <div class="m-4 flex flex-col text-3xl">
+        <div class="mx-4 mb-4 flex flex-col text-3xl">
             <div class="border-b-[1px] mb-2 border-white/30">
                 <div class="px-6 pb-8">
-                    <h2 class="text-4xl my-5 font-semibold text-blue-700">ARCADE</h2>
+                    <h2 class="text-4xl my-5 font-semibold text-sky-700">ARCADE</h2>
                     <p v-if="props.arcadeUnlockMethod == 'PCB'" class="font-thin text-xl">{{ props.title }} is unlockable on Arcade Cabinets using PCB<br></p>
                     <p v-if="props.arcadeUnlockMethod == 'BLASTERGATE'" class="font-thin text-xl">{{ props.title }} is unlockable on Arcade Cabinets through the Blaster Gate<br></p>
                     <p v-if="props.arcadeUnlockMethod == 'HEXADIVER'" class="font-thin text-xl">{{ props.title }} is unlockable on Arcade Cabinets through the Hexa Diver<br></p>
@@ -20,7 +20,7 @@ console.log(props)
             </div>
             <div class="border-b-[1px] mb-2 border-white/30">
                 <div class="px-6 pb-8">
-                    <h2 class="text-4xl my-5 font-semibold text-blue-700">KONASUTE</h2>
+                    <h2 class="text-4xl my-5 font-semibold text-sky-700">KONASUTE</h2>
                     <div class="font-thin text-xl">
                         <p v-if="props.konasuteUnlockMethod == 'VOLUMEPACK'" >{{ props.title }} is unlockable on Konasute by purchasing Volume Pack No. {{ props.konasuteVolPack }}</p>
                         <p v-if="props.konasuteUnlockMethod == 'BLASTERGATE_DEFAULT'" >{{ props.title }} is unlockable on Konasute through the Blaster Gate</p>
@@ -42,10 +42,10 @@ console.log(props)
             </div>
             <div>
                 <div class="px-6 pb-8">
-                    <h2 class="text-4xl my-5 font-semibold text-blue-700">CLONES (K-SHOOT MANIA / USC)</h2>
+                    <h2 class="text-4xl my-5 font-semibold text-sky-700">CLONES (K-SHOOT MANIA / USC)</h2>
                     <p class="font-thin text-xl">
-                        Songs are generally available on Oniichan. If they are not, wait until they are released.<br>
-                        <span class="text-sm text-gray-400">* Some charts for newer songs can be found on the SDVX Community discord when someone converts them</span>
+                        Songs are usually available on <a class="text-cyan-400 hover:text-cyan-300" :href="OniiChanURL" target="_blank" rel="noopener noreferrer">Oniichan</a>. If they are not, wait until they are released.<br>
+                        <span class="text-sm text-gray-400"> * Some charts for newer songs can be found on the <a class="text-cyan-400 hover:text-cyan-300" :href="SDVXCommunityDiscordURL" target="_blank" rel="noopener noreferrer">SDVX Community discord</a> when someone converts them</span>
                     </p>
                 </div>
             </div>

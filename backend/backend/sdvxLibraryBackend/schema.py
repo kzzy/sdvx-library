@@ -21,8 +21,10 @@ class SongFilter(FilterSet):
         return queryset.filter(
             Q(title__icontains=value) | Q(alternateTitle__icontains=value)
         ).order_by('title')
+    
+    #def search_by_filter(self, queryset, )
 
-class SongExtendedConneciton(Connection):
+class SongExtendedConnection(Connection):
     class Meta:
         abstract = True
 
@@ -36,7 +38,7 @@ class SongNode(DjangoObjectType):
         model = Song
         interfaces = (relay.Node, )
         filterset_class = SongFilter
-        connection_class = SongExtendedConneciton
+        connection_class = SongExtendedConnection
 
 class ChartNode(DjangoObjectType):
     class Meta:

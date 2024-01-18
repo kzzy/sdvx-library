@@ -39,7 +39,7 @@ const params = (subject:String, msg:String) => {
     } as SendEmailRequest
 }
 export const sendEmail = (subject:String, msg:String) => {
-    if(import.meta.env.VITE_ENABLE_AWS_SES == 'false') return
+    if(JSON.parse(import.meta.env.VITE_ENABLE_AWS_SES) == false) return
 
     const generatedParams = params(subject, msg)
     ses.sendEmail(generatedParams, (err: AWSError, data: SendEmailResponse) => {

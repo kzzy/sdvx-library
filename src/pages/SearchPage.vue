@@ -3,6 +3,7 @@ import SearchFilters from '@/components/SearchFilters.vue'
 import SearchResults from '@/components/SearchResults.vue'
 import { runAllSongsQuery, runSearchSongsQuery, runChartQuery } from '@/helpers/GraphqlHelper'
 import { mapSongResponseToSongData, mapChartResponseToDifficulties } from '@/helpers/MappingFunctions'
+import { assetsDir } from '@/helpers/LookupTables'
 import type { SearchFilterInterface } from '@/utils/SearchFilter.interface'
 import type { AdvancedSongDataInterface, SongDifficulty } from '@/utils/SongData.interface.ts'
 import { onMounted, ref, watch } from 'vue'
@@ -236,7 +237,7 @@ const onResultHitBottomScroll = (e:any) => {
         <div class="w-min bg-[#050505] bg-opacity-95 border-r-2 border-indigo-900 max-[1240px]:hidden">
             <div class="mx-5 py-5 flex flex-col">
                 <div class="rounded-3xl bg-mainNight bg-opacity-95 outline-indigo-900 outline outline-1 shadow-green-500 shadow-md w-fit">
-                    <img class="w-12 h-16 m-auto pt-3 hover:cursor-pointer" src="/src/assets/pixel_grace.png" alt=":)" @click="router.push({ path: '/' })">
+                    <img class="w-12 h-16 m-auto pt-3 hover:cursor-pointer" :src="assetsDir + 'pixel_grace.png'" alt=":)" @click="router.push({ path: '/' })">
                     <div class="text-white text-3xl text-center pt-2 pb-8 font-bold">
                         <h1>SDVX Library</h1>
                     </div>
@@ -246,9 +247,6 @@ const onResultHitBottomScroll = (e:any) => {
                     <p class="text-white text-sm pt-10 text-center p-4">Replace special characters with english character equivalents except for Japanese songs</p>
                 </div>
                 <SearchFilters class="mt-5" @search_filters="(value) => searchFilters = value"/>
-                <div class="mt-auto text-white text-center text-xl justify-evenly">
-                    <span class="hover:cursor-pointer">Contact</span>
-                </div>
             </div>
         </div>
         <div class="relative w-full flex flex-col items-center max-h-screen overflow-y-scroll overflow-x-hidden" @scroll="onResultHitBottomScroll">
@@ -262,13 +260,13 @@ const onResultHitBottomScroll = (e:any) => {
             <div v-show="!isLoading">
                 <div v-show="emptySearchResults" class="h-screen w-full flex items-center justify-center text-center">
                     <div>
-                        <img src="/src/assets/miku.webp" class="w-80 h-80">
+                        <img :src="assetsDir + 'miku.webp'" class="w-80 h-80">
                         <p class="text-white text-3xl font-light pb-2 drop-shadow-2xl">We found nothing :(</p>
                     </div>
                 </div>
             </div>
             <div v-show="isLoading" class="h-screen w-full flex items-center justify-center text-center">
-                <img class="w-40 h-40" src="/src/assets/spinner.svg">
+                <img class="w-40 h-40" :src="assetsDir + 'spinner.svg'">
             </div>
         </div>
     </div>

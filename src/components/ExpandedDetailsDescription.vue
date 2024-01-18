@@ -2,7 +2,7 @@
 import HelpDescriptionPopup from './HelpDescriptionPopup.vue'
 import { onMounted, reactive, computed, ref } from 'vue'
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler } from 'chart.js'
-import { diffTextColorLookupTable } from '@/helpers/LookupTables'
+import { diffTextColorLookupTable, assetsDir, assetsJacketsDir } from '@/helpers/LookupTables'
 import { Radar } from 'vue-chartjs'
 
 ChartJS.register(
@@ -118,12 +118,12 @@ const updateDifficultyState = (idx:number) => {
 </script>
 
 <template>
-    <div class="flex flex-wrap min-w-fit justify-center w-[40rem] max-md:w-[422px]">
+    <div class="flex flex-wrap min-w-fit justify-center w-[798px] max-[850px]:w-[422px]">
         <div id='details-text-container' class="w-[414px]">
             <div class="text-xl">
                 <div class="relative flex flex-col my-3 items-center select-none pointer-events-none">
-                    <img src="/src/assets/jacket_overlay.png" class="w-48 h-48 z-0 shadow-lg shadow-black">
-                    <img :src="'/src/assets/jackets/' + currentDifficultyState.jacket" class="absolute w-44 h-44 mt-2 z-10">
+                    <img :src="assetsDir + 'jacket_overlay.png'" class="w-48 h-48 z-0 shadow-lg shadow-black">
+                    <img :src="assetsJacketsDir + currentDifficultyState.jacket" class="absolute w-44 h-44 mt-2 z-10">
                 </div>
                 <div class="grid grid-cols-3 gap-4">
                   <div>
@@ -158,23 +158,23 @@ const updateDifficultyState = (idx:number) => {
                     <div class="relative flex">
                         <div class="hover: cursor-pointer w-fit">
                           <div @mouseover="hover_arcade_desc_popup = true" @mouseleave="hover_arcade_desc_popup = false">
-                            <span class="text-blue-700 font-semibold hover:text-blue-500">Arcade</span>
+                            <span class="text-sky-700 font-semibold hover:text-sky-500">Arcade</span>
                             <HelpDescriptionPopup v-if="hover_arcade_desc_popup" :description="'arcade'"/>
                           </div>
                         </div>
                         <span class="mx-4 my-1">
-                            <img class='w-6 h-6' :src="getArcadeResultIcon(currentDifficultyState.isArcade)">
+                            <img class='w-6 h-6' :src="assetsDir + getArcadeResultIcon(currentDifficultyState.isArcade)">
                         </span>
                     </div>
                     <div class="relative flex">
                         <div class="hover: cursor-pointer w-fit">
                           <div @mouseover="hover_konasute_desc_popup = true" @mouseleave="hover_konasute_desc_popup = false">
-                            <span class="text-blue-700 font-semibold hover:text-blue-500">Konasute</span>
+                            <span class="text-sky-700 font-semibold hover:text-sky-500">Konasute</span>
                             <HelpDescriptionPopup v-if="hover_konasute_desc_popup" :description="'konasute'"/>
                           </div>
                         </div>
                         <span class="mx-4 my-1">
-                            <img class='w-6 h-6' :src="getKonasuteResultIcon(currentDifficultyState.isKonasute)">
+                            <img class='w-6 h-6' :src="assetsDir + getKonasuteResultIcon(currentDifficultyState.isKonasute)">
                         </span>
                     </div>
                   </div>
@@ -189,11 +189,11 @@ const updateDifficultyState = (idx:number) => {
                   <button class="text-3xl font-semibold select-none" :class="diffTextColorLookupTable[currentDifficultyState.difficulty_name]">{{ currentDifficultyState.difficulty_name }}
                   </button>
                   <span class="absolute">
-                      <img class="mx-4 my-1.5 w-6 h-6 select-none"  src="dropdown-arrow.png">
+                      <img class="mx-4 my-1.5 w-6 h-6 select-none"  :src="assetsDir + 'dropdown-arrow.png'">
                   </span>
                 </div>
                 <Transition enter-active-class="transition-opacity ease-linear duration-150" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition-opacity ease-linear duration-150" leave-class="opacity-100" leave-to-class="opacity-0">
-                  <div v-if="difficulty_dropdown_menu" class="absolute flex flex-col w-2/3 shadow-sm shadow-black bg-[#030303] border-l border-gray-700 z-10">
+                  <div v-if="difficulty_dropdown_menu" class="absolute flex flex-col w-2/3 shadow-sm shadow-black bg-[#030303] border-l border-gray-700 rounded-r-xl z-10">
                     <div v-for="(diff, index) in props.song_info.song_difficulties" :key="diff" @click="updateDifficultyState(index); difficulty_dropdown_menu = false" class="-ml-0.5 p-2 hover:cursor-pointer border-l-2 hover:border-indigo-500 hover:text-indigo-400">
                         {{ diff.difficulty_name }}
                     </div>

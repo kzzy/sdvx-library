@@ -4,7 +4,7 @@ const props = defineProps(['description'])
 const descriptionLookup: { [key:string]:string } = {
     'arcade':'Refers to the Sound Voltex Cabinets running on the Official servers',
     'konasute':'Konasute(コナステ) is the PC Port version of Sound Voltex that is playable through Bemani\'s online platform',
-    'tierlist':'The ranking is based off of a Japanese Playerbase curated tier list that is recognized in the community'
+    'tierlist':'The ranking is based off of a Japanese Playerbase curated tier list that is recognized in the community. The tier list applies to level 15+ charts only'
 }
 </script>
 

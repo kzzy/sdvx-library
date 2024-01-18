@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { assetsDir } from '@/helpers/LookupTables'
+
 const router = useRouter()
 const showChangeLog = ref(false)
 const showContacts = ref(false)
@@ -17,7 +19,7 @@ const runHomepageSearch = () => {
 <template>
 	<div class="h-screen w-full font-mono text-white overflow-x-hidden">
 		<div class="h-fit">
-			<img class="w-14 h-14 mt-9 ml-12 hover:animate-bounce cursor-pointer -translate-y-1/4" src="@/assets/pixel_grace.png" alt=":)">
+			<img class="w-14 h-14 mt-9 ml-12 hover:animate-bounce cursor-pointer -translate-y-1/4" :src="assetsDir + 'pixel_grace.png'" alt=":)">
 		</div>
 		<div class="h-1/5"></div>
 		<div class="w-full flex flex-col items-center">
@@ -31,7 +33,7 @@ const runHomepageSearch = () => {
 			<div class="mt-28 w-16 h-16 text-4xl select-none rounded-full flex flex-nowrap items-center justify-end bg-black/80" :class="isSearchBarActive?'w-72 animate-widthChangeIncreaseBox':''" @mouseover="isSearchBarActive = true">
 				<div class="mx-4 flex">
 					<input v-if="isSearchBarActive" v-model="searchTerm" type="text" class="animate-widthChangeIncreaseText w-[14rem] text-2xl text-center bg-transparent focus:outline-none focus:ring-0 " placeholder="" autocomplete="off">
-					<img class="h-8 w-8 hover:cursor-pointer hover:brightness-125" src="https://icons.veryicon.com/png/o/education-technology/education-app/search-137.png" @click="runHomepageSearch">
+					<img class="h-8 w-8 hover:cursor-pointer hover:brightness-125" :src="assetsDir + 'search-icon.png'" @click="runHomepageSearch">
 				</div>
 			</div>
 			<div class="mt-32 text-lg text-gray-400 flex">

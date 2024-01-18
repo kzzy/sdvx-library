@@ -2,7 +2,7 @@ import { useQuery } from "@vue/apollo-composable"
 import gql from "graphql-tag"
 
 enum QUERY_SETTINGS {
-    REQUEST_LIMIT = 7
+    REQUEST_LIMIT = parseInt(import.meta.env.VITE_GRAPHQL_REQUEST_LIMIT)
 }
 
 let variables = {
